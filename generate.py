@@ -8,27 +8,61 @@ from collections import defaultdict
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
+from urllib.parse import urljoin
 from zoneinfo import ZoneInfo
 
 import feedparser
 import requests
+from bs4 import BeautifulSoup
 
 
 ROOT = Path(__file__).resolve().parent
-CONFIG_PATH = ROOT / "config.json"
-DATA_PATH = ROOT / "data" / "items.json"
 SITE_PATH = ROOT / "site"
-ARCHIVE_PATH = SITE_PATH / "archive"
+DOMESTIC_CONFIG_PATH = ROOT / "config.cn.json"
+GLOBAL_CONFIG_PATH = ROOT / "config.global.json"
+DOMESTIC_DATA_PATH = ROOT / "data" / "items-cn.json"
+GLOBAL_DATA_PATH = ROOT / "data" / "items-global.json"
+LEGACY_GLOBAL_DATA_PATH = ROOT / "data" / "items.json"
+GLOBAL_SITE_PATH = SITE_PATH / "view" / "2"
 
 TAG_PATTERN = re.compile(r"<[^>]+>")
 SPACE_PATTERN = re.compile(r"\s+")
 
 CATEGORY_COLORS = {
+    "今日精选": "#059669",
     "科技": "#2563eb",
     "GitHub 热门项目": "#7c3aed",
+    "财经商业": "#0f766e",
+    "科学探索": "#0891b2",
     "游戏": "#db2777",
+    "国内要闻": "#ea580c",
     "时政热点": "#ea580c",
 }
+
+DATE_PATTERNS = (
+    re.compile(r"/(20\d{2})-(\d{2})-(\d{2})/"),
+    re.compile(r"/(20\d{2})/(\d{2})/(\d{2})/"),
+    re.compile(r"(?:t|/)(20\d{2})(\d{2})(\d{2})(?:_|/|\.)"),
+)
+
+FEATURED_POSITIVE_KEYWORDS = (
+    "政策", "法规", "发布", "突破", "研究", "发现", "灾害", "救援",
+    "经济", "法院", "安全", "航天", "芯片", "人工智能", "机器人",
+    "government", "policy", "economy", "court", "research", "study",
+    "discovery", "launch", "space", "climate", "security", "election",
+    "artificial intelligence", "robot",
+)
+
+FEATURED_NEGATIVE_KEYWORDS = (
+    "抽奖", "礼包", "充值", "折扣", "促销", "美女", "性感", "玉足",
+    "造型", "预购", "偷窃", "被盗", "网红", "celebrity", "giveaway",
+    "discount", "sale", "preorder", "stolen", "beer", "trailer reaction",
+)
+
+FEATURED_PRIORITY_SOURCES = (
+    "中国科学院", "科学网", "新华网", "人民网", "中国新闻网", "央广网",
+    "联合国", "NASA", "Nature", "BBC", "MIT Technology Review",
+)
 
 
 def load_json(path: Path, default: Any) -> Any:
@@ -109,6 +143,71 @@ def entry_summary(entry: Any) -> str:
     return clean_text(summary)
 
 
+def source_accepts_title(source: dict[str, Any], title: str) -> bool:
+    title_lower = title.casefold()
+    include_keywords = [
+        str(value).casefold()
+        for value in source.get("include_keywords", [])
+        if value
+    ]
+    exclude_keywords = [
+        str(value).casefold()
+        for value in source.get("exclude_keywords", [])
+        if value
+    ]
+
+    if include_keywords and not any(
+        keyword in title_lower
+        for keyword in include_keywords
+    ):
+        return False
+
+    return not any(keyword in title_lower for keyword in exclude_keywords)
+
+
+def infer_datetime(value: str, fallback: datetime) -> datetime:
+    normalized = clean_text(value, limit=500)
+
+    for pattern in DATE_PATTERNS:
+        match = pattern.search(normalized)
+        if not match:
+            continue
+
+        try:
+            return datetime(
+                int(match.group(1)),
+                int(match.group(2)),
+                int(match.group(3)),
+                tzinfo=timezone.utc,
+            )
+        except ValueError:
+            continue
+
+    for date_format in (
+        "%Y-%m-%d %H:%M:%S",
+        "%Y-%m-%d %H:%M",
+        "%Y-%m-%d",
+        "%Y年%m月%d日 %H:%M",
+        "%Y年%m月%d日",
+    ):
+        match = re.search(
+            r"20\d{2}(?:-|年)\d{1,2}(?:-|月)\d{1,2}(?:日)?"
+            r"(?:\s+\d{1,2}:\d{2}(?::\d{2})?)?",
+            normalized,
+        )
+        if not match:
+            continue
+
+        try:
+            return datetime.strptime(match.group(0), date_format).replace(
+                tzinfo=timezone.utc,
+            )
+        except ValueError:
+            continue
+
+    return fallback
+
+
 def fetch_feed(
     session: requests.Session,
     source: dict[str, Any],
@@ -135,7 +234,7 @@ def fetch_feed(
         title = clean_text(entry.get("title"), limit=200)
         link = str(entry.get("link") or entry.get("id") or "").strip()
 
-        if not title:
+        if not title or not source_accepts_title(source, title):
             continue
 
         items.append(
@@ -154,6 +253,260 @@ def fetch_feed(
             break
 
     return items
+
+
+def fetch_html_listing(
+    session: requests.Session,
+    source: dict[str, Any],
+    cutoff: datetime,
+    default_max_items: int,
+) -> list[dict[str, Any]]:
+    response = session.get(source["url"], timeout=(10, 35))
+    response.raise_for_status()
+
+    if source.get("encoding"):
+        response.encoding = str(source["encoding"])
+    elif not response.encoding or response.encoding.casefold() == "iso-8859-1":
+        response.encoding = response.apparent_encoding
+
+    soup = BeautifulSoup(response.text, "html.parser")
+    item_selector = source.get("item_selector", "a[href]")
+    link_selector = source.get("link_selector")
+    title_selector = source.get("title_selector")
+    summary_selector = source.get("summary_selector")
+    date_selector = source.get("date_selector")
+    title_attribute = source.get("title_attribute")
+    link_pattern = re.compile(source["link_pattern"]) if source.get("link_pattern") else None
+    max_items = int(source.get("max_items", default_max_items))
+    items: list[dict[str, Any]] = []
+    seen_links: set[str] = set()
+    fallback_time = datetime.now(timezone.utc)
+
+    for container in soup.select(str(item_selector)):
+        link_node = container.select_one(str(link_selector)) if link_selector else container
+
+        if not getattr(link_node, "get", None):
+            continue
+
+        raw_link = str(link_node.get("href") or "").strip()
+        link = urljoin(response.url, raw_link)
+
+        if not raw_link or link in seen_links:
+            continue
+        if link_pattern and not link_pattern.search(link):
+            continue
+
+        title_node = container.select_one(str(title_selector)) if title_selector else container
+
+        if title_attribute:
+            title = clean_text(link_node.get(str(title_attribute)), limit=200)
+        else:
+            title = clean_text(
+                title_node.get_text(" ", strip=True) if title_node else "",
+                limit=200,
+            )
+
+        if not title or not source_accepts_title(source, title):
+            continue
+
+        summary = ""
+        if summary_selector:
+            summary_node = container.select_one(str(summary_selector))
+            if summary_node:
+                summary = clean_text(summary_node.get_text(" ", strip=True))
+
+        date_text = link
+        if date_selector:
+            date_node = container.select_one(str(date_selector))
+            if date_node:
+                date_text += " " + date_node.get_text(" ", strip=True)
+
+        published = infer_datetime(date_text, fallback_time)
+        if published < cutoff:
+            continue
+
+        seen_links.add(link)
+        items.append(
+            {
+                "key": make_key(link, title, source["name"]),
+                "title": title,
+                "link": link,
+                "summary": summary,
+                "source": source["name"],
+                "category": source.get("category", "未分类"),
+                "published": published.isoformat(),
+            }
+        )
+
+        if len(items) >= max_items:
+            break
+
+    if not items:
+        raise RuntimeError("页面中没有找到符合规则的最新条目")
+
+    return items
+
+
+def fetch_source(
+    session: requests.Session,
+    source: dict[str, Any],
+    cutoff: datetime,
+    default_max_items: int,
+) -> list[dict[str, Any]]:
+    if source.get("type", "feed") == "html":
+        return fetch_html_listing(
+            session=session,
+            source=source,
+            cutoff=cutoff,
+            default_max_items=default_max_items,
+        )
+
+    return fetch_feed(
+        session=session,
+        source=source,
+        cutoff=cutoff,
+        default_max_items=default_max_items,
+    )
+
+
+def normalized_title(value: str) -> str:
+    return re.sub(r"[^0-9a-z\u4e00-\u9fff]+", "", value.casefold())
+
+
+def select_daily_items(
+    retained: list[dict[str, Any]],
+    today: str,
+    category_order: list[str],
+    max_daily_items: int,
+    max_items_per_category: int,
+) -> list[dict[str, Any]]:
+    grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    seen_titles: set[str] = set()
+
+    for item in sorted(
+        (
+            value
+            for value in retained
+            if value.get("first_seen") == today
+        ),
+        key=lambda value: value.get("published", ""),
+        reverse=True,
+    ):
+        title_key = normalized_title(str(item.get("title", "")))
+        if title_key and title_key in seen_titles:
+            continue
+        if title_key:
+            seen_titles.add(title_key)
+
+        category = str(item.get("category", "未分类"))
+        if len(grouped[category]) < max_items_per_category:
+            grouped[category].append(item)
+
+    selected: list[dict[str, Any]] = []
+    categories = ordered_category_names(
+        {category: len(values) for category, values in grouped.items()},
+        category_order,
+    )
+
+    for category in categories:
+        selected.extend(grouped[category])
+
+    return selected[:max_daily_items]
+
+
+def add_featured_items(
+    items: list[dict[str, Any]],
+    category_order: list[str],
+    max_featured_items: int,
+) -> list[dict[str, Any]]:
+    if not items or max_featured_items <= 0:
+        return items
+
+    grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for item in items:
+        category = str(item.get("category", "未分类"))
+        if category != "今日精选":
+            grouped[category].append(item)
+
+    def featured_score(item: dict[str, Any]) -> tuple[int, str]:
+        searchable = (
+            f"{item.get('title', '')} {item.get('summary', '')}"
+        ).casefold()
+        score = sum(
+            3
+            for keyword in FEATURED_POSITIVE_KEYWORDS
+            if keyword.casefold() in searchable
+        )
+        score -= sum(
+            7
+            for keyword in FEATURED_NEGATIVE_KEYWORDS
+            if keyword.casefold() in searchable
+        )
+        source = str(item.get("source", ""))
+        if any(value in source for value in FEATURED_PRIORITY_SOURCES):
+            score += 2
+        return score, str(item.get("published", ""))
+
+    for values in grouped.values():
+        values.sort(
+            key=featured_score,
+            reverse=True,
+        )
+
+    categories = [
+        category
+        for category in category_order
+        if category != "今日精选" and grouped.get(category)
+    ]
+    categories.extend(
+        category
+        for category in sorted(grouped)
+        if category not in categories
+    )
+
+    featured: list[dict[str, Any]] = []
+    source_counts: dict[str, int] = defaultdict(int)
+    cursor = 0
+
+    while len(featured) < max_featured_items and categories:
+        category = categories[cursor % len(categories)]
+        candidates = grouped[category]
+        chosen_index = next(
+            (
+                index
+                for index, candidate in enumerate(candidates)
+                if source_counts[str(candidate.get("source", ""))] < 1
+            ),
+            None,
+        )
+
+        if chosen_index is None:
+            categories.remove(category)
+            if not categories:
+                break
+            cursor %= len(categories)
+            continue
+
+        chosen = candidates.pop(chosen_index)
+        source_counts[str(chosen.get("source", ""))] += 1
+        featured.append(
+            {
+                **chosen,
+                "key": f"featured:{chosen.get('key', '')}",
+                "category": "今日精选",
+                "featured_rank": len(featured),
+            }
+        )
+
+        if not candidates:
+            categories.remove(category)
+            if not categories:
+                break
+            cursor %= len(categories)
+        else:
+            cursor += 1
+
+    return featured + items
 
 
 def esc(value: Any) -> str:
@@ -232,6 +585,50 @@ def category_selector(
     return selector, default_category
 
 
+def edition_switch_script(switch_target: str) -> str:
+    target_json = json.dumps(switch_target, ensure_ascii=False)
+    return f"""
+    <script>
+        (() => {{
+            const switchTarget = {target_json};
+            const switchMark = document.querySelector(".brand-mark");
+            let taps = [];
+
+            function switchEdition() {{
+                window.location.assign(switchTarget);
+            }}
+
+            if (switchMark) {{
+                switchMark.addEventListener("click", event => {{
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                    const now = Date.now();
+                    taps = taps.filter(value => now - value <= 4000);
+                    taps.push(now);
+
+                    if (taps.length >= 7) {{
+                        taps = [];
+                        switchEdition();
+                    }}
+                }});
+            }}
+
+            document.addEventListener("keydown", event => {{
+                if (
+                    event.altKey
+                    && event.shiftKey
+                    && event.key.toLowerCase() === "g"
+                ) {{
+                    event.preventDefault();
+                    switchEdition();
+                }}
+            }});
+        }})();
+    </script>
+    """
+
+
 def render_daily_page(
     *,
     title: str,
@@ -245,6 +642,9 @@ def render_daily_page(
     archive_link: str,
     home_link: str,
     generated_at: str,
+    edition_id: str,
+    switch_target: str,
+    noindex: bool,
 ) -> str:
     grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
 
@@ -265,11 +665,20 @@ def render_daily_page(
         hidden_attribute = "" if category == default_category else " hidden"
         cards = []
 
-        for item in sorted(
-            grouped[category],
-            key=lambda value: value.get("published", ""),
-            reverse=True,
-        ):
+        category_items = (
+            sorted(
+                grouped[category],
+                key=lambda value: int(value.get("featured_rank", 9999)),
+            )
+            if category == "今日精选"
+            else sorted(
+                grouped[category],
+                key=lambda value: value.get("published", ""),
+                reverse=True,
+            )
+        )
+
+        for item in category_items:
             published = parse_datetime(item.get("published"))
             local_time = published.astimezone(local_zone).strftime("%m-%d %H:%M")
 
@@ -360,6 +769,14 @@ def render_daily_page(
 
     default_count = counts.get(default_category, len(items))
 
+    robots_meta = (
+        '<meta name="robots" content="noindex,nofollow">'
+        if noindex
+        else ""
+    )
+    switch_script = edition_switch_script(switch_target)
+    category_storage_key = f"personalDailyCategory:{edition_id}"
+
     return f"""<!doctype html>
 <html lang="zh-CN">
 <head>
@@ -370,6 +787,7 @@ def render_daily_page(
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta name="theme-color" content="#090d18">
+    {robots_meta}
     <title>{esc(title)} · {esc(local_date)}</title>
     <script>
         try {{
@@ -1101,7 +1519,7 @@ def render_daily_page(
             let savedCategory = null;
 
             try {{
-                savedCategory = localStorage.getItem("personalDailyCategory");
+                savedCategory = localStorage.getItem("{esc(category_storage_key)}");
             }} catch (error) {{}}
 
             const initialCategory = values.has(requested)
@@ -1129,7 +1547,7 @@ def render_daily_page(
                 );
 
                 try {{
-                    localStorage.setItem("personalDailyCategory", value);
+                    localStorage.setItem("{esc(category_storage_key)}", value);
                 }} catch (error) {{}}
 
                 if (updateHistory) {{
@@ -1176,12 +1594,20 @@ def render_daily_page(
             refreshThemeIcon();
         }})();
     </script>
+    {switch_script}
 </body>
 </html>
 """
 
 
-def render_archive_index(title: str, dates: list[str]) -> str:
+def render_archive_index(
+    *,
+    title: str,
+    dates: list[str],
+    home_link: str,
+    switch_target: str,
+    noindex: bool,
+) -> str:
     cards = "\n".join(
         f"""
         <a class="archive-card" href="{esc(value)}.html">
@@ -1209,6 +1635,13 @@ def render_archive_index(title: str, dates: list[str]) -> str:
         </div>
         """
 
+    robots_meta = (
+        '<meta name="robots" content="noindex,nofollow">'
+        if noindex
+        else ""
+    )
+    switch_script = edition_switch_script(switch_target)
+
     return f"""<!doctype html>
 <html lang="zh-CN">
 <head>
@@ -1217,6 +1650,7 @@ def render_archive_index(title: str, dates: list[str]) -> str:
     <meta name="color-scheme" content="light dark">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta name="theme-color" content="#090d18">
+    {robots_meta}
     <title>历史归档 · {esc(title)}</title>
     <script>
         try {{
@@ -1443,21 +1877,21 @@ def render_archive_index(title: str, dates: list[str]) -> str:
     <main>
         <header class="hero">
             <nav>
-                <a class="brand" href="../index.html">
+                <a class="brand" href="{esc(home_link)}">
                     <span class="brand-mark" aria-hidden="true">
                         <svg viewBox="0 0 24 24"><path d="M4 17V7l8-4 8 4v10l-8 4-8-4Z"/><path d="m8 9 4 2 4-2M12 11v6"/></svg>
                     </span>
                     <span>Personal Daily</span>
                 </a>
                 <div class="nav-actions">
-                    <a class="home-link" href="../index.html">返回今天</a>
+                    <a class="home-link" href="{esc(home_link)}">返回今天</a>
                     <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换主题"><span id="theme-icon">☾</span></button>
                 </div>
             </nav>
             <div class="hero-copy">
                 <span class="eyebrow">Timeline library</span>
                 <h1>历史归档</h1>
-                <p class="lead">回到某一天，继续浏览当时收录的科技、开源、游戏与全球时政。</p>
+                <p class="lead">回到某一天，继续浏览当时收录的重要信息。</p>
             </div>
         </header>
         <div class="archive-heading">
@@ -1487,14 +1921,39 @@ def render_archive_index(title: str, dates: list[str]) -> str:
             refresh();
         }})();
     </script>
+    {switch_script}
 </body>
 </html>
 """
 
 
-def main() -> None:
-    config = load_json(CONFIG_PATH, {})
-    history = load_json(DATA_PATH, [])
+def clean_archive_directory(archive_path: Path, dates: list[str]) -> None:
+    valid_names = {"index.html"}
+    valid_names.update(f"{value}.html" for value in dates)
+
+    for path in archive_path.glob("*.html"):
+        if path.name not in valid_names:
+            path.unlink()
+
+
+def generate_edition(
+    *,
+    name: str,
+    edition_id: str,
+    config_path: Path,
+    data_path: Path,
+    site_path: Path,
+    now_utc: datetime,
+    root_switch_target: str,
+    archive_switch_target: str,
+    noindex: bool,
+    legacy_data_path: Path | None = None,
+) -> None:
+    config = load_json(config_path, {})
+    history_path = data_path
+    if not data_path.exists() and legacy_data_path and legacy_data_path.exists():
+        history_path = legacy_data_path
+    history = load_json(history_path, [])
 
     title = config.get("title", "我的个人信息日报")
     subtitle = config.get("subtitle", "每日自动更新")
@@ -1502,9 +1961,11 @@ def main() -> None:
     lookback_hours = int(config.get("lookback_hours", 48))
     retention_days = int(config.get("retention_days", 180))
     max_items_per_feed = int(config.get("max_items_per_feed", 5))
-    max_daily_items = int(config.get("max_daily_items", 80))
+    max_daily_items = int(config.get("max_daily_items", 100))
+    max_items_per_category = int(config.get("max_items_per_category", 15))
+    max_featured_items = int(config.get("max_featured_items", 10))
     feeds = config.get("feeds", [])
-    category_order = list(
+    category_order = config.get("category_order") or list(
         dict.fromkeys(
             source.get("category", "未分类")
             for source in feeds
@@ -1512,7 +1973,6 @@ def main() -> None:
     )
 
     local_zone = ZoneInfo(timezone_name)
-    now_utc = datetime.now(timezone.utc)
     now_local = now_utc.astimezone(local_zone)
     today = now_local.date().isoformat()
     cutoff = now_utc - timedelta(hours=lookback_hours)
@@ -1521,11 +1981,12 @@ def main() -> None:
     session.headers.update(
         {
             "User-Agent": (
-                "personal-daily/1.0 "
-                "(+https://github.com; personal RSS reader)"
+                "personal-daily/2.0 "
+                "(+https://github.com; personal news reader)"
             ),
             "Accept": "application/rss+xml, application/atom+xml, "
-            "application/xml, text/xml;q=0.9, */*;q=0.5",
+            "application/xml, text/xml, text/html;q=0.9, */*;q=0.5",
+            "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.7",
         }
     )
 
@@ -1534,7 +1995,6 @@ def main() -> None:
         for source in feeds
         if source.get("name")
     }
-
     existing = {
         item["key"]: item
         for item in history
@@ -1545,12 +2005,14 @@ def main() -> None:
         )
     }
 
+    print()
+    print(f"=== {name} ===")
     errors: list[str] = []
     fetched_count = 0
 
     for source in feeds:
         try:
-            fetched = fetch_feed(
+            fetched = fetch_source(
                 session=session,
                 source=source,
                 cutoff=cutoff,
@@ -1570,7 +2032,7 @@ def main() -> None:
                     existing[item["key"]] = item
 
             print(f"OK   {source['name']}: {len(fetched)} item(s)")
-        except Exception as error:  # Continue when one external feed is down.
+        except Exception as error:  # Continue when one external source is down.
             source_name = source.get("name", "未知信息源")
             message = f"{source_name}: {type(error).__name__}: {error}"
             errors.append(message)
@@ -1593,74 +2055,136 @@ def main() -> None:
         key=lambda item: item.get("published", ""),
         reverse=True,
     )
-
-    today_items = [
-        item for item in retained if item.get("first_seen") == today
-    ][:max_daily_items]
-
-    generated_at = now_local.strftime("%Y-%m-%d %H:%M %Z")
-
-    SITE_PATH.mkdir(parents=True, exist_ok=True)
-    ARCHIVE_PATH.mkdir(parents=True, exist_ok=True)
-
-    index_page = render_daily_page(
-        title=title,
-        subtitle=subtitle,
-        local_date=today,
-        items=today_items,
-        errors=errors,
-        local_zone=local_zone,
+    today_items = select_daily_items(
+        retained=retained,
+        today=today,
         category_order=category_order,
-        feed_count=len(feeds),
-        archive_link="archive/index.html",
-        home_link="index.html",
-        generated_at=generated_at,
+        max_daily_items=max_daily_items,
+        max_items_per_category=max_items_per_category,
     )
+    today_page_items = add_featured_items(
+        today_items,
+        category_order,
+        max_featured_items,
+    )
+    generated_at = now_local.strftime("%Y-%m-%d %H:%M %Z")
+    archive_path = site_path / "archive"
+    site_path.mkdir(parents=True, exist_ok=True)
+    archive_path.mkdir(parents=True, exist_ok=True)
 
-    archive_page = render_daily_page(
-        title=title,
-        subtitle=subtitle,
-        local_date=today,
-        items=today_items,
-        errors=errors,
-        local_zone=local_zone,
-        category_order=category_order,
-        feed_count=len(feeds),
-        archive_link="index.html",
-        home_link="../index.html",
-        generated_at=generated_at,
+    (site_path / "index.html").write_text(
+        tidy_html(
+            render_daily_page(
+                title=title,
+                subtitle=subtitle,
+                local_date=today,
+                items=today_page_items,
+                errors=errors,
+                local_zone=local_zone,
+                category_order=category_order,
+                feed_count=len(feeds),
+                archive_link="archive/index.html",
+                home_link="index.html",
+                generated_at=generated_at,
+                edition_id=edition_id,
+                switch_target=root_switch_target,
+                noindex=noindex,
+            )
+        ),
+        encoding="utf-8",
     )
 
     archive_dates = sorted(
         {
-            item.get("first_seen")
+            str(item.get("first_seen"))
             for item in retained
             if item.get("first_seen")
         },
         reverse=True,
     )
 
-    (SITE_PATH / "index.html").write_text(
-        tidy_html(index_page),
-        encoding="utf-8",
-    )
-    (ARCHIVE_PATH / f"{today}.html").write_text(
-        tidy_html(archive_page),
-        encoding="utf-8",
-    )
-    (ARCHIVE_PATH / "index.html").write_text(
-        tidy_html(render_archive_index(title, archive_dates)),
-        encoding="utf-8",
-    )
+    for archive_date in archive_dates:
+        archive_items = select_daily_items(
+            retained=retained,
+            today=archive_date,
+            category_order=category_order,
+            max_daily_items=max_daily_items,
+            max_items_per_category=max_items_per_category,
+        )
+        archive_page_items = add_featured_items(
+            archive_items,
+            category_order,
+            max_featured_items,
+        )
+        (archive_path / f"{archive_date}.html").write_text(
+            tidy_html(
+                render_daily_page(
+                    title=title,
+                    subtitle=subtitle,
+                    local_date=archive_date,
+                    items=archive_page_items,
+                    errors=errors if archive_date == today else [],
+                    local_zone=local_zone,
+                    category_order=category_order,
+                    feed_count=len(feeds),
+                    archive_link="index.html",
+                    home_link="../index.html",
+                    generated_at=generated_at,
+                    edition_id=edition_id,
+                    switch_target=archive_switch_target,
+                    noindex=noindex,
+                )
+            ),
+            encoding="utf-8",
+        )
 
-    save_json(DATA_PATH, retained)
+    clean_archive_directory(archive_path, archive_dates)
+    (archive_path / "index.html").write_text(
+        tidy_html(
+            render_archive_index(
+                title=title,
+                dates=archive_dates,
+                home_link="../index.html",
+                switch_target=archive_switch_target,
+                noindex=noindex,
+            )
+        ),
+        encoding="utf-8",
+    )
+    save_json(data_path, retained)
 
-    print()
     print(f"Date: {today}")
-    print(f"Feeds configured: {len(feeds)}")
+    print(f"Sources configured: {len(feeds)}")
     print(f"Items fetched in window: {fetched_count}")
-    print(f"Items shown today: {len(today_items)}")
-    print(f"Feed errors: {len(errors)}")
+    print(f"Items shown today: {len(today_items)} + {len(today_page_items) - len(today_items)} featured")
+    print(f"Source errors: {len(errors)}")
+
+
+def main() -> None:
+    now_utc = datetime.now(timezone.utc)
+    generate_edition(
+        name="大陆版",
+        edition_id="cn",
+        config_path=DOMESTIC_CONFIG_PATH,
+        data_path=DOMESTIC_DATA_PATH,
+        site_path=SITE_PATH,
+        now_utc=now_utc,
+        root_switch_target="view/2/index.html",
+        archive_switch_target="../view/2/index.html",
+        noindex=False,
+    )
+    generate_edition(
+        name="国际版",
+        edition_id="global",
+        config_path=GLOBAL_CONFIG_PATH,
+        data_path=GLOBAL_DATA_PATH,
+        legacy_data_path=LEGACY_GLOBAL_DATA_PATH,
+        site_path=GLOBAL_SITE_PATH,
+        now_utc=now_utc,
+        root_switch_target="../../index.html",
+        archive_switch_target="../../../index.html",
+        noindex=True,
+    )
 
 
 if __name__ == "__main__":
