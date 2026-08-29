@@ -1,0 +1,877 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <title>我的个人信息日报 · 2026-08-30</title>
+    <style>
+        :root {
+            color-scheme: light dark;
+            --background: #f4f6fa;
+            --surface: rgba(255, 255, 255, 0.92);
+            --surface-strong: #ffffff;
+            --text: #182033;
+            --muted: #667085;
+            --border: #e1e6ef;
+            --accent: #2563eb;
+            --shadow: 0 10px 30px rgba(31, 41, 55, 0.07);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --background: #0b0f17;
+                --surface: rgba(20, 27, 39, 0.92);
+                --surface-strong: #141b27;
+                --text: #edf2f7;
+                --muted: #9ca8ba;
+                --border: #2a3444;
+                --accent: #60a5fa;
+                --shadow: 0 12px 35px rgba(0, 0, 0, 0.22);
+            }
+        }
+
+        * { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            background:
+                radial-gradient(circle at top left, rgba(37, 99, 235, 0.10), transparent 32rem),
+                var(--background);
+            color: var(--text);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+                BlinkMacSystemFont, "Segoe UI", sans-serif;
+            line-height: 1.68;
+        }
+
+        main {
+            width: min(920px, calc(100% - 28px));
+            margin: 0 auto;
+            padding: 54px 0 80px;
+        }
+
+        .hero {
+            padding: 30px;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            background: var(--surface);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(12px);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(30px, 6vw, 48px);
+            letter-spacing: -0.04em;
+            line-height: 1.12;
+        }
+
+        .subtitle {
+            margin: 10px 0 0;
+            color: var(--muted);
+            font-size: 16px;
+        }
+
+        .date-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 24px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .top-links { display: flex; gap: 16px; }
+
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        .category-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 22px 0 2px;
+        }
+
+        .category-pill {
+            padding: 7px 12px;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            background: var(--surface-strong);
+            color: var(--text);
+            font-size: 14px;
+        }
+
+        .category-pill strong { color: var(--muted); margin-left: 4px; }
+
+        section { scroll-margin-top: 20px; margin-top: 42px; }
+
+        .section-heading {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 18px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--category-color);
+        }
+
+        .section-heading h2 { margin: 0; font-size: 23px; }
+        .section-heading span { color: var(--muted); font-size: 13px; }
+
+        .card {
+            margin: 14px 0;
+            padding: 21px 22px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: var(--surface);
+            box-shadow: var(--shadow);
+        }
+
+        .card h3 { margin: 0; font-size: 18px; line-height: 1.5; }
+        .summary { margin: 10px 0; color: var(--text); }
+
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 8px 18px;
+            margin-top: 12px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .empty, .errors {
+            margin-top: 24px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: var(--surface);
+        }
+
+        .empty p { margin-bottom: 0; color: var(--muted); }
+        .errors summary { cursor: pointer; }
+        .errors li { margin: 6px 0; overflow-wrap: anywhere; }
+
+        footer {
+            margin-top: 52px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+            main { width: min(100% - 20px, 920px); padding-top: 18px; }
+            .hero { padding: 22px 18px; border-radius: 18px; }
+            .card { padding: 18px; }
+            .summary { font-size: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <header class="hero">
+            <h1>我的个人信息日报</h1>
+            <p class="subtitle">科技、热门开源项目、游戏与全球时政</p>
+            <div class="date-row">
+                <span>2026-08-30 · 共 72 条</span>
+                <nav class="top-links">
+                    <a href="index.html">今天</a>
+                    <a href="archive/index.html">历史归档</a>
+                </nav>
+            </div>
+            <nav class="category-nav"><a class="category-pill" href="#75ad0143b7">GitHub 热门项目 <strong>10</strong></a><a class="category-pill" href="#4534327de1">时政热点 <strong>25</strong></a><a class="category-pill" href="#ba08216f13">游戏 <strong>19</strong></a><a class="category-pill" href="#3d078fbc4e">科技 <strong>18</strong></a></nav>
+        </header>
+
+
+
+            <section id="75ad0143b7" style="--category-color: #7c3aed">
+                <div class="section-heading">
+                    <h2>GitHub 热门项目</h2>
+                    <span>10 条</span>
+                </div>
+
+                <article class="card">
+                    <h3><a href="https://github.com/pytorch/pytorch/releases/tag/viable%2Fstrict%2F1788028080" target="_blank" rel="noopener noreferrer">viable/strict/1788028080</a></h3>
+                    <p class="summary">[ROCm] Guard native BMM outer-product launches against the HIP work-i…</p>
+                    <div class="meta">
+                        <span>PyTorch</span>
+                        <span>08-29 22:33</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://github.com/pytorch/pytorch/releases/tag/viable%2Fstrict%2F1788025796" target="_blank" rel="noopener noreferrer">viable/strict/1788025796: [MPS] Fix linear backward SIGABRT with a 1-D weight (#187989)</a></h3>
+                    <p class="summary">Fixes #187988 What linear() accepts a 1-D weight (shape [in_features] ): it contracts and drops the last input dimension. mps_linear (forward) already handles this by unsqueezing the weight to [1, in_features] . The backward pass did not mirror that, so it lowered grad_input and grad_weight to invalid rank-1 × rank-1 matmuls and aborted the process during MPSGraph verification: &#x27;mps.matmul&#x27; op contracting dimensions……</p>
+                    <div class="meta">
+                        <span>PyTorch</span>
+                        <span>08-29 22:03</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://github.com/pytorch/pytorch/releases/tag/viable%2Fstrict%2F1788024140" target="_blank" rel="noopener noreferrer">viable/strict/1788024140: Revert &quot;[c10d] Make nccl2 the default NCCL backend (#192281)&quot;</a></h3>
+                    <p class="summary">This reverts commit 4078ac4 . Reverted #192281 on behalf of https://github.com/pytorch-auto-revert due to Reverted automatically by pytorch&#x27;s autorevert, to avoid this behaviour add the tag autorevert: disable ( comment )</p>
+                    <div class="meta">
+                        <span>PyTorch</span>
+                        <span>08-29 21:13</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://github.com/rust-lang/rust/releases/tag/1.98.0" target="_blank" rel="noopener noreferrer">Rust 1.98.0</a></h3>
+                    <p class="summary">Language Allow shortening lifetime of &amp;mut when unsize-coercing, even in an invariant position. For example, you can now coerce a Cell&lt;&amp;&#x27;long mut i32&gt; to a Cell&lt;&amp;&#x27;short mut dyn Send&gt; . Such shortenings were already previously allowed when coercing a &amp;mut to a &amp; , or coercing a &amp; to a &amp; . Add deny-by-default invalid_runtime_symbol_definitions lint and warn-by-default suspicious_runtime_symbol_definitions lint The lint……</p>
+                    <div class="meta">
+                        <span>Rust</span>
+                        <span>08-29 16:30</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://github.com/pytorch/pytorch/releases/tag/trunk%2F6060fdb0ae15b62cf04fd50d20fabf2eb84f33b2" target="_blank" rel="noopener noreferrer">trunk/6060fdb0ae15b62cf04fd50d20fabf2eb84f33b2: Fix FakeTensor wrapping for meta tensor constructor (#186188)</a></h3>
+                    <p class="summary">The C++ tensor constructor returned directly from its Meta shortcut before reaching the shared lift_fresh path. Under FakeTensorMode, this bypassed mode dispatch and returned a plain Meta tensor. Keep the no-CPU-allocation shortcut, but continue through lift_fresh. For the deferred device-move path, distinguish the requested device from the tensor&#x27;s actual construction device so storage-backed inputs still move corre……</p>
+                    <div class="meta">
+                        <span>PyTorch</span>
+                        <span>08-29 12:03</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://github.com/pytorch/pytorch/releases/tag/viable%2Fstrict%2F1787985328" target="_blank" rel="noopener noreferrer">viable/strict/1787985328: Revert &quot;Drop unused includes in c10 (#194959)&quot;</a></h3>
+                    <p class="summary">This reverts commit a2ab606 . Reverted #194959 on behalf of https://github.com/georgehong due to This is breaking internal builds with error: no member named &#x27;cerr&#x27; in namespace &#x27;std&#x27;. Removing from c10/util/Exception.cpp dropped the declaration of std::cerr, which that file still uses. ( comment )</p>
+                    <div class="meta">
+                        <span>PyTorch</span>
+                        <span>08-29 08:49</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://github.com/pytorch/pytorch/releases/tag/viable%2Fstrict%2F1787982632" target="_blank" rel="noopener noreferrer">viable/strict/1787982632</a></h3>
+                    <p class="summary">[pr_time_benchmarks] Refresh add_loop_eager_dynamic and add_loop_indu…</p>
+                    <div class="meta">
+                        <span>PyTorch</span>
+                        <span>08-29 08:10</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://github.com/ollama/ollama/releases/tag/v0.33.2" target="_blank" rel="noopener noreferrer">v0.33.2</a></h3>
+                    <p class="summary">What&#x27;s Changed Ollama&#x27;s app now follows the system appearance again, restoring dark mode support Fixed the macOS app to properly hand off to an already-running instance instead of starting a second one The Claude Desktop proxy no longer interrupts in-flight requests when the model catalog updates Full Changelog : v0.33.1...v0.33.2</p>
+                    <div class="meta">
+                        <span>Ollama</span>
+                        <span>08-29 04:58</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://github.com/astral-sh/uv/releases/tag/0.12.7" target="_blank" rel="noopener noreferrer">0.12.7</a></h3>
+                    <p class="summary">Release Notes Released on 2026-08-27. Python Replace managed Python installations when upgrading to a newer build of the same version ( #21323 ) Enhancements Support Linux s390x , ppc64le , and loongarch64 targets for cross-platform dependency resolution ( #21313 ) Retry downloads with configured credentials when Azure Storage denies anonymous access to an endpoint configured via UV_AZURE_ENDPOINT_URL ( #21318 ) Prev……</p>
+                    <div class="meta">
+                        <span>uv</span>
+                        <span>08-28 06:14</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://github.com/ollama/ollama/releases/tag/v0.33.2-rc1" target="_blank" rel="noopener noreferrer">v0.33.2-rc1</a></h3>
+                    <p class="summary">app: list account cloud models for Claude ( #18077 )</p>
+                    <div class="meta">
+                        <span>Ollama</span>
+                        <span>08-28 04:22</span>
+                    </div>
+                </article>
+
+            </section>
+
+            <section id="4534327de1" style="--category-color: #ea580c">
+                <div class="section-heading">
+                    <h2>时政热点</h2>
+                    <span>25 条</span>
+                </div>
+
+                <article class="card">
+                    <h3><a href="https://www.aljazeera.com/video/newsfeed/2026/8/29/dr-congo-begins-vaccinating-against-largest-and-deadliest-ebola-outbreak?traffic_source=rss" target="_blank" rel="noopener noreferrer">DR Congo begins vaccinating against largest and deadliest Ebola outbreak</a></h3>
+                    <p class="summary">70,000 Ervebo vaccine doses have been sent to DR Congo in hope they prove effective against the Bundibugyo strain.</p>
+                    <div class="meta">
+                        <span>Al Jazeera</span>
+                        <span>08-30 02:13</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.aljazeera.com/video/newsfeed/2026/8/29/sudans-date-palm-trees-under-threat-from-drought-and-wildfires?traffic_source=rss" target="_blank" rel="noopener noreferrer">Sudan’s date palm trees under threat from drought and wildfires</a></h3>
+                    <p class="summary">In Sudan, date palm trees are an economic lifeline for residents of Northern State.</p>
+                    <div class="meta">
+                        <span>Al Jazeera</span>
+                        <span>08-30 02:07</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.bbc.co.uk/news/articles/cqlw52vr0dwo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Right-wing commentator Milo Yiannopoulos deported from US to UK</a></h3>
+                    <p class="summary">The self-styled provocateur had been detained by Immigration and Customs Enforcement (ICE).</p>
+                    <div class="meta">
+                        <span>BBC World</span>
+                        <span>08-30 01:52</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.aljazeera.com/news/2026/8/29/turkiye-summons-ukraine-ambassador-over-black-sea-attacks-2?traffic_source=rss" target="_blank" rel="noopener noreferrer">Turkiye summons Ukraine ambassador over Black Sea attacks</a></h3>
+                    <p class="summary">Two Turkish-operated vessels have been struck this week as a result of the war between Russia and Ukraine.</p>
+                    <div class="meta">
+                        <span>Al Jazeera</span>
+                        <span>08-30 01:41</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.aljazeera.com/video/newsfeed/2026/8/29/israeli-army-arrests-six-palestinians-after-settler-violence-in-west-bank?traffic_source=rss" target="_blank" rel="noopener noreferrer">Israeli army arrests six Palestinians after settler violence in West Bank</a></h3>
+                    <p class="summary">Israeli settlers stormed Qusra in the occupied West Bank, attacking Palestinian residents and damaging homes.</p>
+                    <div class="meta">
+                        <span>Al Jazeera</span>
+                        <span>08-30 01:09</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.aljazeera.com/video/newsfeed/2026/8/29/08-29-26-niger-mutiny-sv?traffic_source=rss" target="_blank" rel="noopener noreferrer">Niger military says it is regaining control after attempted mutiny</a></h3>
+                    <p class="summary">Niger’s military says it is regaining control after a mutiny in Niamey after gun fire was heard in the capital.</p>
+                    <div class="meta">
+                        <span>Al Jazeera</span>
+                        <span>08-30 01:03</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.bbc.co.uk/news/articles/cx2zlwe7qj1o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Trump hails &#x27;historic&#x27; deal for US to control 65bn barrels of Venezuela&#x27;s oil</a></h3>
+                    <p class="summary">Venezuelan interim president says the unusual agreement will help revive her country&#x27;s economy.</p>
+                    <div class="meta">
+                        <span>BBC World</span>
+                        <span>08-30 00:15</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.bbc.co.uk/news/articles/c86xwqez4npo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">At least 37 dead and hundreds evacuated after strike on Kyiv weapons depot</a></h3>
+                    <p class="summary">An investigation has begun into the storage of weapons for Ukraine&#x27;s military near a residential area.</p>
+                    <div class="meta">
+                        <span>BBC World</span>
+                        <span>08-29 23:27</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.dw.com/zh/中国军备迅速扩张：仅仅是为了自卫吗？/a-78557144?maca=chi-rss-chi-all-1127-rdf" target="_blank" rel="noopener noreferrer">中国军备迅速扩张：仅仅是为了自卫吗？</a></h3>
+                    <p class="summary">有专家认为，中国军队不仅在人数上成为世界之最，而且在装备上也大步向前，其航母上的电磁弹射器和沙漠中的一处八角形建筑尤其受人关注。</p>
+                    <div class="meta">
+                        <span>德国之声中文</span>
+                        <span>08-29 20:52</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.dw.com/zh/中尼边境发生山洪灾难-中国如何进行舆论审查/a-78550639?maca=chi-rss-chi-all-1127-rdf" target="_blank" rel="noopener noreferrer">中尼边境发生山洪灾难 中国如何进行舆论审查</a></h3>
+                    <p class="summary">审查和信息控制在中国很普遍，但在西藏尤为突出。中国数字时代敏感词检测编辑对德国之声表示，中尼边境发生重大的山洪灾难之后，中国审查机器立即启动，进行了技术精确的舆论审查与引导。</p>
+                    <div class="meta">
+                        <span>德国之声中文</span>
+                        <span>08-29 18:46</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.dw.com/zh/灾区失联人数逼近3000-幸存者讲述获救经历/a-78556649?maca=chi-rss-chi-all-1127-rdf" target="_blank" rel="noopener noreferrer">灾区失联人数逼近3000 幸存者讲述获救经历</a></h3>
+                    <p class="summary">尼中两国周六发布的最新数据显示，受灾失联人数已飙升至接近3000人，已寻获遗体633具。一个德国家庭获救，四名朝圣的德国人仍下落未明。</p>
+                    <div class="meta">
+                        <span>德国之声中文</span>
+                        <span>08-29 18:44</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.dw.com/zh/中国管控西藏灾情信息/a-78556459?maca=chi-rss-chi-all-1127-rdf" target="_blank" rel="noopener noreferrer">中国管控西藏灾情信息</a></h3>
+                    <p class="summary">中尼边境发生洪灾后，尼泊尔灾区涌入大批记者，西藏一侧却鲜有独立报道，外界能获得的信息十分有限。人权组织“国际声援西藏运动”呼吁中国当局提高信息透明度。</p>
+                    <div class="meta">
+                        <span>德国之声中文</span>
+                        <span>08-29 18:17</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.theguardian.com/world/2026/aug/29/former-guerrillas-colombia-fate-new-president" target="_blank" rel="noopener noreferrer">Was it a mistake for 99 Colombian guerrillas to lay down their arms?</a></h3>
+                    <p class="summary">Fighters in legal limbo after accepting ‘total peace’ plan of Petro government just days before hardliner Abelardo De la Espriella took over In mid-June, 99 guerrilla fighters were flown by helicopter to a small settlement in a rural area of southern Colombia where they lined up and, one by one, handed their weapons to government officials: rifles, pistols, machine guns and grenade launchers. They also stripped off t……</p>
+                    <div class="meta">
+                        <span>The Guardian World</span>
+                        <span>08-29 18:00</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.dw.com/zh/长平观察：为什么满屏灾难报道，仍然存在致命审查？/a-78555848?maca=chi-rss-chi-all-1127-rdf" target="_blank" rel="noopener noreferrer">长平观察：为什么满屏灾难报道，仍然存在致命审查？</a></h3>
+                    <p class="summary">舆论普遍留意到，西藏吉隆县一个边境口岸“国门被冲毁”的视频遭到审查。时事评论作家长平认为，更严重的是对人的审查，对逝者和幸存者生命故事的扼杀。</p>
+                    <div class="meta">
+                        <span>德国之声中文</span>
+                        <span>08-29 17:40</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.bbc.co.uk/news/articles/cx2z415w2gpo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Footage of Tibet floods isn&#x27;t being shown in China - and we know little about victims there</a></h3>
+                    <p class="summary">Some of the most dramatic footage from the deadly flash flooding is hidden from public view in China.</p>
+                    <div class="meta">
+                        <span>BBC World</span>
+                        <span>08-29 11:54</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.bbc.co.uk/news/articles/c99dvm39mreo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Landlady to 9/11 hijackers reveals their links to alleged Saudi spy</a></h3>
+                    <p class="summary">A woman who rented out homes to two al-Qaeda members speaks publicly for the first time - to the BBC.</p>
+                    <div class="meta">
+                        <span>BBC World</span>
+                        <span>08-29 08:32</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.theguardian.com/us-news/2026/aug/28/trump-venezuela-oil-agreement" target="_blank" rel="noopener noreferrer">Trump announces new US oil agreement with Venezuela</a></h3>
+                    <p class="summary">US president says US will have ‘majority’ control of 65bn barrels of proven oil reserves Donald Trump announced Friday a new US oil agreement with Venezuela’s interim president Delcy Rodríguez, saying the US will have “majority” control of 65bn barrels of proven oil reserves. The terms of the agreement remain to be seen, but the US president said on his social-media platform that it had been brokered “through a partn……</p>
+                    <div class="meta">
+                        <span>The Guardian World</span>
+                        <span>08-29 07:34</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.theguardian.com/world/2026/aug/28/us-venezuela-oil-gas-stake" target="_blank" rel="noopener noreferrer">Venezuelan opposition up in arms over reports US wants big stake in oil and gas</a></h3>
+                    <p class="summary">Critics call move to gain long-term access to country’s massive energy reserves ‘predatory’ and ‘unconstitutional’ Reports that the US is preparing to claim a big stake in Venezuela’s massive energy reserves have sparked an outcry, with critics describing the move as “predatory” and a “rapacious” land grab. Several media outlets this week reported that the Trump administration – which abducted Venezuela’s authoritari……</p>
+                    <div class="meta">
+                        <span>The Guardian World</span>
+                        <span>08-29 01:41</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.theguardian.com/artanddesign/2026/aug/28/egyptian-queen-diamond-necklace-stolen-vienna-raid" target="_blank" rel="noopener noreferrer">Egyptian queen’s 673-diamond necklace stolen in Vienna smash-and-grab raid</a></h3>
+                    <p class="summary">Police hunt two suspects after historic 200-carat piece is snatched from Austrian museum during opening hours Austrian police are hunting two men alleged to have stolen a 200-carat platinum necklace encrusted with 673 diamonds that was on loan to a museum in Vienna and once belonged to Egyptian royalty. Authorities in the capital released pictures of the suspects captured by security cameras during the heist at the M……</p>
+                    <div class="meta">
+                        <span>The Guardian World</span>
+                        <span>08-28 22:46</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://news.un.org/feed/view/zh/story/2026/08/1142708" target="_blank" rel="noopener noreferrer">世卫组织：乌克兰医疗体系持续承受战争冲击</a></h3>
+                    <p class="summary">世界卫生组织驻乌克兰代表哈比希特周五表示，近期乌克兰遭遇的警报和袭击数量创下自2022年2月俄罗斯入侵以来的最高纪录。上周克里维里赫发生两次袭击，造成140人受伤，其中包括23名儿童，另有16人遇难。</p>
+                    <div class="meta">
+                        <span>联合国新闻中文</span>
+                        <span>08-28 20:00</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://news.un.org/feed/view/zh/story/2026/08/1142707" target="_blank" rel="noopener noreferrer">联合国：海地暴力持续恶化 人道主义危机加剧</a></h3>
+                    <p class="summary">联合国海地综合办事处主任兼秘书长特别代表马谢乌周五向安理会表示，8月23日夜至24日凌晨发生在海地肯斯科夫的黑帮袭击造成至少47人死亡，数十人被绑架，许多人受伤和流离失所。他呼吁立即无条件释放所有被绑架者，包括妇女和儿童，并强调必须进一步加强对海地的国际安全支持。</p>
+                    <div class="meta">
+                        <span>联合国新闻中文</span>
+                        <span>08-28 20:00</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://news.un.org/feed/view/zh/story/2026/08/1142706" target="_blank" rel="noopener noreferrer">世卫组织：刚果（金）埃博拉疫情仍构成突发公共卫生事件 但未达到“大流行”门槛</a></h3>
+                    <p class="summary">世界卫生组织总干事谭德塞周五表示，根据《国际卫生条例》应急委员会建议，刚果民主共和国（刚果（金））本迪布焦型病毒埃博拉疫情仍符合“国际关注的突发公共卫生事件”标准，但不符合大流行紧急情况标准。</p>
+                    <div class="meta">
+                        <span>联合国新闻中文</span>
+                        <span>08-28 20:00</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://news.un.org/feed/view/zh/story/2026/08/1142705" target="_blank" rel="noopener noreferrer">标志性公约签署65周年 难民署呼吁采取新举措防止无国籍状态</a></h3>
+                    <p class="summary">在1961年《减少无国籍状态公约》缔结65周年之际，联合国难民署呼吁重申政治承诺，确保每个人都能享有国籍权。难民署国表示，全球至少有450万人属于无国籍或国籍不明，还有数百万人受到这一问题影响但未被官方数据记录。</p>
+                    <div class="meta">
+                        <span>联合国新闻中文</span>
+                        <span>08-28 20:00</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://news.un.org/feed/view/zh/story/2026/08/1142704" target="_blank" rel="noopener noreferrer">欧洲和北美地区严重干旱和热浪加剧森林和城市自然环境压力</a></h3>
+                    <p class="summary">联合国欧洲经济委员会周五表示，该组织各成员国，尤其是欧洲和北美地区，持续的严重干旱和创纪录的夏季高温正加剧森林生态系统压力。欧洲干旱观测站数据显示，目前欧盟和英国50%的领土处于干旱状态，严重降水不足正影响土壤湿度和森林健康。</p>
+                    <div class="meta">
+                        <span>联合国新闻中文</span>
+                        <span>08-28 20:00</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.theguardian.com/technology/2026/aug/28/meta-facebook-us-lawsuit-settlement-world-impact" target="_blank" rel="noopener noreferrer">What could Meta’s US settlement mean around the world – and what now for other claims against firm?</a></h3>
+                    <p class="summary">Other governments could seek similar concessions, while separate legal action is pending in places ranging from Kenya to the Netherlands In October 2021, Abrham Meareg’s father, a professor of chemistry in Ethiopia’s northern town of Bahir Dar, was shot at close range and died outside his family home. This was in the middle of the country’s civil war. For weeks, Facebook’s algorithm had actively promoted posts callin……</p>
+                    <div class="meta">
+                        <span>The Guardian World</span>
+                        <span>08-28 12:00</span>
+                    </div>
+                </article>
+
+            </section>
+
+            <section id="ba08216f13" style="--category-color: #db2777">
+                <div class="section-heading">
+                    <h2>游戏</h2>
+                    <span>19 条</span>
+                </div>
+
+                <article class="card">
+                    <h3><a href="https://www.pcgamer.com/games/action/nodusfall-guide/" target="_blank" rel="noopener noreferrer">All the key details on HoYo&#x27;s co-op monster slayer Nodusfall</a></h3>
+                    <p class="summary">Paimon could never.</p>
+                    <div class="meta">
+                        <span>PC Gamer</span>
+                        <span>08-30 02:00</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.pcgamer.com/games/survival-crafting/the-long-dark-will-get-new-dlc-again-as-studio-shifts-devs-away-from-the-sequel-to-survive-an-uncertain-industry-we-have-to-adapt-to-this/" target="_blank" rel="noopener noreferrer">The Long Dark will get new DLC again as studio shifts devs away from the sequel to survive an &#x27;uncertain&#x27; industry: &#x27;We have to adapt to this&#x27;</a></h3>
+                    <p class="summary">Blackfrost&#x27;s early access release won&#x27;t make it this year after all.</p>
+                    <div class="meta">
+                        <span>PC Gamer</span>
+                        <span>08-30 01:35</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.pcgamer.com/games/modern-gamers-spoiled-by-steam-will-never-understand-the-joy-of-a-megapak/" target="_blank" rel="noopener noreferrer">Modern gamers spoiled by Steam will never understand the joy of a MegaPak</a></h3>
+                    <p class="summary">A requiem for the early days of budget PC gaming.</p>
+                    <div class="meta">
+                        <span>PC Gamer</span>
+                        <span>08-30 01:00</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.pcgamer.com/games/mmo/i-want-mmos-to-waste-our-time-again/" target="_blank" rel="noopener noreferrer">I want MMOs to waste our time again</a></h3>
+                    <p class="summary">I&#x27;ve accomplished very little on a Star Wars Galaxies private server, and I wouldn&#x27;t want it any other way.</p>
+                    <div class="meta">
+                        <span>PC Gamer</span>
+                        <span>08-30 00:00</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.eurogamer.net/ea-motive-iron-man-leak-response-tweet" target="_blank" rel="noopener noreferrer">EA breaks its silence after Iron Man gameplay leak, admitting &quot;well, that didn&#x27;t go as planned&quot;</a></h3>
+                    <p class="summary">EA has broken its silence on the leaked Iron Man footage that surfaced yesterday , admitting, &quot;well, that didn&#x27;t go as planned&quot;. Read more</p>
+                    <div class="meta">
+                        <span>Eurogamer</span>
+                        <span>08-29 22:56</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.eurogamer.net/gta-6-gameplay-reveal-streaming-viewership-record-twitch-netflix" target="_blank" rel="noopener noreferrer">GTA 6&#x27;s gameplay reveal pulled in 3.97 million peak viewers, overwhelming Twitch and Netflix in the process</a></h3>
+                    <p class="summary">Reaction streams to Grand Theft Auto 6 &#x27;s first gameplay presentation peaked at 3,970,738 viewers across livestreaming platforms, making it the biggest gaming stream of 2026 so far. Read more</p>
+                    <div class="meta">
+                        <span>Eurogamer</span>
+                        <span>08-29 22:25</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.pcgamer.com/games/strategy/i-played-just-one-hour-of-total-war-warhammer-40-000-and-it-was-the-highlight-of-my-year/" target="_blank" rel="noopener noreferrer">I played just an hour of Total War: Warhammer 40,000 and it was the highlight of my year</a></h3>
+                    <p class="summary">Living the grimdark dream.</p>
+                    <div class="meta">
+                        <span>PC Gamer</span>
+                        <span>08-29 21:34</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://news.xbox.com/en-us/2026/08/29/the-witcher-3-songs-of-the-past-preview/" target="_blank" rel="noopener noreferrer">The Witcher 3: Songs of the Past Will Give Us a Unique Way to Revisit This Beloved World</a></h3>
+                    <p class="summary">I’ve been in a lot of rooms to see a lot of games, but sitting in a theater to watch footage of The Witcher 3’s Songs of the Past expansion for the first time provided me with an experience I’ve not come across before – live nostalgia. As members of the Fool’s Theory dev team […] The post The Witcher 3: Songs of the Past Will Give Us a Unique Way to Revisit This Beloved World appeared first on XBOX Wire .</p>
+                    <div class="meta">
+                        <span>Xbox Wire</span>
+                        <span>08-29 20:19</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.eurogamer.net/squadron-42-delayed-2027-gta-6" target="_blank" rel="noopener noreferrer">Squadron 42 delayed to 2027, with Star Citizen dev blaming GTA 6</a></h3>
+                    <p class="summary">Cloud Imperium Games has delayed Squadron 42, its long-in-development Star Citizen spin-off, to Q2 2027, with studio boss Chris Roberts arguing the game would be drowned out by GTA 6 . Read more</p>
+                    <div class="meta">
+                        <span>Eurogamer</span>
+                        <span>08-29 20:09</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.eurogamer.net/panic-playdate-tariff-refunds-customers" target="_blank" rel="noopener noreferrer">Playdate maker Panic is passing tariff refunds on to customers</a></h3>
+                    <p class="summary">Panic, maker of the crank-powered handheld Playdate , is forwarding Supreme Court-ordered tariff refunds back to customers. Read more</p>
+                    <div class="meta">
+                        <span>Eurogamer</span>
+                        <span>08-29 18:51</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.eurogamer.net/pokemon-tales-sirfetchd-pichu-trailer-disney-plus" target="_blank" rel="noopener noreferrer">Pokémon Tales: The Misadventures of Sirfetch&#x27;d &amp; Pichu gets first trailer</a></h3>
+                    <p class="summary">The Pokémon Company International and Aardman have released the first teaser trailer for Pokémon Tales: The Misadventures of Sirfetch&#x27;d &amp; Pichu, a new stop-motion series set in the Galar region. Read more</p>
+                    <div class="meta">
+                        <span>Eurogamer</span>
+                        <span>08-29 17:55</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://news.xbox.com/en-us/2026/08/28/fable-watch-brand-new-quest-gameplay-from-gamescom-2026/" target="_blank" rel="noopener noreferrer">Fable: Watch Brand New Quest Gameplay from gamescom 2026</a></h3>
+                    <p class="summary">If you weren’t able to attend gamescom 2026 this week – and thus haven’t been able to see Playground Games’ presentation of brand new quest gameplay from Fable – never fear. Above, you can watch a full 18 minutes of gameplay centred on a quest through Bowerstone, the series’ reimagined capital city. Along the way, […] The post Fable: Watch Brand New Quest Gameplay from gamescom 2026 appeared first on XBOX Wire .</p>
+                    <div class="meta">
+                        <span>Xbox Wire</span>
+                        <span>08-29 00:00</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://blog.playstation.com/2026/08/28/share-of-the-week-breathtaking-views/" target="_blank" rel="noopener noreferrer">Share of the Week: Breathtaking Views</a></h3>
+                    <p class="summary">Last week, we asked you to share breathtaking views from your favorite games using #PSshare #PSBlog. Here are this week’s highlights: call_me_xavii shares the creatively painted world of Clair Obscur: Expedition 33 rorottino shares a view of the world of Elden Ring SheikhSadi80 shares a cherry blossom altar view in Ghost of Yōtei dfgmendes shares […]</p>
+                    <div class="meta">
+                        <span>PlayStation Blog</span>
+                        <span>08-28 23:59</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://blog.playstation.com/2026/08/28/official-playstation-podcast-episode-546-path-of-gamescom/" target="_blank" rel="noopener noreferrer">Official PlayStation Podcast Episode 546: Path of Gamescom</a></h3>
+                    <p class="summary">Email us at PSPodcast@sony.com! Subscribe via Apple Podcasts, Spotify, or download here Hey, everybody! We’re back this week to discuss some of the biggest announcements from Gamescom, the upcoming full release of Path of Exile 2, and our latest gaming obsessions. Stuff We Talked About The Cast Thanks to Dormilón for our rad theme song […]</p>
+                    <div class="meta">
+                        <span>PlayStation Blog</span>
+                        <span>08-28 23:58</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://blog.playstation.com/2026/08/28/a-new-look-at-fables-style-weaving-combat/" target="_blank" rel="noopener noreferrer">A new look at Fable’s style-weaving combat</a></h3>
+                    <p class="summary">When we think about combat in Fable, we think about more than defeating enemies. We think about giving players the tools to approach encounters in their own way, experiment with different abilities and create a Hero that feels unique to them and their preferred playstyle. That’s why combat in Fable is built around what we […]</p>
+                    <div class="meta">
+                        <span>PlayStation Blog</span>
+                        <span>08-28 23:00</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://news.xbox.com/en-us/2026/08/28/next-week-on-xbox-new-games-for-august-31-to-september-4/" target="_blank" rel="noopener noreferrer">Next Week on XBOX: New Games for August 31 to September 4</a></h3>
+                    <p class="summary">Welcome to Next Week on XBOX! In this weekly feature we cover all the games coming soon to XBOX Series X|S, XBOX One, XBOX on PC, and Game Pass! Get more details on these upcoming games below and click their profiles for further info (release dates subject to change). Let’s jump in! The Blood of […] The post Next Week on XBOX: New Games for August 31 to September 4 appeared first on XBOX Wire .</p>
+                    <div class="meta">
+                        <span>Xbox Wire</span>
+                        <span>08-28 22:00</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://news.xbox.com/en-us/2026/08/28/warlock-dungeons-dragons-magic-explained/" target="_blank" rel="noopener noreferrer">Warlock: Dungeons &amp; Dragons – The Open World Adventure Making Magic More… Magical</a></h3>
+                    <p class="summary">Magic, in most games, is treated like a key for a lock – a spell performs a set function. Ice getting in the way? Melt it with fire. Enemy covered in armor? Hit them with lightning. Warlock: Dungeons and Dragons, on the other hand, treats magic more like a painter’s palette. In a hands-off demo […] The post Warlock: Dungeons &amp; Dragons – The Open World Adventure Making Magic More… Magical appeared first on XBOX Wire .</p>
+                    <div class="meta">
+                        <span>Xbox Wire</span>
+                        <span>08-28 22:00</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://blog.playstation.com/2026/08/28/marvels-wolverine-details-on-logans-mutant-abilities-game-features-and-more/" target="_blank" rel="noopener noreferrer">Marvel’s Wolverine: Details on Logan’s mutant abilities, game features, and more</a></h3>
+                    <p class="summary">Today, we’re stoked to share with you our Features Trailer for Marvel’s Wolverine! Narrated by Liam McIntyre, who plays James “Logan” Howlett, here’s a slice of what’s coming to the game on September 15… that’s just a few short weeks away! So, check out the trailer and read on for additional insights. Marvel’s Wolverine […]</p>
+                    <div class="meta">
+                        <span>PlayStation Blog</span>
+                        <span>08-28 20:00</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.xbox.com/en-US/games/store/grand-theft-auto-vi/9NNZSNHLR63L#new_tab" target="_blank" rel="noopener noreferrer">Pre-Order Grand Theft Auto VI Now. Coming to XBOX Series X|S November 19, 2026</a></h3>
+                    <p class="summary">The post Pre-Order Grand Theft Auto VI Now. Coming to XBOX Series X|S November 19, 2026 appeared first on XBOX Wire .</p>
+                    <div class="meta">
+                        <span>Xbox Wire</span>
+                        <span>08-28 12:06</span>
+                    </div>
+                </article>
+
+            </section>
+
+            <section id="3d078fbc4e" style="--category-color: #2563eb">
+                <div class="section-heading">
+                    <h2>科技</h2>
+                    <span>18 条</span>
+                </div>
+
+                <article class="card">
+                    <h3><a href="https://www.theverge.com/ai-artificial-intelligence/986438/sony-music-warner-chappell-anthropic-lawsuit-copyright" target="_blank" rel="noopener noreferrer">Sony Music and Warner Chappell are suing Anthropic</a></h3>
+                    <p class="summary">Sony Music and Warner Chappell have filed suit against Anthropic in the US District Court for the Northern District of California seeking damages for &quot;tens of thousands&quot; copyrighted works. The companies are asking for up to $150,000 per work, plus up to $25,000 for each instance when identifiable copyright data was stripped. In total, the […]</p>
+                    <div class="meta">
+                        <span>The Verge</span>
+                        <span>08-30 02:19</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://techcrunch.com/2026/08/29/at-techbbq-europes-ai-conversations-kept-coming-back-to-whos-actually-in-control/" target="_blank" rel="noopener noreferrer">At TechBBQ, Europe’s AI conversations kept coming back to: Who’s actually in control?</a></h3>
+                    <p class="summary">Investors, founders, and operators from across Europe arrived for the annual Nordic TechBBQ conference to talk about how humans can have agency over AI.</p>
+                    <div class="meta">
+                        <span>TechCrunch</span>
+                        <span>08-30 01:51</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://techcrunch.com/2026/08/29/were-not-doing-30-bets-a-year-vijay-pande-on-betting-small-after-running-4-billion-at-a16z/" target="_blank" rel="noopener noreferrer">“We’re not doing 30 bets a year”: Vijay Pande on betting small after running $4 billion at a16z</a></h3>
+                    <p class="summary">Vijay Pande — who left a16z&#x27;s roughly $4 billion biotech practice last year to start the much smaller, AI-native VZVC — talks about why biology is finally shifting from a &quot;discovery&quot; science to an &quot;engineering&quot; one, why clinical trials are still brutally expensive, and why he thinks open, shared datasets (not walled-off ones) are what will actually let AI transform medicine.</p>
+                    <div class="meta">
+                        <span>TechCrunch</span>
+                        <span>08-30 01:36</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://techcrunch.com/2026/08/29/hollywood-celebs-are-getting-into-microdrama-apps/" target="_blank" rel="noopener noreferrer">Hollywood celebs are getting into microdrama apps</a></h3>
+                    <p class="summary">Several Hollywood celebs are ditching the massive eight-figure checks and exotic movie sets for a rising format: microdramas.</p>
+                    <div class="meta">
+                        <span>TechCrunch</span>
+                        <span>08-30 00:10</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.theverge.com/gadgets/986427/distraction-free-writing-gadget-byok-scripts-extensions" target="_blank" rel="noopener noreferrer">Distraction-free writing gadget BYOK is adding custom extensions</a></h3>
+                    <p class="summary">BYOK is a no-frills, single-purpose gadget that 90 percent of people will find absolutely frivolous. But for those who spend a significant chunk of their lives putting words to virtual paper, there is an obvious allure. Personally, I think it&#x27;s at its best when you just stick to the bare minimum, focusing on pure text […]</p>
+                    <div class="meta">
+                        <span>The Verge</span>
+                        <span>08-30 00:01</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.theverge.com/entertainment/983448/welcome-to-night-vale-cocreator-joseph-fink-learned-storytelling-from-grim-fandango" target="_blank" rel="noopener noreferrer">Welcome to Night Vale cocreator Joseph Fink learned storytelling from Grim Fandango</a></h3>
+                    <p class="summary">Joseph Fink is the cocreator and cowriter of Welcome to Night Vale, arguably the most important fiction podcast ever. He&#x27;s also the creator of the noir podcast Unlicensed and Alice Isn&#x27;t Dead, which takes some of the conspiratorial cosmic horror of Night Vale and turns it into fodder for a more serious series about relationships, […]</p>
+                    <div class="meta">
+                        <span>The Verge</span>
+                        <span>08-29 23:00</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://techcrunch.com/2026/08/29/the-theragun-sense-makes-everyday-recovery-surprisingly-easy/" target="_blank" rel="noopener noreferrer">The Theragun Sense makes everyday recovery surprisingly easy</a></h3>
+                    <p class="summary">As my 20s are set to come to an end later this year, I’ve officially reached the age where sleeping in the wrong position or stretching just a little too far can cause aches and pains. I’ve always been somewhat skeptical of massage guns, mostly because I’ve tried a few off-brand ones and just assumed […]</p>
+                    <div class="meta">
+                        <span>TechCrunch</span>
+                        <span>08-29 22:00</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://techcrunch.com/2026/08/29/nvidias-ai-advantage-is-moving-beyond-the-gpu/" target="_blank" rel="noopener noreferrer">Nvidia’s AI advantage is moving beyond the GPU</a></h3>
+                    <p class="summary">The new generation of data center systems is increasing efficiency with smarter traffic control instead of just more processor cycles.</p>
+                    <div class="meta">
+                        <span>TechCrunch</span>
+                        <span>08-29 21:00</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.theverge.com/tech/986033/samsung-galaxy-z-flip-8-review" target="_blank" rel="noopener noreferrer">The Galaxy Z Flip 8 is at its best when there’s friction</a></h3>
+                    <p class="summary">What do you want from a flip phone when it&#x27;s closed? A simple interface, perhaps notifications and a widget or two, for handling the basics? Or a fully fledged Android experience shrunk down for the Flip form factor? For years, Samsung has insisted on the former, even as some fans - and Razr rival Motorola […]</p>
+                    <div class="meta">
+                        <span>The Verge</span>
+                        <span>08-29 21:00</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.theverge.com/entertainment/985866/h4rris-nihil-young-edm-suno-ai" target="_blank" rel="noopener noreferrer">Musicians-turned-detectives are hunting for AI grifters</a></h3>
+                    <p class="summary">As audio-focused generative tools and platforms have gotten more sophisticated, the internet has become increasingly filled with AI-generated music whose melodies and vocals are algorithmically derived from the work of human artists. While some of the people pumping out this kind of content immediately own up to using AI, others have denied using the technology […]</p>
+                    <div class="meta">
+                        <span>The Verge</span>
+                        <span>08-29 20:00</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://arstechnica.com/tech-policy/2026/08/i-asked-100-companies-for-my-data-some-deleted-it-instead/" target="_blank" rel="noopener noreferrer">I asked 100 companies for my data. Some deleted it instead.</a></h3>
+                    <p class="summary">Testing 100 companies found privacy requests often led to confusion and dead ends.</p>
+                    <div class="meta">
+                        <span>Ars Technica</span>
+                        <span>08-29 18:50</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://arstechnica.com/tech-policy/2026/08/kalshi-cant-evade-nevada-gambling-laws-by-calling-bets-swaps-court-rules/" target="_blank" rel="noopener noreferrer">Court rules Kalshi sports bets aren&#x27;t &quot;swaps,&quot; just gambling with a different name</a></h3>
+                    <p class="summary">Kalshi can&#x27;t evade Nevada gambling laws by calling bets &quot;swaps,&quot; judges rule.</p>
+                    <div class="meta">
+                        <span>Ars Technica</span>
+                        <span>08-29 06:14</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://arstechnica.com/tech-policy/2026/08/cities-terminate-flock-contracts-at-record-pace-in-august/" target="_blank" rel="noopener noreferrer">Cities terminate Flock contracts at record pace in August</a></h3>
+                    <p class="summary">Cancellations have accelerated.</p>
+                    <div class="meta">
+                        <span>Ars Technica</span>
+                        <span>08-29 05:33</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://arstechnica.com/health/2026/08/rfk-jr-has-lied-to-the-senate-lawmakers-call-for-criminal-probe-ouster/" target="_blank" rel="noopener noreferrer">&quot;RFK Jr. has lied to the Senate&quot;: Lawmakers call for criminal probe, ouster</a></h3>
+                    <p class="summary">RFK Jr. went to Samoa to spread vaccine fears. The measles outbreak after killed 83.</p>
+                    <div class="meta">
+                        <span>Ars Technica</span>
+                        <span>08-29 05:17</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://arstechnica.com/tech-policy/2026/08/trump-blacklisting-of-woke-anthropic-deemed-illegal-by-federal-judge/" target="_blank" rel="noopener noreferrer">Trump blacklisting of &quot;woke&quot; Anthropic deemed illegal by federal judge</a></h3>
+                    <p class="summary">Anthropic refused to support lethal autonomous warfare and mass surveillance.</p>
+                    <div class="meta">
+                        <span>Ars Technica</span>
+                        <span>08-29 02:07</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.technologyreview.com/2026/08/28/1143113/the-download-antiaging-drug-joining-virtual-power-plants/" target="_blank" rel="noopener noreferrer">The Download: a secretive antiaging drug and joining virtual power plants</a></h3>
+                    <p class="summary">This is today’s edition of The Download, our weekday newsletter that provides a daily dose of what’s going on in the world of technology. A startup claims it’s found a drug to make your blood young —Antonio Regalado I knew I’d officially become a “longevity influencer” when a company called Generation Lab offered me the…</p>
+                    <div class="meta">
+                        <span>MIT Technology Review</span>
+                        <span>08-28 20:35</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.technologyreview.com/2026/08/28/1142956/how-to-sign-up-for-a-virtual-power-plant-and-decide-whether-you-should/" target="_blank" rel="noopener noreferrer">How to sign up for a virtual power plant—and decide whether you should</a></h3>
+                    <p class="summary">MIT Technology Review’s How To series helps you get things done. Your thermostat may not look like a power plant. Neither does your electric vehicle, home battery, or HVAC system. But utility and energy companies increasingly want to treat them like one. A virtual power plant, or VPP, is a collection of household devices (such…</p>
+                    <div class="meta">
+                        <span>MIT Technology Review</span>
+                        <span>08-28 17:00</span>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <h3><a href="https://www.technologyreview.com/2026/08/27/1143037/startup-claims-its-found-a-drug-to-make-your-blood-young/" target="_blank" rel="noopener noreferrer">A startup claims it’s found a drug to make your blood young</a></h3>
+                    <p class="summary">I knew I’d officially become a “longevity influencer” this month when a company called Generation Lab reached out to offer me the chance to write about—and even receive—their new rejuvenation treatment, an injectable combination of two existing drugs which they call 1 Generation. This wasn’t just any antiaging treatment, either. A company fact sheet says that…</p>
+                    <div class="meta">
+                        <span>MIT Technology Review</span>
+                        <span>08-28 03:48</span>
+                    </div>
+                </article>
+
+            </section>
+
+
+        <footer>
+            最后生成：2026-08-30 02:29 CST · GitHub Actions 自动更新
+        </footer>
+    </main>
+</body>
+</html>
