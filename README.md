@@ -5,7 +5,7 @@
 ## 当前信息源
 
 - 科技：GitHub Blog、Ars Technica、TechCrunch、MIT Technology Review、The Verge
-- GitHub 热门项目：Visual Studio Code、Ollama、Rust、uv、PyTorch、Kubernetes、Deno、Godot Engine
+- GitHub 热门项目：Visual Studio Code、Ollama、Rust、uv、PowerToys、Kubernetes、Deno、Godot Engine
 - 游戏：PC Gamer、Eurogamer、PlayStation Blog、Xbox Wire
 - 时政热点：德国之声中文、联合国新闻中文、Al Jazeera、The Guardian World、BBC World
 

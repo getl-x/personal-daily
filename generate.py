@@ -547,10 +547,20 @@ def main() -> None:
         }
     )
 
+    configured_sources = {
+        str(source.get("name", ""))
+        for source in feeds
+        if source.get("name")
+    }
+
     existing = {
         item["key"]: item
         for item in history
-        if isinstance(item, dict) and item.get("key")
+        if (
+            isinstance(item, dict)
+            and item.get("key")
+            and item.get("source") in configured_sources
+        )
     }
 
     errors: list[str] = []
