@@ -1424,7 +1424,7 @@ def render_daily_page(
                             <path d="M8.5 9h6M8.5 12h6M8.5 15h3.5M18 9h1a1 1 0 0 1 1 1v6.5a2 2 0 0 1-2 2"/>
                         </svg>
                     </span>
-                    <span>Personal Daily</span>
+                    <span>今日知览</span>
                 </a>
                 <div class="nav-actions">
                     <a class="nav-link" href="{esc(home_link)}" title="今天">
@@ -1447,9 +1447,9 @@ def render_daily_page(
 
             <div class="hero-content">
                 <div>
-                    <span class="eyebrow"><span class="live-dot"></span> Daily intelligence stream</span>
+                    <span class="eyebrow"><span class="live-dot"></span> DAILY BRIEFING</span>
                     <h1><span>{esc(title)}</span></h1>
-                    <p class="subtitle">{esc(subtitle)}。选择一个频道，只看你此刻关心的内容。</p>
+                    <p class="subtitle">{esc(subtitle)}</p>
                     <div class="hero-meta">
                         <span>
                             <svg aria-hidden="true" viewBox="0 0 24 24">
@@ -1881,7 +1881,7 @@ def render_archive_index(
                     <span class="brand-mark" aria-hidden="true">
                         <svg viewBox="0 0 24 24"><path d="M4 17V7l8-4 8 4v10l-8 4-8-4Z"/><path d="m8 9 4 2 4-2M12 11v6"/></svg>
                     </span>
-                    <span>Personal Daily</span>
+                    <span>今日知览</span>
                 </a>
                 <div class="nav-actions">
                     <a class="home-link" href="{esc(home_link)}">返回今天</a>
@@ -1955,7 +1955,7 @@ def generate_edition(
         history_path = legacy_data_path
     history = load_json(history_path, [])
 
-    title = config.get("title", "我的个人信息日报")
+    title = config.get("title", "今日知览")
     subtitle = config.get("subtitle", "每日自动更新")
     timezone_name = config.get("timezone", "Asia/Shanghai")
     lookback_hours = int(config.get("lookback_hours", 48))
