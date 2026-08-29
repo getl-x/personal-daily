@@ -2,6 +2,8 @@
 
 每天北京时间 08:30 自动读取免费 RSS/Atom 信息源，去重、分类并生成适合手机阅读的静态日报，然后部署到 GitHub Pages。
 
+页面使用下拉框切换内容频道，默认只显示“科技”；切换后其他频道会真正隐藏，不需要从头滚到尾。所选频道和明暗主题会保存在浏览器中，桌面端使用双列卡片，手机端自动切换为单列。
+
 ## 当前信息源
 
 - 科技：GitHub Blog、Ars Technica、TechCrunch、MIT Technology Review、The Verge
@@ -18,6 +20,7 @@
 3. 当日最多展示 80 条，每个源最多 5 条。
 4. 历史条目和网页归档保留 180 天。
 5. 生成内容保存在 `site/` 并部署到 GitHub Pages。
+6. 首页可在科技、GitHub 热门项目、游戏、时政热点和全部内容之间快速切换。
 
 也可以在仓库的 **Actions → Personal Daily → Run workflow** 中手动运行。
 

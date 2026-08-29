@@ -165,24 +165,71 @@ def tidy_html(value: str) -> str:
     return "\n".join(line.rstrip() for line in value.splitlines()) + "\n"
 
 
-def category_navigation(items: list[dict[str, Any]]) -> str:
+def ordered_category_names(
+    counts: dict[str, int],
+    category_order: list[str],
+) -> list[str]:
+    ordered = [category for category in category_order if category in counts]
+    ordered.extend(
+        category
+        for category in sorted(counts)
+        if category not in ordered
+    )
+    return ordered
+
+
+def category_selector(
+    items: list[dict[str, Any]],
+    category_order: list[str],
+) -> tuple[str, str]:
     counts: dict[str, int] = defaultdict(int)
 
     for item in items:
         counts[item.get("category", "未分类")] += 1
 
     if not counts:
-        return ""
+        return "", "__all__"
 
-    links = []
-    for category in sorted(counts):
-        anchor = hashlib.md5(category.encode("utf-8")).hexdigest()[:10]
-        links.append(
-            f'<a class="category-pill" href="#{anchor}">'
-            f"{esc(category)} <strong>{counts[category]}</strong></a>"
+    categories = ordered_category_names(counts, category_order)
+    default_category = categories[0]
+    options = []
+
+    for category in categories:
+        selected = " selected" if category == default_category else ""
+        color = CATEGORY_COLORS.get(category, "#64748b")
+        options.append(
+            f'<option value="{esc(category)}" '
+            f'data-count="{counts[category]}" '
+            f'data-color="{esc(color)}"{selected}>'
+            f"{esc(category)} · {counts[category]} 条</option>"
         )
 
-    return f'<nav class="category-nav">{"".join(links)}</nav>'
+    options.append(
+        f'<option value="__all__" data-count="{len(items)}" '
+        f'data-color="#6366f1">全部内容 · {len(items)} 条</option>'
+    )
+
+    selector = f"""
+    <label class="select-control" for="category-select">
+        <span class="select-label">内容类型</span>
+        <span class="select-box">
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+                <path d="M4 6.5h16M7 12h10M10 17.5h4"/>
+            </svg>
+            <select
+                id="category-select"
+                data-default-category="{esc(default_category)}"
+                aria-label="选择要查看的内容类型"
+            >
+                {''.join(options)}
+            </select>
+            <svg class="select-chevron" aria-hidden="true" viewBox="0 0 24 24">
+                <path d="m7 9.5 5 5 5-5"/>
+            </svg>
+        </span>
+    </label>
+    """
+    return selector, default_category
 
 
 def render_daily_page(
@@ -193,6 +240,8 @@ def render_daily_page(
     items: list[dict[str, Any]],
     errors: list[str],
     local_zone: ZoneInfo,
+    category_order: list[str],
+    feed_count: int,
     archive_link: str,
     home_link: str,
     generated_at: str,
@@ -202,11 +251,18 @@ def render_daily_page(
     for item in items:
         grouped[item.get("category", "未分类")].append(item)
 
+    counts = {
+        category: len(category_items)
+        for category, category_items in grouped.items()
+    }
+    categories = ordered_category_names(counts, category_order)
+    selector, default_category = category_selector(items, category_order)
     sections = []
 
-    for category in sorted(grouped):
+    for category in categories:
         anchor = hashlib.md5(category.encode("utf-8")).hexdigest()[:10]
         color = CATEGORY_COLORS.get(category, "#475569")
+        hidden_attribute = "" if category == default_category else " hidden"
         cards = []
 
         for item in sorted(
@@ -231,28 +287,53 @@ def render_daily_page(
                 heading = f"<h3>{item_title}</h3>"
 
             summary_html = f'<p class="summary">{summary}</p>' if summary else ""
+            read_more = (
+                f'<a class="read-more" href="{link}" target="_blank" '
+                f'rel="noopener noreferrer">阅读原文'
+                '<svg aria-hidden="true" viewBox="0 0 24 24">'
+                '<path d="M5 12h14m-5-5 5 5-5 5"/></svg></a>'
+                if link
+                else ""
+            )
 
             cards.append(
                 f"""
                 <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">{source}</span>
+                        <time datetime="{esc(item.get('published', ''))}">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            {esc(local_time)}
+                        </time>
+                    </div>
                     {heading}
                     {summary_html}
-                    <div class="meta">
-                        <span>{source}</span>
-                        <span>{esc(local_time)}</span>
-                    </div>
+                    <div class="card-footer">{read_more}</div>
                 </article>
                 """
             )
 
         sections.append(
             f"""
-            <section id="{anchor}" style="--category-color: {color}">
+            <section
+                class="content-section"
+                id="{anchor}"
+                data-category="{esc(category)}"
+                style="--category-color: {color}"
+                {hidden_attribute}
+            >
                 <div class="section-heading">
-                    <h2>{esc(category)}</h2>
-                    <span>{len(cards)} 条</span>
+                    <div>
+                        <span class="section-kicker">CURRENT CHANNEL</span>
+                        <h2>{esc(category)}</h2>
+                    </div>
+                    <span class="section-count">{len(cards)} 条内容</span>
                 </div>
-                {''.join(cards)}
+                <div class="cards-grid">{''.join(cards)}</div>
             </section>
             """
         )
@@ -277,7 +358,7 @@ def render_daily_page(
         </details>
         """
 
-    nav = category_navigation(items)
+    default_count = counts.get(default_category, len(items))
 
     return f"""<!doctype html>
 <html lang="zh-CN">
@@ -285,207 +366,848 @@ def render_daily_page(
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light dark">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="theme-color" content="#090d18">
     <title>{esc(title)} · {esc(local_date)}</title>
+    <script>
+        try {{
+            const savedTheme = localStorage.getItem("personalDailyTheme");
+            if (savedTheme === "light" || savedTheme === "dark") {{
+                document.documentElement.dataset.theme = savedTheme;
+            }}
+        }} catch (error) {{}}
+    </script>
     <style>
         :root {{
-            color-scheme: light dark;
-            --background: #f4f6fa;
-            --surface: rgba(255, 255, 255, 0.92);
-            --surface-strong: #ffffff;
-            --text: #182033;
-            --muted: #667085;
-            --border: #e1e6ef;
-            --accent: #2563eb;
-            --shadow: 0 10px 30px rgba(31, 41, 55, 0.07);
+            color-scheme: light;
+            --page: #f3f6fc;
+            --page-deep: #e9eef8;
+            --surface: rgba(255, 255, 255, 0.84);
+            --surface-solid: #ffffff;
+            --surface-soft: rgba(248, 250, 255, 0.82);
+            --text: #162033;
+            --text-soft: #344054;
+            --muted: #6b7587;
+            --border: rgba(37, 56, 88, 0.12);
+            --border-strong: rgba(37, 56, 88, 0.20);
+            --accent: #4f46e5;
+            --accent-two: #0ea5e9;
+            --glow: rgba(79, 70, 229, 0.20);
+            --shadow: 0 20px 60px rgba(37, 55, 88, 0.10);
+            --shadow-card: 0 12px 34px rgba(37, 55, 88, 0.08);
+        }}
+
+        :root[data-theme="dark"] {{
+            color-scheme: dark;
+            --page: #070b13;
+            --page-deep: #0b1020;
+            --surface: rgba(17, 24, 39, 0.78);
+            --surface-solid: #111827;
+            --surface-soft: rgba(15, 23, 42, 0.76);
+            --text: #f2f6ff;
+            --text-soft: #d2d9e6;
+            --muted: #929eb2;
+            --border: rgba(148, 163, 184, 0.16);
+            --border-strong: rgba(148, 163, 184, 0.26);
+            --accent: #818cf8;
+            --accent-two: #38bdf8;
+            --glow: rgba(99, 102, 241, 0.24);
+            --shadow: 0 24px 70px rgba(0, 0, 0, 0.30);
+            --shadow-card: 0 16px 42px rgba(0, 0, 0, 0.22);
         }}
 
         @media (prefers-color-scheme: dark) {{
-            :root {{
-                --background: #0b0f17;
-                --surface: rgba(20, 27, 39, 0.92);
-                --surface-strong: #141b27;
-                --text: #edf2f7;
-                --muted: #9ca8ba;
-                --border: #2a3444;
-                --accent: #60a5fa;
-                --shadow: 0 12px 35px rgba(0, 0, 0, 0.22);
+            :root:not([data-theme="light"]) {{
+                color-scheme: dark;
+                --page: #070b13;
+                --page-deep: #0b1020;
+                --surface: rgba(17, 24, 39, 0.78);
+                --surface-solid: #111827;
+                --surface-soft: rgba(15, 23, 42, 0.76);
+                --text: #f2f6ff;
+                --text-soft: #d2d9e6;
+                --muted: #929eb2;
+                --border: rgba(148, 163, 184, 0.16);
+                --border-strong: rgba(148, 163, 184, 0.26);
+                --accent: #818cf8;
+                --accent-two: #38bdf8;
+                --glow: rgba(99, 102, 241, 0.24);
+                --shadow: 0 24px 70px rgba(0, 0, 0, 0.30);
+                --shadow-card: 0 16px 42px rgba(0, 0, 0, 0.22);
             }}
         }}
 
         * {{ box-sizing: border-box; }}
-
         html {{ scroll-behavior: smooth; }}
 
         body {{
+            min-height: 100vh;
             margin: 0;
+            overflow-x: hidden;
             background:
-                radial-gradient(circle at top left, rgba(37, 99, 235, 0.10), transparent 32rem),
-                var(--background);
+                radial-gradient(circle at 8% 0%, rgba(56, 189, 248, 0.12), transparent 29rem),
+                radial-gradient(circle at 92% 10%, var(--glow), transparent 34rem),
+                linear-gradient(155deg, var(--page), var(--page-deep));
             color: var(--text);
             font-family: Inter, ui-sans-serif, system-ui, -apple-system,
-                BlinkMacSystemFont, "Segoe UI", sans-serif;
-            line-height: 1.68;
+                BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+            line-height: 1.66;
         }}
 
+        body::before {{
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background-image:
+                linear-gradient(rgba(125, 141, 168, 0.055) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(125, 141, 168, 0.055) 1px, transparent 1px);
+            background-size: 42px 42px;
+            mask-image: linear-gradient(to bottom, black, transparent 82%);
+            content: "";
+        }}
+
+        a {{ color: inherit; text-decoration: none; }}
+        button, select {{ font: inherit; }}
+        svg {{
+            width: 1.1em;
+            height: 1.1em;
+            fill: none;
+            stroke: currentColor;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-width: 1.8;
+        }}
+
+        .skip-link {{
+            position: fixed;
+            top: 8px;
+            left: 8px;
+            z-index: 100;
+            padding: 9px 14px;
+            border-radius: 10px;
+            background: var(--surface-solid);
+            color: var(--text);
+            transform: translateY(-150%);
+        }}
+
+        .skip-link:focus {{ transform: translateY(0); }}
+
         main {{
-            width: min(920px, calc(100% - 28px));
+            width: min(1160px, calc(100% - 32px));
             margin: 0 auto;
-            padding: 54px 0 80px;
+            padding: 28px 0 80px;
         }}
 
         .hero {{
-            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            padding: 26px 30px 32px;
             border: 1px solid var(--border);
-            border-radius: 24px;
-            background: var(--surface);
+            border-radius: 30px;
+            background:
+                linear-gradient(135deg, rgba(99, 102, 241, 0.11), transparent 48%),
+                var(--surface);
             box-shadow: var(--shadow);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(22px);
+        }}
+
+        .hero::after {{
+            position: absolute;
+            top: -90px;
+            right: -70px;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.20), transparent 68%);
+            content: "";
+            pointer-events: none;
+        }}
+
+        .site-nav,
+        .hero-content {{ position: relative; z-index: 1; }}
+
+        .site-nav {{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            padding-bottom: 27px;
+            border-bottom: 1px solid var(--border);
+        }}
+
+        .brand {{
+            display: inline-flex;
+            align-items: center;
+            gap: 11px;
+            font-weight: 760;
+            letter-spacing: -0.02em;
+        }}
+
+        .brand-mark {{
+            display: grid;
+            width: 38px;
+            height: 38px;
+            place-items: center;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #6366f1, #0ea5e9);
+            color: #fff;
+            box-shadow: 0 10px 24px rgba(79, 70, 229, 0.28);
+        }}
+
+        .brand-mark svg {{ width: 21px; height: 21px; }}
+
+        .nav-actions {{ display: flex; align-items: center; gap: 8px; }}
+
+        .nav-link,
+        .theme-toggle {{
+            display: inline-flex;
+            min-height: 38px;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 7px 11px;
+            border: 1px solid transparent;
+            border-radius: 11px;
+            color: var(--muted);
+            background: transparent;
+            cursor: pointer;
+            transition: 160ms ease;
+        }}
+
+        .nav-link:hover,
+        .theme-toggle:hover {{
+            border-color: var(--border);
+            background: var(--surface-soft);
+            color: var(--text);
+            text-decoration: none;
+        }}
+
+        .theme-toggle {{ width: 40px; padding: 0; }}
+        .theme-toggle span {{ font-size: 18px; line-height: 1; }}
+
+        .hero-content {{
+            display: grid;
+            grid-template-columns: minmax(0, 1.45fr) minmax(300px, 0.65fr);
+            align-items: end;
+            gap: 42px;
+            padding-top: 38px;
+        }}
+
+        .eyebrow {{
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 14px;
+            color: var(--accent-two);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }}
+
+        .live-dot {{
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: #22c55e;
+            box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.13);
         }}
 
         h1 {{
+            max-width: 760px;
             margin: 0;
-            font-size: clamp(30px, 6vw, 48px);
-            letter-spacing: -0.04em;
-            line-height: 1.12;
+            font-size: clamp(38px, 6vw, 70px);
+            font-weight: 850;
+            letter-spacing: -0.065em;
+            line-height: 1.02;
+        }}
+
+        h1 span {{
+            background: linear-gradient(110deg, var(--text) 8%, var(--accent) 58%, var(--accent-two));
+            background-clip: text;
+            color: transparent;
         }}
 
         .subtitle {{
-            margin: 10px 0 0;
-            color: var(--muted);
-            font-size: 16px;
+            max-width: 670px;
+            margin: 18px 0 0;
+            color: var(--text-soft);
+            font-size: clamp(16px, 2vw, 19px);
         }}
 
-        .date-row {{
+        .hero-meta {{
             display: flex;
             flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            margin-top: 24px;
+            gap: 10px 20px;
+            margin-top: 25px;
             color: var(--muted);
-            font-size: 14px;
+            font-size: 13px;
         }}
 
-        .top-links {{ display: flex; gap: 16px; }}
+        .hero-meta span {{ display: inline-flex; align-items: center; gap: 7px; }}
 
-        a {{ color: var(--accent); text-decoration: none; }}
-        a:hover {{ text-decoration: underline; }}
-
-        .category-nav {{
-            display: flex;
-            flex-wrap: wrap;
+        .stats {{
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 10px;
-            margin: 22px 0 2px;
         }}
 
-        .category-pill {{
-            padding: 7px 12px;
+        .stat {{
+            min-width: 0;
+            padding: 18px 14px;
             border: 1px solid var(--border);
-            border-radius: 999px;
-            background: var(--surface-strong);
-            color: var(--text);
-            font-size: 14px;
+            border-radius: 17px;
+            background: var(--surface-soft);
+            text-align: center;
         }}
 
-        .category-pill strong {{ color: var(--muted); margin-left: 4px; }}
+        .stat strong {{
+            display: block;
+            color: var(--text);
+            font-size: clamp(22px, 3vw, 31px);
+            line-height: 1;
+        }}
 
-        section {{ scroll-margin-top: 20px; margin-top: 42px; }}
+        .stat span {{
+            display: block;
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 11px;
+            white-space: nowrap;
+        }}
+
+        .filter-panel {{
+            --active-color: {esc(CATEGORY_COLORS.get(default_category, '#6366f1'))};
+            position: sticky;
+            top: 12px;
+            z-index: 20;
+            display: grid;
+            grid-template-columns: minmax(190px, 0.9fr) minmax(280px, 1.15fr) auto;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+            padding: 17px 20px;
+            border: 1px solid var(--border-strong);
+            border-radius: 20px;
+            background: color-mix(in srgb, var(--surface-solid) 82%, transparent);
+            box-shadow: var(--shadow-card);
+            backdrop-filter: blur(22px);
+        }}
+
+        .filter-title {{
+            display: block;
+            font-size: 16px;
+            font-weight: 780;
+            letter-spacing: -0.02em;
+        }}
+
+        .filter-hint {{ display: block; color: var(--muted); font-size: 12px; }}
+
+        .select-control {{ display: block; min-width: 0; }}
+        .select-label {{ position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); }}
+
+        .select-box {{
+            position: relative;
+            display: flex;
+            align-items: center;
+        }}
+
+        .select-box > svg:first-child {{
+            position: absolute;
+            left: 15px;
+            z-index: 1;
+            color: var(--active-color);
+            pointer-events: none;
+        }}
+
+        .select-box select {{
+            width: 100%;
+            min-height: 48px;
+            appearance: none;
+            padding: 10px 46px 10px 45px;
+            border: 1px solid color-mix(in srgb, var(--active-color) 42%, var(--border));
+            border-radius: 14px;
+            outline: none;
+            background: color-mix(in srgb, var(--active-color) 7%, var(--surface-solid));
+            color: var(--text);
+            font-weight: 720;
+            cursor: pointer;
+            transition: 160ms ease;
+        }}
+
+        .select-box select:focus {{
+            border-color: var(--active-color);
+            box-shadow: 0 0 0 4px color-mix(in srgb, var(--active-color) 15%, transparent);
+        }}
+
+        .select-chevron {{
+            position: absolute;
+            right: 14px;
+            color: var(--muted);
+            pointer-events: none;
+        }}
+
+        .current-view {{
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            color: var(--muted);
+            font-size: 12px;
+            white-space: nowrap;
+        }}
+
+        .current-view-dot {{
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--active-color);
+            box-shadow: 0 0 0 5px color-mix(in srgb, var(--active-color) 13%, transparent);
+        }}
+
+        .current-view strong {{ color: var(--text); font-size: 14px; }}
+        .errors {{ margin-top: 20px; }}
+
+        .errors,
+        .empty,
+        .noscript-message {{
+            padding: 18px 20px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: var(--surface);
+        }}
+
+        .errors summary {{ cursor: pointer; font-weight: 720; }}
+        .errors li {{ margin: 6px 0; overflow-wrap: anywhere; }}
+
+        .content-section {{
+            margin-top: 34px;
+            scroll-margin-top: 104px;
+        }}
+
+        .content-section[hidden] {{ display: none !important; }}
 
         .section-heading {{
             display: flex;
-            align-items: baseline;
+            align-items: end;
             justify-content: space-between;
-            gap: 18px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--category-color);
+            gap: 20px;
+            margin-bottom: 17px;
         }}
 
-        .section-heading h2 {{ margin: 0; font-size: 23px; }}
-        .section-heading span {{ color: var(--muted); font-size: 13px; }}
+        .section-kicker {{
+            color: var(--category-color);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+        }}
+
+        .section-heading h2 {{
+            margin: 3px 0 0;
+            font-size: clamp(25px, 3vw, 34px);
+            letter-spacing: -0.04em;
+        }}
+
+        .section-count {{ color: var(--muted); font-size: 13px; }}
+
+        .cards-grid {{
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 15px;
+        }}
 
         .card {{
-            margin: 14px 0;
-            padding: 21px 22px;
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            background: var(--surface);
-            box-shadow: var(--shadow);
-        }}
-
-        .card h3 {{ margin: 0; font-size: 18px; line-height: 1.5; }}
-        .summary {{ margin: 10px 0; color: var(--text); }}
-
-        .meta {{
+            position: relative;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 8px 18px;
-            margin-top: 12px;
-            color: var(--muted);
-            font-size: 13px;
-        }}
-
-        .empty, .errors {{
-            margin-top: 24px;
-            padding: 20px;
+            min-width: 0;
+            min-height: 252px;
+            flex-direction: column;
+            overflow: hidden;
+            padding: 21px 22px 18px;
             border: 1px solid var(--border);
-            border-radius: 16px;
-            background: var(--surface);
+            border-radius: 20px;
+            background:
+                linear-gradient(145deg, color-mix(in srgb, var(--category-color) 5%, transparent), transparent 42%),
+                var(--surface);
+            box-shadow: var(--shadow-card);
+            transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
         }}
 
+        .card:hover {{
+            border-color: color-mix(in srgb, var(--category-color) 38%, var(--border));
+            box-shadow: 0 20px 46px color-mix(in srgb, var(--category-color) 11%, transparent);
+            transform: translateY(-3px);
+        }}
+
+        .card-accent {{
+            position: absolute;
+            top: 0;
+            right: 22px;
+            left: 22px;
+            height: 2px;
+            border-radius: 0 0 99px 99px;
+            background: linear-gradient(90deg, transparent, var(--category-color), transparent);
+            opacity: 0.75;
+        }}
+
+        .card-meta-top {{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 14px;
+        }}
+
+        .source-badge {{
+            max-width: 68%;
+            overflow: hidden;
+            padding: 5px 9px;
+            border: 1px solid color-mix(in srgb, var(--category-color) 24%, var(--border));
+            border-radius: 999px;
+            background: color-mix(in srgb, var(--category-color) 8%, var(--surface-solid));
+            color: var(--category-color);
+            font-size: 11px;
+            font-weight: 780;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }}
+
+        .card time {{
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--muted);
+            font-size: 11px;
+            white-space: nowrap;
+        }}
+
+        .card h3 {{
+            margin: 0;
+            font-size: clamp(17px, 2vw, 20px);
+            letter-spacing: -0.02em;
+            line-height: 1.42;
+        }}
+
+        .card h3 a {{
+            color: var(--text);
+            transition: color 150ms ease;
+        }}
+
+        .card h3 a:hover {{ color: var(--category-color); text-decoration: none; }}
+
+        .summary {{
+            display: -webkit-box;
+            margin: 11px 0 0;
+            overflow: hidden;
+            color: var(--text-soft);
+            font-size: 14px;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 4;
+        }}
+
+        .card-footer {{
+            display: flex;
+            align-items: end;
+            justify-content: flex-end;
+            min-height: 28px;
+            margin-top: auto;
+            padding-top: 15px;
+        }}
+
+        .read-more {{
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            color: var(--category-color);
+            font-size: 12px;
+            font-weight: 760;
+        }}
+
+        .read-more svg {{ transition: transform 150ms ease; }}
+        .read-more:hover {{ text-decoration: none; }}
+        .read-more:hover svg {{ transform: translateX(3px); }}
+
+        .empty {{ margin-top: 24px; }}
         .empty p {{ margin-bottom: 0; color: var(--muted); }}
-        .errors summary {{ cursor: pointer; }}
-        .errors li {{ margin: 6px 0; overflow-wrap: anywhere; }}
 
         footer {{
-            margin-top: 52px;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 50px;
+            padding: 24px 4px 0;
+            border-top: 1px solid var(--border);
             color: var(--muted);
-            font-size: 13px;
+            font-size: 12px;
         }}
 
-        @media (max-width: 600px) {{
-            main {{ width: min(100% - 20px, 920px); padding-top: 18px; }}
-            .hero {{ padding: 22px 18px; border-radius: 18px; }}
-            .card {{ padding: 18px; }}
-            .summary {{ font-size: 15px; }}
+        .footer-badge {{
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+        }}
+
+        @media (max-width: 860px) {{
+            .hero-content {{ grid-template-columns: 1fr; gap: 28px; }}
+            .stats {{ max-width: 480px; }}
+            .filter-panel {{ grid-template-columns: 1fr minmax(260px, 1.3fr); }}
+            .current-view {{ display: none; }}
+        }}
+
+        @media (max-width: 720px) {{
+            main {{ width: min(100% - 20px, 1160px); padding-top: 10px; }}
+            .hero {{ padding: 18px 18px 24px; border-radius: 22px; }}
+            .site-nav {{ padding-bottom: 18px; }}
+            .brand > span:last-child {{ display: none; }}
+            .nav-link span {{ display: none; }}
+            .nav-link {{ width: 40px; padding: 0; }}
+            .hero-content {{ padding-top: 26px; }}
+            h1 {{ font-size: clamp(39px, 13vw, 58px); }}
+            .filter-panel {{
+                top: 8px;
+                grid-template-columns: 1fr;
+                gap: 11px;
+                padding: 13px;
+                border-radius: 17px;
+            }}
+            .filter-copy {{ display: none; }}
+            .cards-grid {{ grid-template-columns: 1fr; }}
+            .card {{ min-height: 0; }}
+            .section-heading {{ align-items: center; }}
+            footer {{ align-items: flex-start; flex-direction: column; gap: 7px; }}
+        }}
+
+        @media (max-width: 430px) {{
+            .hero-meta {{ display: grid; gap: 7px; }}
+            .stats {{ gap: 7px; }}
+            .stat {{ padding: 14px 8px; }}
+            .stat span {{ font-size: 10px; }}
+            .card {{ padding: 19px 17px 16px; border-radius: 17px; }}
+            .card-meta-top {{ align-items: flex-start; flex-direction: column; gap: 8px; }}
+            .source-badge {{ max-width: 100%; }}
+        }}
+
+        @media (prefers-reduced-motion: reduce) {{
+            *, *::before, *::after {{ scroll-behavior: auto !important; transition: none !important; }}
         }}
     </style>
 </head>
 <body>
-    <main>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <main id="main-content">
         <header class="hero">
-            <h1>{esc(title)}</h1>
-            <p class="subtitle">{esc(subtitle)}</p>
-            <div class="date-row">
-                <span>{esc(local_date)} · 共 {len(items)} 条</span>
-                <nav class="top-links">
-                    <a href="{esc(home_link)}">今天</a>
-                    <a href="{esc(archive_link)}">历史归档</a>
-                </nav>
+            <nav class="site-nav" aria-label="主要导航">
+                <a class="brand" href="{esc(home_link)}">
+                    <span class="brand-mark" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M5 5.5h10.5A2.5 2.5 0 0 1 18 8v10.5H7.5A2.5 2.5 0 0 1 5 16V5.5Z"/>
+                            <path d="M8.5 9h6M8.5 12h6M8.5 15h3.5M18 9h1a1 1 0 0 1 1 1v6.5a2 2 0 0 1-2 2"/>
+                        </svg>
+                    </span>
+                    <span>Personal Daily</span>
+                </a>
+                <div class="nav-actions">
+                    <a class="nav-link" href="{esc(home_link)}" title="今天">
+                        <svg aria-hidden="true" viewBox="0 0 24 24">
+                            <path d="M5 5h14v14H5zM8 3v4M16 3v4M5 9h14"/>
+                        </svg>
+                        <span>今天</span>
+                    </a>
+                    <a class="nav-link" href="{esc(archive_link)}" title="历史归档">
+                        <svg aria-hidden="true" viewBox="0 0 24 24">
+                            <path d="M4 7h16M6 4h12l1 3v13H5V7l1-3ZM9 11h6"/>
+                        </svg>
+                        <span>归档</span>
+                    </a>
+                    <button class="theme-toggle" id="theme-toggle" type="button" title="切换明暗主题" aria-label="切换明暗主题">
+                        <span id="theme-icon" aria-hidden="true">☾</span>
+                    </button>
+                </div>
+            </nav>
+
+            <div class="hero-content">
+                <div>
+                    <span class="eyebrow"><span class="live-dot"></span> Daily intelligence stream</span>
+                    <h1><span>{esc(title)}</span></h1>
+                    <p class="subtitle">{esc(subtitle)}。选择一个频道，只看你此刻关心的内容。</p>
+                    <div class="hero-meta">
+                        <span>
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <path d="M5 5h14v14H5zM8 3v4M16 3v4M5 9h14"/>
+                            </svg>
+                            {esc(local_date)}
+                        </span>
+                        <span>
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <path d="M12 3v3M12 18v3M4.2 7.5l2.6 1.5M17.2 15l2.6 1.5M4.2 16.5 6.8 15M17.2 9l2.6-1.5"/>
+                                <circle cx="12" cy="12" r="4"/>
+                            </svg>
+                            每日 08:30 自动更新
+                        </span>
+                    </div>
+                </div>
+                <div class="stats" aria-label="日报统计">
+                    <div class="stat"><strong>{len(items)}</strong><span>今日收录</span></div>
+                    <div class="stat"><strong>{feed_count}</strong><span>免费信息源</span></div>
+                    <div class="stat"><strong>{len(categories)}</strong><span>内容频道</span></div>
+                </div>
             </div>
-            {nav}
         </header>
 
         {error_html}
+
+        <div class="filter-panel" id="filter-panel">
+            <div class="filter-copy">
+                <span class="filter-title">你想看什么？</span>
+                <span class="filter-hint">切换后只显示所选频道</span>
+            </div>
+            {selector}
+            <div class="current-view" aria-live="polite">
+                <span class="current-view-dot" aria-hidden="true"></span>
+                <span id="active-category-name">{esc(default_category)}</span>
+                <strong id="active-category-count">{default_count} 条</strong>
+            </div>
+        </div>
+
+        <noscript>
+            <style>.content-section[hidden] {{ display: block !important; }}</style>
+            <p class="noscript-message">启用 JavaScript 后可以使用分类下拉筛选；当前仍会显示全部内容。</p>
+        </noscript>
+
         {''.join(sections)}
 
         <footer>
-            最后生成：{esc(generated_at)} · GitHub Actions 自动更新
+            <span>最后生成：{esc(generated_at)}</span>
+            <span class="footer-badge"><span class="live-dot"></span> GitHub Actions 自动更新</span>
         </footer>
     </main>
+
+    <script>
+        (() => {{
+            const root = document.documentElement;
+            const selector = document.getElementById("category-select");
+            const sections = Array.from(document.querySelectorAll(".content-section"));
+            const filterPanel = document.getElementById("filter-panel");
+            const activeName = document.getElementById("active-category-name");
+            const activeCount = document.getElementById("active-category-count");
+            const themeToggle = document.getElementById("theme-toggle");
+            const themeIcon = document.getElementById("theme-icon");
+
+            const values = new Set(Array.from(selector.options, option => option.value));
+            const url = new URL(window.location.href);
+            const requested = url.searchParams.get("category");
+            let savedCategory = null;
+
+            try {{
+                savedCategory = localStorage.getItem("personalDailyCategory");
+            }} catch (error) {{}}
+
+            const initialCategory = values.has(requested)
+                ? requested
+                : values.has(savedCategory)
+                    ? savedCategory
+                    : selector.dataset.defaultCategory;
+
+            function applyCategory(value, updateHistory = false, shouldScroll = false) {{
+                const selectedOption = Array.from(selector.options).find(
+                    option => option.value === value
+                );
+                const showAll = value === "__all__";
+
+                sections.forEach(section => {{
+                    section.hidden = !showAll && section.dataset.category !== value;
+                }});
+
+                selector.value = value;
+                activeName.textContent = showAll ? "全部内容" : value;
+                activeCount.textContent = (selectedOption?.dataset.count || "0") + " 条";
+                filterPanel.style.setProperty(
+                    "--active-color",
+                    selectedOption?.dataset.color || "#6366f1"
+                );
+
+                try {{
+                    localStorage.setItem("personalDailyCategory", value);
+                }} catch (error) {{}}
+
+                if (updateHistory) {{
+                    if (value === selector.dataset.defaultCategory) {{
+                        url.searchParams.delete("category");
+                    }} else {{
+                        url.searchParams.set("category", value);
+                    }}
+                    history.replaceState(null, "", url);
+                }}
+
+                if (shouldScroll) {{
+                    const top = filterPanel.getBoundingClientRect().top + window.scrollY - 10;
+                    window.scrollTo({{ top, behavior: "smooth" }});
+                }}
+            }}
+
+            selector.addEventListener("change", () => {{
+                applyCategory(selector.value, true, true);
+            }});
+
+            function isDarkTheme() {{
+                if (root.dataset.theme) return root.dataset.theme === "dark";
+                return window.matchMedia("(prefers-color-scheme: dark)").matches;
+            }}
+
+            function refreshThemeIcon() {{
+                const dark = isDarkTheme();
+                themeIcon.textContent = dark ? "☀" : "☾";
+                themeToggle.title = dark ? "切换到浅色主题" : "切换到深色主题";
+                themeToggle.setAttribute("aria-label", themeToggle.title);
+            }}
+
+            themeToggle.addEventListener("click", () => {{
+                const nextTheme = isDarkTheme() ? "light" : "dark";
+                root.dataset.theme = nextTheme;
+                try {{
+                    localStorage.setItem("personalDailyTheme", nextTheme);
+                }} catch (error) {{}}
+                refreshThemeIcon();
+            }});
+
+            applyCategory(initialCategory);
+            refreshThemeIcon();
+        }})();
+    </script>
 </body>
 </html>
 """
 
 
 def render_archive_index(title: str, dates: list[str]) -> str:
-    links = "\n".join(
-        f'<li><a href="{esc(value)}.html">{esc(value)}</a></li>'
+    cards = "\n".join(
+        f"""
+        <a class="archive-card" href="{esc(value)}.html">
+            <span class="archive-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                    <path d="M5 5h14v14H5zM8 3v4M16 3v4M5 9h14"/>
+                </svg>
+            </span>
+            <span>
+                <strong>{esc(value)}</strong>
+                <small>查看当日完整信息流</small>
+            </span>
+            <svg class="arrow" aria-hidden="true" viewBox="0 0 24 24">
+                <path d="M5 12h14m-5-5 5 5-5 5"/>
+            </svg>
+        </a>
+        """
         for value in dates
     )
-    if not links:
-        links = "<li>暂时没有归档</li>"
+    if not cards:
+        cards = """
+        <div class="empty">
+            <strong>暂时还没有历史归档</strong>
+            <p>日报首次运行后，日期会自动出现在这里。</p>
+        </div>
+        """
 
     return f"""<!doctype html>
 <html lang="zh-CN">
@@ -493,24 +1215,278 @@ def render_archive_index(title: str, dates: list[str]) -> str:
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light dark">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta name="theme-color" content="#090d18">
     <title>历史归档 · {esc(title)}</title>
+    <script>
+        try {{
+            const savedTheme = localStorage.getItem("personalDailyTheme");
+            if (savedTheme === "light" || savedTheme === "dark") {{
+                document.documentElement.dataset.theme = savedTheme;
+            }}
+        }} catch (error) {{}}
+    </script>
     <style>
-        :root {{ color-scheme: light dark; }}
-        body {{
-            width: min(720px, calc(100% - 32px));
-            margin: 48px auto;
-            font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-            line-height: 1.8;
+        :root {{
+            color-scheme: light;
+            --page: #f3f6fc;
+            --surface: rgba(255, 255, 255, 0.84);
+            --surface-solid: #ffffff;
+            --text: #162033;
+            --muted: #667085;
+            --border: rgba(100, 116, 139, 0.2);
+            --shadow: 0 24px 80px rgba(39, 51, 89, 0.12);
+            --accent: #6366f1;
+            --accent-2: #06b6d4;
         }}
-        a {{ color: #3b82f6; text-decoration: none; }}
-        a:hover {{ text-decoration: underline; }}
-        li {{ margin: 8px 0; }}
+        :root[data-theme="dark"] {{
+            color-scheme: dark;
+            --page: #090d18;
+            --surface: rgba(18, 25, 41, 0.84);
+            --surface-solid: #121929;
+            --text: #f2f5fb;
+            --muted: #98a6bd;
+            --border: rgba(148, 163, 184, 0.18);
+            --shadow: 0 28px 90px rgba(0, 0, 0, 0.36);
+        }}
+        @media (prefers-color-scheme: dark) {{
+            :root:not([data-theme="light"]) {{
+                color-scheme: dark;
+                --page: #090d18;
+                --surface: rgba(18, 25, 41, 0.84);
+                --surface-solid: #121929;
+                --text: #f2f5fb;
+                --muted: #98a6bd;
+                --border: rgba(148, 163, 184, 0.18);
+                --shadow: 0 28px 90px rgba(0, 0, 0, 0.36);
+            }}
+        }}
+        * {{ box-sizing: border-box; }}
+        html {{ min-height: 100%; }}
+        body {{
+            min-height: 100vh;
+            margin: 0;
+            font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 12% 4%, rgba(99, 102, 241, 0.18), transparent 30rem),
+                radial-gradient(circle at 88% 18%, rgba(6, 182, 212, 0.13), transparent 26rem),
+                var(--page);
+            line-height: 1.5;
+        }}
+        body::before {{
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            content: "";
+            opacity: 0.25;
+            background-image:
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 38px 38px;
+            mask-image: linear-gradient(to bottom, black, transparent 72%);
+        }}
+        a {{ color: inherit; text-decoration: none; }}
+        svg {{
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }}
+        main {{
+            width: min(900px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 28px 0 64px;
+        }}
+        .hero {{
+            position: relative;
+            overflow: hidden;
+            padding: 26px clamp(22px, 5vw, 48px) clamp(30px, 6vw, 58px);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            background: var(--surface);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(22px);
+        }}
+        .hero::after {{
+            position: absolute;
+            top: -110px;
+            right: -90px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            content: "";
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.32), rgba(6, 182, 212, 0.08));
+            filter: blur(5px);
+        }}
+        nav {{
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }}
+        .brand {{ display: flex; align-items: center; gap: 11px; font-weight: 800; }}
+        .brand-mark,
+        .archive-icon {{
+            display: grid;
+            flex: 0 0 auto;
+            place-items: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            color: white;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            box-shadow: 0 12px 28px rgba(99, 102, 241, 0.24);
+        }}
+        .nav-actions {{ display: flex; align-items: center; gap: 8px; }}
+        .home-link,
+        .theme-toggle {{
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 42px;
+            padding: 0 15px;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            color: var(--muted);
+            background: var(--surface-solid);
+            cursor: pointer;
+        }}
+        .home-link:hover,
+        .theme-toggle:hover {{ color: var(--text); border-color: rgba(99, 102, 241, 0.45); }}
+        .theme-toggle {{ width: 42px; padding: 0; font-size: 18px; }}
+        .hero-copy {{ position: relative; z-index: 1; margin-top: 74px; }}
+        .eyebrow {{
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }}
+        .eyebrow::before {{
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            content: "";
+            background: #22c55e;
+            box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.12);
+        }}
+        h1 {{ margin: 14px 0 10px; font-size: clamp(35px, 7vw, 62px); letter-spacing: -0.055em; line-height: 1; }}
+        .lead {{ margin: 0; color: var(--muted); font-size: clamp(15px, 2vw, 18px); }}
+        .archive-heading {{
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 18px;
+            margin: 42px 4px 18px;
+        }}
+        .archive-heading h2 {{ margin: 0; font-size: 22px; letter-spacing: -0.025em; }}
+        .archive-heading span {{ color: var(--muted); font-size: 13px; }}
+        .archive-grid {{ display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }}
+        .archive-card {{
+            display: grid;
+            grid-template-columns: auto minmax(0, 1fr) auto;
+            align-items: center;
+            gap: 15px;
+            min-width: 0;
+            padding: 18px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background: var(--surface);
+            box-shadow: 0 12px 38px rgba(39, 51, 89, 0.07);
+            backdrop-filter: blur(16px);
+            transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+        }}
+        .archive-card:hover {{
+            transform: translateY(-3px);
+            border-color: rgba(99, 102, 241, 0.42);
+            box-shadow: 0 18px 44px rgba(39, 51, 89, 0.13);
+        }}
+        .archive-icon {{ width: 44px; height: 44px; border-radius: 14px; }}
+        .archive-icon svg {{ width: 19px; height: 19px; }}
+        .archive-card strong {{ display: block; font-size: 16px; letter-spacing: -0.01em; }}
+        .archive-card small {{ display: block; margin-top: 3px; color: var(--muted); font-size: 12px; }}
+        .archive-card .arrow {{ color: var(--muted); transition: transform 160ms ease; }}
+        .archive-card:hover .arrow {{ color: var(--accent); transform: translateX(3px); }}
+        .empty {{
+            grid-column: 1 / -1;
+            padding: 28px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background: var(--surface);
+        }}
+        .empty p {{ margin: 6px 0 0; color: var(--muted); }}
+        footer {{ margin-top: 32px; color: var(--muted); text-align: center; font-size: 12px; }}
+        @media (max-width: 650px) {{
+            main {{ width: min(100% - 20px, 900px); padding-top: 10px; }}
+            .hero {{ padding: 18px 18px 34px; border-radius: 23px; }}
+            .brand span:last-child {{ display: none; }}
+            .home-link {{ padding: 0 12px; }}
+            .hero-copy {{ margin-top: 52px; }}
+            .archive-grid {{ grid-template-columns: 1fr; }}
+            .archive-heading {{ margin-top: 32px; }}
+        }}
+        @media (prefers-reduced-motion: reduce) {{
+            *, *::before, *::after {{ scroll-behavior: auto !important; transition: none !important; }}
+        }}
     </style>
 </head>
 <body>
-    <p><a href="../index.html">← 返回今天</a></p>
-    <h1>历史归档</h1>
-    <ul>{links}</ul>
+    <main>
+        <header class="hero">
+            <nav>
+                <a class="brand" href="../index.html">
+                    <span class="brand-mark" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M4 17V7l8-4 8 4v10l-8 4-8-4Z"/><path d="m8 9 4 2 4-2M12 11v6"/></svg>
+                    </span>
+                    <span>Personal Daily</span>
+                </a>
+                <div class="nav-actions">
+                    <a class="home-link" href="../index.html">返回今天</a>
+                    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换主题"><span id="theme-icon">☾</span></button>
+                </div>
+            </nav>
+            <div class="hero-copy">
+                <span class="eyebrow">Timeline library</span>
+                <h1>历史归档</h1>
+                <p class="lead">回到某一天，继续浏览当时收录的科技、开源、游戏与全球时政。</p>
+            </div>
+        </header>
+        <div class="archive-heading">
+            <h2>所有日报</h2>
+            <span>{len(dates)} 个归档日期</span>
+        </div>
+        <div class="archive-grid">{cards}</div>
+        <footer>{esc(title)} · 由 GitHub Actions 自动维护</footer>
+    </main>
+    <script>
+        (() => {{
+            const root = document.documentElement;
+            const toggle = document.getElementById("theme-toggle");
+            const icon = document.getElementById("theme-icon");
+            const isDark = () => root.dataset.theme
+                ? root.dataset.theme === "dark"
+                : window.matchMedia("(prefers-color-scheme: dark)").matches;
+            const refresh = () => {{
+                icon.textContent = isDark() ? "☀" : "☾";
+                toggle.title = isDark() ? "切换到浅色主题" : "切换到深色主题";
+            }};
+            toggle.addEventListener("click", () => {{
+                root.dataset.theme = isDark() ? "light" : "dark";
+                try {{ localStorage.setItem("personalDailyTheme", root.dataset.theme); }} catch (error) {{}}
+                refresh();
+            }});
+            refresh();
+        }})();
+    </script>
 </body>
 </html>
 """
@@ -528,6 +1504,12 @@ def main() -> None:
     max_items_per_feed = int(config.get("max_items_per_feed", 5))
     max_daily_items = int(config.get("max_daily_items", 80))
     feeds = config.get("feeds", [])
+    category_order = list(
+        dict.fromkeys(
+            source.get("category", "未分类")
+            for source in feeds
+        )
+    )
 
     local_zone = ZoneInfo(timezone_name)
     now_utc = datetime.now(timezone.utc)
@@ -628,6 +1610,8 @@ def main() -> None:
         items=today_items,
         errors=errors,
         local_zone=local_zone,
+        category_order=category_order,
+        feed_count=len(feeds),
         archive_link="archive/index.html",
         home_link="index.html",
         generated_at=generated_at,
@@ -640,6 +1624,8 @@ def main() -> None:
         items=today_items,
         errors=errors,
         local_zone=local_zone,
+        category_order=category_order,
+        feed_count=len(feeds),
         archive_link="index.html",
         home_link="../index.html",
         generated_at=generated_at,
