@@ -1,0 +1,2544 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="theme-color" content="#090d18">
+    <meta name="robots" content="noindex,nofollow">
+    <title>今日知览 · 2026-10-29</title>
+    <script>
+        try {
+            const savedTheme = localStorage.getItem("personalDailyTheme");
+            if (savedTheme === "light" || savedTheme === "dark") {
+                document.documentElement.dataset.theme = savedTheme;
+            }
+        } catch (error) {}
+    </script>
+    <style>
+        :root {
+            color-scheme: light;
+            --page: #f3f6fc;
+            --page-deep: #e9eef8;
+            --surface: rgba(255, 255, 255, 0.84);
+            --surface-solid: #ffffff;
+            --surface-soft: rgba(248, 250, 255, 0.82);
+            --text: #162033;
+            --text-soft: #344054;
+            --muted: #6b7587;
+            --border: rgba(37, 56, 88, 0.12);
+            --border-strong: rgba(37, 56, 88, 0.20);
+            --accent: #4f46e5;
+            --accent-two: #0ea5e9;
+            --glow: rgba(79, 70, 229, 0.20);
+            --shadow: 0 20px 60px rgba(37, 55, 88, 0.10);
+            --shadow-card: 0 12px 34px rgba(37, 55, 88, 0.08);
+        }
+
+        :root[data-theme="dark"] {
+            color-scheme: dark;
+            --page: #070b13;
+            --page-deep: #0b1020;
+            --surface: rgba(17, 24, 39, 0.78);
+            --surface-solid: #111827;
+            --surface-soft: rgba(15, 23, 42, 0.76);
+            --text: #f2f6ff;
+            --text-soft: #d2d9e6;
+            --muted: #929eb2;
+            --border: rgba(148, 163, 184, 0.16);
+            --border-strong: rgba(148, 163, 184, 0.26);
+            --accent: #818cf8;
+            --accent-two: #38bdf8;
+            --glow: rgba(99, 102, 241, 0.24);
+            --shadow: 0 24px 70px rgba(0, 0, 0, 0.30);
+            --shadow-card: 0 16px 42px rgba(0, 0, 0, 0.22);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                color-scheme: dark;
+                --page: #070b13;
+                --page-deep: #0b1020;
+                --surface: rgba(17, 24, 39, 0.78);
+                --surface-solid: #111827;
+                --surface-soft: rgba(15, 23, 42, 0.76);
+                --text: #f2f6ff;
+                --text-soft: #d2d9e6;
+                --muted: #929eb2;
+                --border: rgba(148, 163, 184, 0.16);
+                --border-strong: rgba(148, 163, 184, 0.26);
+                --accent: #818cf8;
+                --accent-two: #38bdf8;
+                --glow: rgba(99, 102, 241, 0.24);
+                --shadow: 0 24px 70px rgba(0, 0, 0, 0.30);
+                --shadow-card: 0 16px 42px rgba(0, 0, 0, 0.22);
+            }
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+            background:
+                radial-gradient(circle at 8% 0%, rgba(56, 189, 248, 0.12), transparent 29rem),
+                radial-gradient(circle at 92% 10%, var(--glow), transparent 34rem),
+                linear-gradient(155deg, var(--page), var(--page-deep));
+            color: var(--text);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+                BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+            line-height: 1.66;
+        }
+
+        body::before {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background-image:
+                linear-gradient(rgba(125, 141, 168, 0.055) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(125, 141, 168, 0.055) 1px, transparent 1px);
+            background-size: 42px 42px;
+            mask-image: linear-gradient(to bottom, black, transparent 82%);
+            content: "";
+        }
+
+        a { color: inherit; text-decoration: none; }
+        button, select { font: inherit; }
+        svg {
+            width: 1.1em;
+            height: 1.1em;
+            fill: none;
+            stroke: currentColor;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-width: 1.8;
+        }
+
+        .skip-link {
+            position: fixed;
+            top: 8px;
+            left: 8px;
+            z-index: 100;
+            padding: 9px 14px;
+            border-radius: 10px;
+            background: var(--surface-solid);
+            color: var(--text);
+            transform: translateY(-150%);
+        }
+
+        .skip-link:focus { transform: translateY(0); }
+
+        main {
+            width: min(1160px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 28px 0 80px;
+        }
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding: 26px 30px 32px;
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            background:
+                linear-gradient(135deg, rgba(99, 102, 241, 0.11), transparent 48%),
+                var(--surface);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(22px);
+        }
+
+        .hero::after {
+            position: absolute;
+            top: -90px;
+            right: -70px;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.20), transparent 68%);
+            content: "";
+            pointer-events: none;
+        }
+
+        .site-nav,
+        .hero-content { position: relative; z-index: 1; }
+
+        .site-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            padding-bottom: 27px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 11px;
+            font-weight: 760;
+            letter-spacing: -0.02em;
+        }
+
+        .brand-mark {
+            display: grid;
+            width: 38px;
+            height: 38px;
+            place-items: center;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #6366f1, #0ea5e9);
+            color: #fff;
+            box-shadow: 0 10px 24px rgba(79, 70, 229, 0.28);
+        }
+
+        .brand-mark svg { width: 21px; height: 21px; }
+
+        .nav-actions { display: flex; align-items: center; gap: 8px; }
+
+        .nav-link,
+        .theme-toggle {
+            display: inline-flex;
+            min-height: 38px;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 7px 11px;
+            border: 1px solid transparent;
+            border-radius: 11px;
+            color: var(--muted);
+            background: transparent;
+            cursor: pointer;
+            transition: 160ms ease;
+        }
+
+        .nav-link:hover,
+        .theme-toggle:hover {
+            border-color: var(--border);
+            background: var(--surface-soft);
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .theme-toggle { width: 40px; padding: 0; }
+        .theme-toggle span { font-size: 18px; line-height: 1; }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: minmax(0, 1.45fr) minmax(300px, 0.65fr);
+            align-items: end;
+            gap: 42px;
+            padding-top: 38px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 14px;
+            color: var(--accent-two);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: #22c55e;
+            box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.13);
+        }
+
+        h1 {
+            max-width: 760px;
+            margin: 0;
+            font-size: clamp(38px, 6vw, 70px);
+            font-weight: 850;
+            letter-spacing: -0.065em;
+            line-height: 1.02;
+        }
+
+        h1 span {
+            background: linear-gradient(110deg, var(--text) 8%, var(--accent) 58%, var(--accent-two));
+            background-clip: text;
+            color: transparent;
+        }
+
+        .subtitle {
+            max-width: 670px;
+            margin: 18px 0 0;
+            color: var(--text-soft);
+            font-size: clamp(16px, 2vw, 19px);
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 20px;
+            margin-top: 25px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .hero-meta span { display: inline-flex; align-items: center; gap: 7px; }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .stat {
+            min-width: 0;
+            padding: 18px 14px;
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            background: var(--surface-soft);
+            text-align: center;
+        }
+
+        .stat strong {
+            display: block;
+            color: var(--text);
+            font-size: clamp(22px, 3vw, 31px);
+            line-height: 1;
+        }
+
+        .stat span {
+            display: block;
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 11px;
+            white-space: nowrap;
+        }
+
+        .filter-panel {
+            --active-color: #059669;
+            position: sticky;
+            top: 12px;
+            z-index: 20;
+            display: grid;
+            grid-template-columns: minmax(190px, 0.9fr) minmax(280px, 1.15fr) auto;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+            padding: 17px 20px;
+            border: 1px solid var(--border-strong);
+            border-radius: 20px;
+            background: color-mix(in srgb, var(--surface-solid) 82%, transparent);
+            box-shadow: var(--shadow-card);
+            backdrop-filter: blur(22px);
+        }
+
+        .filter-title {
+            display: block;
+            font-size: 16px;
+            font-weight: 780;
+            letter-spacing: -0.02em;
+        }
+
+        .filter-hint { display: block; color: var(--muted); font-size: 12px; }
+
+        .select-control { display: block; min-width: 0; }
+        .select-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
+
+        .select-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .select-box > svg:first-child {
+            position: absolute;
+            left: 15px;
+            z-index: 1;
+            color: var(--active-color);
+            pointer-events: none;
+        }
+
+        .select-box select {
+            width: 100%;
+            min-height: 48px;
+            appearance: none;
+            padding: 10px 46px 10px 45px;
+            border: 1px solid color-mix(in srgb, var(--active-color) 42%, var(--border));
+            border-radius: 14px;
+            outline: none;
+            background: color-mix(in srgb, var(--active-color) 7%, var(--surface-solid));
+            color: var(--text);
+            font-weight: 720;
+            cursor: pointer;
+            transition: 160ms ease;
+        }
+
+        .select-box select:focus {
+            border-color: var(--active-color);
+            box-shadow: 0 0 0 4px color-mix(in srgb, var(--active-color) 15%, transparent);
+        }
+
+        .select-chevron {
+            position: absolute;
+            right: 14px;
+            color: var(--muted);
+            pointer-events: none;
+        }
+
+        .current-view {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            color: var(--muted);
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .current-view-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--active-color);
+            box-shadow: 0 0 0 5px color-mix(in srgb, var(--active-color) 13%, transparent);
+        }
+
+        .current-view strong { color: var(--text); font-size: 14px; }
+        .errors { margin-top: 20px; }
+
+        .errors,
+        .empty,
+        .noscript-message {
+            padding: 18px 20px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: var(--surface);
+        }
+
+        .errors summary { cursor: pointer; font-weight: 720; }
+        .errors li { margin: 6px 0; overflow-wrap: anywhere; }
+
+        .content-section {
+            margin-top: 34px;
+            scroll-margin-top: 104px;
+        }
+
+        .content-section[hidden] { display: none !important; }
+
+        .section-heading {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 17px;
+        }
+
+        .section-kicker {
+            color: var(--category-color);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+        }
+
+        .section-heading h2 {
+            margin: 3px 0 0;
+            font-size: clamp(25px, 3vw, 34px);
+            letter-spacing: -0.04em;
+        }
+
+        .section-count { color: var(--muted); font-size: 13px; }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 15px;
+        }
+
+        .card {
+            position: relative;
+            display: flex;
+            min-width: 0;
+            min-height: 252px;
+            flex-direction: column;
+            overflow: hidden;
+            padding: 21px 22px 18px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background:
+                linear-gradient(145deg, color-mix(in srgb, var(--category-color) 5%, transparent), transparent 42%),
+                var(--surface);
+            box-shadow: var(--shadow-card);
+            transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+        }
+
+        .card:hover {
+            border-color: color-mix(in srgb, var(--category-color) 38%, var(--border));
+            box-shadow: 0 20px 46px color-mix(in srgb, var(--category-color) 11%, transparent);
+            transform: translateY(-3px);
+        }
+
+        .card-accent {
+            position: absolute;
+            top: 0;
+            right: 22px;
+            left: 22px;
+            height: 2px;
+            border-radius: 0 0 99px 99px;
+            background: linear-gradient(90deg, transparent, var(--category-color), transparent);
+            opacity: 0.75;
+        }
+
+        .card-meta-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .source-badge {
+            max-width: 68%;
+            overflow: hidden;
+            padding: 5px 9px;
+            border: 1px solid color-mix(in srgb, var(--category-color) 24%, var(--border));
+            border-radius: 999px;
+            background: color-mix(in srgb, var(--category-color) 8%, var(--surface-solid));
+            color: var(--category-color);
+            font-size: 11px;
+            font-weight: 780;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .card time {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--muted);
+            font-size: 11px;
+            white-space: nowrap;
+        }
+
+        .card h3 {
+            margin: 0;
+            font-size: clamp(17px, 2vw, 20px);
+            letter-spacing: -0.02em;
+            line-height: 1.42;
+        }
+
+        .card h3 a {
+            color: var(--text);
+            transition: color 150ms ease;
+        }
+
+        .card h3 a:hover { color: var(--category-color); text-decoration: none; }
+
+        .summary {
+            display: -webkit-box;
+            margin: 11px 0 0;
+            overflow: hidden;
+            color: var(--text-soft);
+            font-size: 14px;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 4;
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: end;
+            justify-content: flex-end;
+            min-height: 28px;
+            margin-top: auto;
+            padding-top: 15px;
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            color: var(--category-color);
+            font-size: 12px;
+            font-weight: 760;
+        }
+
+        .read-more svg { transition: transform 150ms ease; }
+        .read-more:hover { text-decoration: none; }
+        .read-more:hover svg { transform: translateX(3px); }
+
+        .empty { margin-top: 24px; }
+        .empty p { margin-bottom: 0; color: var(--muted); }
+
+        footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 50px;
+            padding: 24px 4px 0;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .footer-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        @media (max-width: 860px) {
+            .hero-content { grid-template-columns: 1fr; gap: 28px; }
+            .stats { max-width: 480px; }
+            .filter-panel { grid-template-columns: 1fr minmax(260px, 1.3fr); }
+            .current-view { display: none; }
+        }
+
+        @media (max-width: 720px) {
+            main { width: min(100% - 20px, 1160px); padding-top: 10px; }
+            .hero { padding: 18px 18px 24px; border-radius: 22px; }
+            .site-nav { padding-bottom: 18px; }
+            .brand > span:last-child { display: none; }
+            .nav-link span { display: none; }
+            .nav-link { width: 40px; padding: 0; }
+            .hero-content { padding-top: 26px; }
+            h1 { font-size: clamp(39px, 13vw, 58px); }
+            .filter-panel {
+                top: 8px;
+                grid-template-columns: 1fr;
+                gap: 11px;
+                padding: 13px;
+                border-radius: 17px;
+            }
+            .filter-copy { display: none; }
+            .cards-grid { grid-template-columns: 1fr; }
+            .card { min-height: 0; }
+            .section-heading { align-items: center; }
+            footer { align-items: flex-start; flex-direction: column; gap: 7px; }
+        }
+
+        @media (max-width: 430px) {
+            .hero-meta { display: grid; gap: 7px; }
+            .stats { gap: 7px; }
+            .stat { padding: 14px 8px; }
+            .stat span { font-size: 10px; }
+            .card { padding: 19px 17px 16px; border-radius: 17px; }
+            .card-meta-top { align-items: flex-start; flex-direction: column; gap: 8px; }
+            .source-badge { max-width: 100%; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <main id="main-content">
+        <header class="hero">
+            <nav class="site-nav" aria-label="主要导航">
+                <a class="brand" href="../index.html">
+                    <span class="brand-mark" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M5 5.5h10.5A2.5 2.5 0 0 1 18 8v10.5H7.5A2.5 2.5 0 0 1 5 16V5.5Z"/>
+                            <path d="M8.5 9h6M8.5 12h6M8.5 15h3.5M18 9h1a1 1 0 0 1 1 1v6.5a2 2 0 0 1-2 2"/>
+                        </svg>
+                    </span>
+                    <span>今日知览</span>
+                </a>
+                <div class="nav-actions">
+                    <a class="nav-link" href="../index.html" title="今天">
+                        <svg aria-hidden="true" viewBox="0 0 24 24">
+                            <path d="M5 5h14v14H5zM8 3v4M16 3v4M5 9h14"/>
+                        </svg>
+                        <span>今天</span>
+                    </a>
+                    <a class="nav-link" href="index.html" title="历史归档">
+                        <svg aria-hidden="true" viewBox="0 0 24 24">
+                            <path d="M4 7h16M6 4h12l1 3v13H5V7l1-3ZM9 11h6"/>
+                        </svg>
+                        <span>归档</span>
+                    </a>
+                    <button class="theme-toggle" id="theme-toggle" type="button" title="切换明暗主题" aria-label="切换明暗主题">
+                        <span id="theme-icon" aria-hidden="true">☾</span>
+                    </button>
+                </div>
+            </nav>
+
+            <div class="hero-content">
+                <div>
+                    <span class="eyebrow"><span class="live-dot"></span> DAILY BRIEFING</span>
+                    <h1><span>今日知览</span></h1>
+                    <p class="subtitle">科技、财经、科学、游戏与每日要闻，一页掌握今天值得关注的内容。</p>
+                    <div class="hero-meta">
+                        <span>
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <path d="M5 5h14v14H5zM8 3v4M16 3v4M5 9h14"/>
+                            </svg>
+                            2026-10-29
+                        </span>
+                        <span>
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <path d="M12 3v3M12 18v3M4.2 7.5l2.6 1.5M17.2 15l2.6 1.5M4.2 16.5 6.8 15M17.2 9l2.6-1.5"/>
+                                <circle cx="12" cy="12" r="4"/>
+                            </svg>
+                            每日 08:30 自动更新
+                        </span>
+                    </div>
+                </div>
+                <div class="stats" aria-label="日报统计">
+                    <div class="stat"><strong>91</strong><span>今日收录</span></div>
+                    <div class="stat"><strong>30</strong><span>免费信息源</span></div>
+                    <div class="stat"><strong>7</strong><span>内容频道</span></div>
+                </div>
+            </div>
+        </header>
+
+
+
+        <div class="filter-panel" id="filter-panel">
+            <div class="filter-copy">
+                <span class="filter-title">你想看什么？</span>
+                <span class="filter-hint">切换后只显示所选频道</span>
+            </div>
+
+    <label class="select-control" for="category-select">
+        <span class="select-label">内容类型</span>
+        <span class="select-box">
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+                <path d="M4 6.5h16M7 12h10M10 17.5h4"/>
+            </svg>
+            <select
+                id="category-select"
+                data-default-category="今日精选"
+                aria-label="选择要查看的内容类型"
+            >
+                <option value="今日精选" data-count="10" data-color="#059669" selected>今日精选 · 10 条</option><option value="科技" data-count="15" data-color="#2563eb">科技 · 15 条</option><option value="GitHub 热门项目" data-count="6" data-color="#7c3aed">GitHub 热门项目 · 6 条</option><option value="财经商业" data-count="15" data-color="#0f766e">财经商业 · 15 条</option><option value="科学探索" data-count="15" data-color="#0891b2">科学探索 · 15 条</option><option value="游戏" data-count="15" data-color="#db2777">游戏 · 15 条</option><option value="时政热点" data-count="15" data-color="#ea580c">时政热点 · 15 条</option><option value="__all__" data-count="91" data-color="#6366f1">全部内容 · 91 条</option>
+            </select>
+            <svg class="select-chevron" aria-hidden="true" viewBox="0 0 24 24">
+                <path d="m7 9.5 5 5 5-5"/>
+            </svg>
+        </span>
+    </label>
+
+            <div class="current-view" aria-live="polite">
+                <span class="current-view-dot" aria-hidden="true"></span>
+                <span id="active-category-name">今日精选</span>
+                <strong id="active-category-count">10 条</strong>
+            </div>
+        </div>
+
+        <noscript>
+            <style>.content-section[hidden] { display: block !important; }</style>
+            <p class="noscript-message">启用 JavaScript 后可以使用分类下拉筛选；当前仍会显示全部内容。</p>
+        </noscript>
+
+
+            <section
+                class="content-section"
+                id="73878a7377"
+                data-category="今日精选"
+                style="--category-color: #059669"
+
+            >
+                <div class="section-heading">
+                    <div>
+                        <span class="section-kicker">CURRENT CHANNEL</span>
+                        <h2>今日精选</h2>
+                    </div>
+                    <span class="section-count">10 条内容</span>
+                </div>
+                <div class="cards-grid">
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">The Verge</span>
+                        <time datetime="2026-10-29T02:22:46+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 10:22
+                        </time>
+                    </div>
+                    <h3><a href="https://www.theverge.com/policy/1021554/anduril-bluechip-65-percent-domestic-buy-american" target="_blank" rel="noopener noreferrer">Anduril now says its BlueChip laptop will meet Buy American standards at launch</a></h3>
+                    <p class="summary">On Tuesday, defense contractor Anduril and chipmaker Qualcomm announced a partnership to build laptops entirely in the United States, starting with a single model in 2027. They also announced a &quot;long-term goal&quot; of pushing the computer industry to create &quot;a fully domestic supply chain.&quot; Even a single Made-in-USA laptop would be a surprise, because no […]</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.theverge.com/policy/1021554/anduril-bluechip-65-percent-domestic-buy-american" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Ollama</span>
+                        <time datetime="2026-10-29T02:54:11+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 10:54
+                        </time>
+                    </div>
+                    <h3><a href="https://github.com/ollama/ollama/releases/tag/v0.40.13" target="_blank" rel="noopener noreferrer">v0.40.13</a></h3>
+                    <p class="summary">LFM3 on Linux and Windows Liquid AI&#x27;s LFM3 models, including text-to-speech in lfm3-audio and lfm3-omni , now run on Linux and Windows as well as Apple silicon. Full Changelog : v0.40.12...v0.40.13</p>
+                    <div class="card-footer"><a class="read-more" href="https://github.com/ollama/ollama/releases/tag/v0.40.13" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">BBC Business</span>
+                        <time datetime="2026-10-28T20:08:45+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 04:08
+                        </time>
+                    </div>
+                    <h3><a href="https://www.bbc.co.uk/news/articles/c9x28350ly07o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">What we now know about the UK economy in four charts</a></h3>
+                    <p class="summary">The Office for Budget Responsibility says higher energy prices will impact everything from prices and living standards to economic growth.</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.bbc.co.uk/news/articles/c9x28350ly07o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">NASA</span>
+                        <time datetime="2026-10-29T02:49:59+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 10:49
+                        </time>
+                    </div>
+                    <h3><a href="https://www.nasa.gov/centers-and-facilities/jpl/caltech-names-artemis-ii-commander-reid-wiseman-as-nasa-jpl-deputy/" target="_blank" rel="noopener noreferrer">Caltech Names Artemis II Commander Reid Wiseman as NASA JPL Deputy</a></h3>
+                    <p class="summary">Artemis II Commander Reid Wiseman has been named Caltech associate vice president and deputy director of NASA’s Jet Propulsion Laboratory in Southern California. The emeritus astronaut and retired U.S. Navy captain begins his new role at NASA’s center of excellence for robotics and deep space exploration and at Caltech, which manages JPL for NASA, on […]</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.nasa.gov/centers-and-facilities/jpl/caltech-names-artemis-ii-commander-reid-wiseman-as-nasa-jpl-deputy/" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">PlayStation Blog</span>
+                        <time datetime="2026-10-28T17:15:17+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 01:15
+                        </time>
+                    </div>
+                    <h3><a href="https://blog.playstation.com/2026/10/28/modern-warfare-4-season-1-everything-you-need-to-know-for-november-6-launch/" target="_blank" rel="noopener noreferrer">Modern Warfare 4 Season 1: Everything you need to know for November 6 launch</a></h3>
+                    <p class="summary">Get ready for Season 1, with new maps, modes, events and rewards across Multiplayer and DMZ. Explore the unforgiving corridors of X01, wield new weapons and attachments, acquire new Operator Skins, Weapon Blueprints, DMZ Survival Kits, and more. Call of Duty: Modern Warfare 4 Season 1 goes live on November 6 New Multiplayer maps and […]</p>
+                    <div class="card-footer"><a class="read-more" href="https://blog.playstation.com/2026/10/28/modern-warfare-4-season-1-everything-you-need-to-know-for-november-6-launch/" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">BBC World</span>
+                        <time datetime="2026-10-28T20:24:39+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 04:24
+                        </time>
+                    </div>
+                    <h3><a href="https://www.bbc.co.uk/news/articles/cmdx3knq1xexo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Netanyahu&#x27;s bloc leading Israel election but short of majority, partial results show</a></h3>
+                    <p class="summary">With 85% of ballots counted, Netanyahu&#x27;s Likud party and its allies are set to win 53 seats in the 120-seat Knesset.</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.bbc.co.uk/news/articles/cmdx3knq1xexo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">TechCrunch</span>
+                        <time datetime="2026-10-28T23:15:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 07:15
+                        </time>
+                    </div>
+                    <h3><a href="https://techcrunch.com/2026/10/28/upwind-raises-400m-after-walking-away-from-datadog-acquisition-offer/" target="_blank" rel="noopener noreferrer">Upwind raises $400M after walking away from Datadog acquisition offer</a></h3>
+                    <p class="summary">The cloud security startup raised a Series C at a $3.8B valuation, instead of selling itself for the same price.</p>
+                    <div class="card-footer"><a class="read-more" href="https://techcrunch.com/2026/10/28/upwind-raises-400m-after-walking-away-from-datadog-acquisition-offer/" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Visual Studio Code</span>
+                        <time datetime="2026-10-28T18:51:38+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 02:51
+                        </time>
+                    </div>
+                    <h3><a href="https://github.com/microsoft/vscode/releases/tag/1.144.0" target="_blank" rel="noopener noreferrer">1.144.0</a></h3>
+                    <p class="summary">https://code.visualstudio.com/updates/v1_144</p>
+                    <div class="card-footer"><a class="read-more" href="https://github.com/microsoft/vscode/releases/tag/1.144.0" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">The Guardian Business</span>
+                        <time datetime="2026-10-28T19:26:41+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 03:26
+                        </time>
+                    </div>
+                    <h3><a href="https://www.theguardian.com/business/2026/oct/28/fed-interest-rates-midterms" target="_blank" rel="noopener noreferrer">Fed holds interest rates steady in last decision before midterms</a></h3>
+                    <p class="summary">Fed chair Kevin Warsh said politics played no role in pause of interest rate hikes, despite inflation remaining above 3% The US Federal Reserve left interest rates unchanged on Wednesday during its last board meeting before the midterm elections, keeping rates at one of the highest pre-election levels seen in over 20 years. Two out of 12 board members voted against the pause, preferring to raise rates by a quarter po……</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.theguardian.com/business/2026/oct/28/fed-interest-rates-midterms" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Phys.org</span>
+                        <time datetime="2026-10-29T04:10:01+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 12:10
+                        </time>
+                    </div>
+                    <h3><a href="https://phys.org/news/2026-10-covid-era-snap-emergency-food.html" target="_blank" rel="noopener noreferrer">End of COVID-era SNAP emergency food assistance linked to increased child maltreatment rates</a></h3>
+                    <p class="summary">A new study has found that in U.S. counties that ended COVID-19 pandemic-era Supplemental Nutrition Assistance Program (SNAP) Emergency Allotments, child maltreatment rates went up. The findings from the study in the American Journal of Preventive Medicine suggest that changes to food assistance programs have consequences that extend beyond food security and also affect child and family well-being.</p>
+                    <div class="card-footer"><a class="read-more" href="https://phys.org/news/2026-10-covid-era-snap-emergency-food.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+                </div>
+            </section>
+
+            <section
+                class="content-section"
+                id="3d078fbc4e"
+                data-category="科技"
+                style="--category-color: #2563eb"
+                 hidden
+            >
+                <div class="section-heading">
+                    <div>
+                        <span class="section-kicker">CURRENT CHANNEL</span>
+                        <h2>科技</h2>
+                    </div>
+                    <span class="section-count">15 条内容</span>
+                </div>
+                <div class="cards-grid">
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">The Verge</span>
+                        <time datetime="2026-10-29T02:22:46+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 10:22
+                        </time>
+                    </div>
+                    <h3><a href="https://www.theverge.com/policy/1021554/anduril-bluechip-65-percent-domestic-buy-american" target="_blank" rel="noopener noreferrer">Anduril now says its BlueChip laptop will meet Buy American standards at launch</a></h3>
+                    <p class="summary">On Tuesday, defense contractor Anduril and chipmaker Qualcomm announced a partnership to build laptops entirely in the United States, starting with a single model in 2027. They also announced a &quot;long-term goal&quot; of pushing the computer industry to create &quot;a fully domestic supply chain.&quot; Even a single Made-in-USA laptop would be a surprise, because no […]</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.theverge.com/policy/1021554/anduril-bluechip-65-percent-domestic-buy-american" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">TechCrunch</span>
+                        <time datetime="2026-10-28T23:15:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 07:15
+                        </time>
+                    </div>
+                    <h3><a href="https://techcrunch.com/2026/10/28/upwind-raises-400m-after-walking-away-from-datadog-acquisition-offer/" target="_blank" rel="noopener noreferrer">Upwind raises $400M after walking away from Datadog acquisition offer</a></h3>
+                    <p class="summary">The cloud security startup raised a Series C at a $3.8B valuation, instead of selling itself for the same price.</p>
+                    <div class="card-footer"><a class="read-more" href="https://techcrunch.com/2026/10/28/upwind-raises-400m-after-walking-away-from-datadog-acquisition-offer/" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">The Verge</span>
+                        <time datetime="2026-10-28T23:05:39+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 07:05
+                        </time>
+                    </div>
+                    <h3><a href="https://www.theverge.com/ai-artificial-intelligence/1021644/adam-mosseri-instagram-ai-negativity" target="_blank" rel="noopener noreferrer">Adam Mosseri says negativity around AI is ‘going to get worse’</a></h3>
+                    <p class="summary">Asked about AI and the trend of college students booing tech CEOs at graduation ceremonies, Instagram head Adam Mosseri acknowledged in an interview that a lot of people really don&#x27;t like AI, and it&#x27;s not just young people and creatives. Appearing on the Colin and Samir podcast to talk about the launch of widescreen and […]</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.theverge.com/ai-artificial-intelligence/1021644/adam-mosseri-instagram-ai-negativity" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Ars Technica</span>
+                        <time datetime="2026-10-28T22:51:15+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 06:51
+                        </time>
+                    </div>
+                    <h3><a href="https://arstechnica.com/space/2026/10/ulas-vulcan-rocket-is-set-to-return-to-flight-on-friday-the-13th/" target="_blank" rel="noopener noreferrer">ULA&#x27;s Vulcan rocket is set to return to flight on Friday the 13th</a></h3>
+                    <p class="summary">This Vulcan launch will be the first to utilize a full complement of six solid rocket boosters.</p>
+                    <div class="card-footer"><a class="read-more" href="https://arstechnica.com/space/2026/10/ulas-vulcan-rocket-is-set-to-return-to-flight-on-friday-the-13th/" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">TechCrunch</span>
+                        <time datetime="2026-10-28T22:47:50+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 06:47
+                        </time>
+                    </div>
+                    <h3><a href="https://techcrunch.com/2026/10/28/apples-touchscreen-macbook-pro-pushes-laptop-pricing-to-a-new-extreme/" target="_blank" rel="noopener noreferrer">Apple’s touchscreen MacBook Pro pushes laptop pricing to a new extreme</a></h3>
+                    <p class="summary">Prepare to cough up around $14,549 if you want the new touchscreen MacBook Pro to have every upgrade.</p>
+                    <div class="card-footer"><a class="read-more" href="https://techcrunch.com/2026/10/28/apples-touchscreen-macbook-pro-pushes-laptop-pricing-to-a-new-extreme/" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Ars Technica</span>
+                        <time datetime="2026-10-28T22:35:50+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 06:35
+                        </time>
+                    </div>
+                    <h3><a href="https://arstechnica.com/gadgets/2026/10/as-us-ties-fray-europe-plans-first-undersea-cable-link-to-greenland/" target="_blank" rel="noopener noreferrer">As US ties fray, Europe plans first undersea cable link to Greenland</a></h3>
+                    <p class="summary">Europe&#x27;s Pan-Arctic Cable will bypass US to link Canada, Japan, and South Korea.</p>
+                    <div class="card-footer"><a class="read-more" href="https://arstechnica.com/gadgets/2026/10/as-us-ties-fray-europe-plans-first-undersea-cable-link-to-greenland/" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Ars Technica</span>
+                        <time datetime="2026-10-28T22:17:15+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 06:17
+                        </time>
+                    </div>
+                    <h3><a href="https://arstechnica.com/health/2026/10/peptide-peddlers-cheer-as-rfk-jr-unilaterally-grants-access-overruling-fda/" target="_blank" rel="noopener noreferrer">Peptide peddlers cheer as RFK Jr. unilaterally grants access, overruling FDA</a></h3>
+                    <p class="summary">Six unproven peptides popular with MAHA now under &quot;enforcement discretion policy.&quot;</p>
+                    <div class="card-footer"><a class="read-more" href="https://arstechnica.com/health/2026/10/peptide-peddlers-cheer-as-rfk-jr-unilaterally-grants-access-overruling-fda/" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">TechCrunch</span>
+                        <time datetime="2026-10-28T21:58:32+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 05:58
+                        </time>
+                    </div>
+                    <h3><a href="https://techcrunch.com/2026/10/28/microsoft-just-shared-azures-actual-revenue-in-dollars-33-2-billion/" target="_blank" rel="noopener noreferrer">Microsoft just shared Azure’s actual revenue in dollars: $33.2 billion</a></h3>
+                    <p class="summary">Microsoft has never disclosed Azure&#x27;s quarterly revenue in dollars. But for the first time, we can see just how close it is getting to besting the biggest competitor in the market, AWS.</p>
+                    <div class="card-footer"><a class="read-more" href="https://techcrunch.com/2026/10/28/microsoft-just-shared-azures-actual-revenue-in-dollars-33-2-billion/" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">The Verge</span>
+                        <time datetime="2026-10-28T21:57:45+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 05:57
+                        </time>
+                    </div>
+                    <h3><a href="https://www.theverge.com/tech/1021528/ice-cbp-data-leak" target="_blank" rel="noopener noreferrer">A hacker stole more than 40,000 DHS employee records</a></h3>
+                    <p class="summary">A hacker stole a trove of personal information from the Department of Homeland Security (DHS). The breach exposes the names, job titles, phone numbers, email addresses, and office locations of more than 41,000 employees, including those in US Immigration and Customs Enforcement (ICE) and Customs and Border Protection (CBP), according to TechCrunch and Wired. The […]</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.theverge.com/tech/1021528/ice-cbp-data-leak" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">TechCrunch</span>
+                        <time datetime="2026-10-28T21:48:37+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 05:48
+                        </time>
+                    </div>
+                    <h3><a href="https://techcrunch.com/2026/10/28/google-expands-ai-search-ads-globally-as-core-ad-growth-slows/" target="_blank" rel="noopener noreferrer">Google expands AI Search ads globally as core ad growth slows</a></h3>
+                    <p class="summary">The announcement came alongside parent company Alphabet&#x27;s third-quarter earnings report, which saw revenue grow 25% year over year to $127.6 billion.</p>
+                    <div class="card-footer"><a class="read-more" href="https://techcrunch.com/2026/10/28/google-expands-ai-search-ads-globally-as-core-ad-growth-slows/" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">TechCrunch</span>
+                        <time datetime="2026-10-28T21:34:30+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 05:34
+                        </time>
+                    </div>
+                    <h3><a href="https://techcrunch.com/2026/10/28/microsoft-recorded-10-billion-in-revenue-from-openai/" target="_blank" rel="noopener noreferrer">Microsoft recorded $10 billion in revenue from OpenAI</a></h3>
+                    <p class="summary">Microsoft said it made $10 billion in revenue from commercial arrangements with OpenAI, including revenue-sharing payments, in the quarter ending September 30. It underscores the still-enormous financial dependency of the partnership.</p>
+                    <div class="card-footer"><a class="read-more" href="https://techcrunch.com/2026/10/28/microsoft-recorded-10-billion-in-revenue-from-openai/" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">The Verge</span>
+                        <time datetime="2026-10-28T21:34:04+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 05:34
+                        </time>
+                    </div>
+                    <h3><a href="https://www.theverge.com/gadgets/1021405/akai-open-source-mpc-sample-key" target="_blank" rel="noopener noreferrer">Akai is embracing vibe-coded mods with an open-source MPC</a></h3>
+                    <p class="summary">The MPC Sample Key isn&#x27;t even formally announced yet, but Akai is already showing off what the modding community is cooking up through vibe coding. Akai has decided to embrace the explosion of hackers and custom firmware developers by giving them early access to the device, which will have open-source firmware. It will likely run […]</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.theverge.com/gadgets/1021405/akai-open-source-mpc-sample-key" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">The Verge</span>
+                        <time datetime="2026-10-28T21:16:18+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 05:16
+                        </time>
+                    </div>
+                    <h3><a href="https://www.theverge.com/tech/1020264/readwise-books-launch-ebook-store" target="_blank" rel="noopener noreferrer">Readwise is taking on Kindle and Kobo for ebook supremacy</a></h3>
+                    <p class="summary">For the last several years, Readwise has been building tools for power readers. There&#x27;s the eponymous product, Readwise, which stores and categorizes your Kindle highlights to help you remember what you&#x27;ve read. There&#x27;s Readwise Reader, an app for reading newsletters, PDFs, and web articles you&#x27;ve saved for later. And now there&#x27;s Readwise Books, a full-fledged […]</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.theverge.com/tech/1020264/readwise-books-launch-ebook-store" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">MIT Technology Review</span>
+                        <time datetime="2026-10-28T20:32:02+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 04:32
+                        </time>
+                    </div>
+                    <h3><a href="https://www.technologyreview.com/2026/10/28/1147709/creating-ai-value-with-enterprise-context/" target="_blank" rel="noopener noreferrer">Creating AI value with enterprise context</a></h3>
+                    <p class="summary">Across a business, any number of AI platforms, systems, and tools may be at work simultaneously—for example, AI-powered customer platforms, conversational assistants, and workflow and process automation tools. Each one is sophisticated, advanced, and quick to respond. But, when set to work, the outcomes and actions that emerge may be wrong, confused, or lacking a…</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.technologyreview.com/2026/10/28/1147709/creating-ai-value-with-enterprise-context/" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Ars Technica</span>
+                        <time datetime="2026-10-28T19:30:33+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 03:30
+                        </time>
+                    </div>
+                    <h3><a href="https://arstechnica.com/tech-policy/2026/10/trump-admin-sues-utah-to-save-kalshi-from-the-states-total-ban-on-gambling/" target="_blank" rel="noopener noreferrer">Trump admin sues Utah to save Kalshi from the state&#x27;s total ban on gambling</a></h3>
+                    <p class="summary">US agency has sued 10 states for trying to stop gambling on prediction markets.</p>
+                    <div class="card-footer"><a class="read-more" href="https://arstechnica.com/tech-policy/2026/10/trump-admin-sues-utah-to-save-kalshi-from-the-states-total-ban-on-gambling/" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+                </div>
+            </section>
+
+            <section
+                class="content-section"
+                id="75ad0143b7"
+                data-category="GitHub 热门项目"
+                style="--category-color: #7c3aed"
+                 hidden
+            >
+                <div class="section-heading">
+                    <div>
+                        <span class="section-kicker">CURRENT CHANNEL</span>
+                        <h2>GitHub 热门项目</h2>
+                    </div>
+                    <span class="section-count">6 条内容</span>
+                </div>
+                <div class="cards-grid">
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Ollama</span>
+                        <time datetime="2026-10-29T02:54:11+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 10:54
+                        </time>
+                    </div>
+                    <h3><a href="https://github.com/ollama/ollama/releases/tag/v0.40.13" target="_blank" rel="noopener noreferrer">v0.40.13</a></h3>
+                    <p class="summary">LFM3 on Linux and Windows Liquid AI&#x27;s LFM3 models, including text-to-speech in lfm3-audio and lfm3-omni , now run on Linux and Windows as well as Apple silicon. Full Changelog : v0.40.12...v0.40.13</p>
+                    <div class="card-footer"><a class="read-more" href="https://github.com/ollama/ollama/releases/tag/v0.40.13" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Ollama</span>
+                        <time datetime="2026-10-28T22:20:04+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 06:20
+                        </time>
+                    </div>
+                    <h3><a href="https://github.com/ollama/ollama/releases/tag/v0.40.13-rc1" target="_blank" rel="noopener noreferrer">v0.40.13-rc1: llama.cpp: workaround Metal unary crash (#19372)</a></h3>
+                    <p class="summary">This temporary patch works around a regression on older versions of MacOS ggml_metal_library_compile_all: failed to build &#x27;unary&#x27; library</p>
+                    <div class="card-footer"><a class="read-more" href="https://github.com/ollama/ollama/releases/tag/v0.40.13-rc1" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Visual Studio Code</span>
+                        <time datetime="2026-10-28T18:51:38+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 02:51
+                        </time>
+                    </div>
+                    <h3><a href="https://github.com/microsoft/vscode/releases/tag/1.144.0" target="_blank" rel="noopener noreferrer">1.144.0</a></h3>
+                    <p class="summary">https://code.visualstudio.com/updates/v1_144</p>
+                    <div class="card-footer"><a class="read-more" href="https://github.com/microsoft/vscode/releases/tag/1.144.0" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Ollama</span>
+                        <time datetime="2026-10-28T17:37:56+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 01:37
+                        </time>
+                    </div>
+                    <h3><a href="https://github.com/ollama/ollama/releases/tag/v0.40.13-rc0" target="_blank" rel="noopener noreferrer">v0.40.13-rc0</a></h3>
+                    <p class="summary">llama.cpp: version bump b11963 ( #19360 )</p>
+                    <div class="card-footer"><a class="read-more" href="https://github.com/ollama/ollama/releases/tag/v0.40.13-rc0" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">PowerToys</span>
+                        <time datetime="2026-10-28T15:42:52+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-28 23:42
+                        </time>
+                    </div>
+                    <h3><a href="https://github.com/microsoft/PowerToys/releases/tag/v0.103.3006" target="_blank" rel="noopener noreferrer">Dev preview v0.103.3006.0</a></h3>
+                    <p class="summary">PowerToys 0.103.3006.0 is a development preview from main , containing changes since v0.102.3001 . This prerelease is intended for testing ahead of the next stable release. Installer Hashes Description Filename sha256 hash Per user - x64 PowerToysUserSetup-0.103.3006.0-x64.exe DFEB0CC4020DCF501206CE796DDEE4F03BA705A53829FB91269B4A604A7A19CB Per user - ARM64 PowerToysUserSetup-0.103.3006.0-arm64.exe 20A2286FF3F1DEA00A……</p>
+                    <div class="card-footer"><a class="read-more" href="https://github.com/microsoft/PowerToys/releases/tag/v0.103.3006" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Kubernetes</span>
+                        <time datetime="2026-10-28T09:02:26+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-28 17:02
+                        </time>
+                    </div>
+                    <h3><a href="https://github.com/kubernetes/kubernetes/releases/tag/v1.38.0-alpha.3" target="_blank" rel="noopener noreferrer">v1.38.0-alpha.3</a></h3>
+                    <p class="summary">See kubernetes-announce@ . Additional binary downloads are linked in the CHANGELOG . See the CHANGELOG for more details.</p>
+                    <div class="card-footer"><a class="read-more" href="https://github.com/kubernetes/kubernetes/releases/tag/v1.38.0-alpha.3" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+                </div>
+            </section>
+
+            <section
+                class="content-section"
+                id="1c306968f0"
+                data-category="财经商业"
+                style="--category-color: #0f766e"
+                 hidden
+            >
+                <div class="section-heading">
+                    <div>
+                        <span class="section-kicker">CURRENT CHANNEL</span>
+                        <h2>财经商业</h2>
+                    </div>
+                    <span class="section-count">15 条内容</span>
+                </div>
+                <div class="cards-grid">
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">CNBC Business</span>
+                        <time datetime="2026-10-28T23:51:38+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 07:51
+                        </time>
+                    </div>
+                    <h3><a href="https://www.cnbc.com/2026/10/28/frontier-airlines-airfare-plane-tickets.html" target="_blank" rel="noopener noreferrer">America&#x27;s largest budget airline reports 71% jump in airfare</a></h3>
+                    <p class="summary">Frontier Airlines reported a 71% jump in airfare for the third quarter and said customers continue to book</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.cnbc.com/2026/10/28/frontier-airlines-airfare-plane-tickets.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">The New York Times Business</span>
+                        <time datetime="2026-10-28T22:42:55+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 06:42
+                        </time>
+                    </div>
+                    <h3><a href="https://www.nytimes.com/2026/10/28/business/economy/heres-the-latest.html" target="_blank" rel="noopener noreferrer">Here’s the latest.</a></h3>
+
+                    <div class="card-footer"><a class="read-more" href="https://www.nytimes.com/2026/10/28/business/economy/heres-the-latest.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">CNBC Business</span>
+                        <time datetime="2026-10-28T22:27:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 06:27
+                        </time>
+                    </div>
+                    <h3><a href="https://www.cnbc.com/2026/10/28/fedex-fdx-sept-2026-earnings.html" target="_blank" rel="noopener noreferrer">FedEx beats expectations, raises outlook in first report since calendar adjustment</a></h3>
+                    <p class="summary">FedEx on Wednesday beat Wall Street expectations on the top and bottom lines for the third quarter of its newly aligned fiscal year.</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.cnbc.com/2026/10/28/fedex-fdx-sept-2026-earnings.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">The Guardian Business</span>
+                        <time datetime="2026-10-28T22:22:19+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 06:22
+                        </time>
+                    </div>
+                    <h3><a href="https://www.theguardian.com/media/2026/oct/28/bari-weiss-cbs-news-60-minutes" target="_blank" rel="noopener noreferrer">Embattled CBS leader Bari Weiss downplays concerns about weak 60 Minutes ratings</a></h3>
+                    <p class="summary">CBS News editor-in-chief sidesteps viewership concerns and says flagship show doing ‘tremendously well’ CBS News editor-in-chief Bari Weiss has spoken publicly for the first time about the ratings challenges the network has experienced under her year-long tenure, sidestepping concerns about diminished viewership at the Sunday show 60 Minutes by saying it was not her top priority. “I could never build anything if I we……</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.theguardian.com/media/2026/oct/28/bari-weiss-cbs-news-60-minutes" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">CNBC Business</span>
+                        <time datetime="2026-10-28T22:12:28+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 06:12
+                        </time>
+                    </div>
+                    <h3><a href="https://www.cnbc.com/2026/10/28/chipotle-mexican-grill-cmg-q3-2026-earnings.html" target="_blank" rel="noopener noreferrer">Chipotle shares rise 7% after CEO says same-store sales growth will continue</a></h3>
+                    <p class="summary">For the first time this year, low-income consumers during the quarter outperformed the high-income cohort at its restaurants, CEO Scott Boatwright said.</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.cnbc.com/2026/10/28/chipotle-mexican-grill-cmg-q3-2026-earnings.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">CNBC Business</span>
+                        <time datetime="2026-10-28T21:42:24+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 05:42
+                        </time>
+                    </div>
+                    <h3><a href="https://www.cnbc.com/2026/10/28/ford-motor-f-earnings-q3-2026.html" target="_blank" rel="noopener noreferrer">Ford reports mixed third-quarter results, says 2027 earnings will be in line with this year</a></h3>
+                    <p class="summary">Ford Motor reported earnings that beat Wall Street’s estimates but slightly missed on revenue.</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.cnbc.com/2026/10/28/ford-motor-f-earnings-q3-2026.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">The New York Times Business</span>
+                        <time datetime="2026-10-28T20:47:13+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 04:47
+                        </time>
+                    </div>
+                    <h3><a href="https://www.nytimes.com/2026/10/28/business/media/cnn-ms-now-politico-white-house-lawsuit.html" target="_blank" rel="noopener noreferrer">CNN, MS Now and Politico Update Lawsuit Against Trump Over White House Access</a></h3>
+                    <p class="summary">The news outlets argued in an updated lawsuit that they should be granted access to the White House reporting pools.</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.nytimes.com/2026/10/28/business/media/cnn-ms-now-politico-white-house-lawsuit.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">CNBC Business</span>
+                        <time datetime="2026-10-28T20:23:48+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 04:23
+                        </time>
+                    </div>
+                    <h3><a href="https://www.cnbc.com/2026/10/28/stellantis-45-billion-cash-drain-turnaround.html" target="_blank" rel="noopener noreferrer">Stellantis stock rises 13% as automaker&#x27;s turnaround plan, cost cuts gain traction</a></h3>
+                    <p class="summary">European car giant Stellantis said Wednesday that it recorded a 4 billion euro ($4.5 billion) cash shortfall in the third quarter.</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.cnbc.com/2026/10/28/stellantis-45-billion-cash-drain-turnaround.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">BBC Business</span>
+                        <time datetime="2026-10-28T20:08:45+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 04:08
+                        </time>
+                    </div>
+                    <h3><a href="https://www.bbc.co.uk/news/articles/c9x28350ly07o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">What we now know about the UK economy in four charts</a></h3>
+                    <p class="summary">The Office for Budget Responsibility says higher energy prices will impact everything from prices and living standards to economic growth.</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.bbc.co.uk/news/articles/c9x28350ly07o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">The New York Times Business</span>
+                        <time datetime="2026-10-28T20:02:56+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 04:02
+                        </time>
+                    </div>
+                    <h3><a href="https://www.nytimes.com/2026/10/28/business/economy/fed-meetings-2027-interest-rates-warsh.html" target="_blank" rel="noopener noreferrer">Fed Will Hold Fewer Rate-Setting Meetings Starting Next Year</a></h3>
+                    <p class="summary">Kevin M. Warsh, the Federal Reserve’s chairman, said the central bank would vote on interest rates seven times in 2027 and six in 2028. It has traditionally voted eight times per year.</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.nytimes.com/2026/10/28/business/economy/fed-meetings-2027-interest-rates-warsh.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">BBC Business</span>
+                        <time datetime="2026-10-28T20:02:38+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 04:02
+                        </time>
+                    </div>
+                    <h3><a href="https://www.bbc.co.uk/news/articles/c60e05yn3w9zo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">What the Budget offers for under 25s - and what it leaves out</a></h3>
+                    <p class="summary">The chancellor announced a series of measures which will impact under-25 year-olds from housing to minimum wage.</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.bbc.co.uk/news/articles/c60e05yn3w9zo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">The New York Times Business</span>
+                        <time datetime="2026-10-28T19:43:34+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 03:43
+                        </time>
+                    </div>
+                    <h3><a href="https://www.nytimes.com/live/2026/10/28/business/fed-meeting-warsh-interest-rates/takeaways-from-warshs-news-conference" target="_blank" rel="noopener noreferrer">Takeaways from Warsh’s news conference.</a></h3>
+
+                    <div class="card-footer"><a class="read-more" href="https://www.nytimes.com/live/2026/10/28/business/fed-meeting-warsh-interest-rates/takeaways-from-warshs-news-conference" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">The Guardian Business</span>
+                        <time datetime="2026-10-28T19:26:41+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 03:26
+                        </time>
+                    </div>
+                    <h3><a href="https://www.theguardian.com/business/2026/oct/28/fed-interest-rates-midterms" target="_blank" rel="noopener noreferrer">Fed holds interest rates steady in last decision before midterms</a></h3>
+                    <p class="summary">Fed chair Kevin Warsh said politics played no role in pause of interest rate hikes, despite inflation remaining above 3% The US Federal Reserve left interest rates unchanged on Wednesday during its last board meeting before the midterm elections, keeping rates at one of the highest pre-election levels seen in over 20 years. Two out of 12 board members voted against the pause, preferring to raise rates by a quarter po……</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.theguardian.com/business/2026/oct/28/fed-interest-rates-midterms" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">The New York Times Business</span>
+                        <time datetime="2026-10-28T19:20:53+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 03:20
+                        </time>
+                    </div>
+                    <h3><a href="https://www.nytimes.com/2026/10/28/travel/endless-cruise-suspended-villa-vie-passengers.html" target="_blank" rel="noopener noreferrer">An ‘Endless’ Cruise Around the World Is Suspended, Leaving Passengers Stranded</a></h3>
+                    <p class="summary">The cruise promised a lifetime of sailing, for less than what it cost to live on land. But it was underfunded and couldn’t absorb the rising cost of fuel.</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.nytimes.com/2026/10/28/travel/endless-cruise-suspended-villa-vie-passengers.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">BBC Business</span>
+                        <time datetime="2026-10-28T18:45:09+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 02:45
+                        </time>
+                    </div>
+                    <h3><a href="https://www.bbc.co.uk/news/articles/cqpvgxz3y49go?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Healey unveils £100 for energy bills and bank tax in first Budget</a></h3>
+                    <p class="summary">The chancellor targets the cost of living amid global economic turmoil but opposition parties say he has not been bold enough.</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.bbc.co.uk/news/articles/cqpvgxz3y49go?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+                </div>
+            </section>
+
+            <section
+                class="content-section"
+                id="e41b915e32"
+                data-category="科学探索"
+                style="--category-color: #0891b2"
+                 hidden
+            >
+                <div class="section-heading">
+                    <div>
+                        <span class="section-kicker">CURRENT CHANNEL</span>
+                        <h2>科学探索</h2>
+                    </div>
+                    <span class="section-count">15 条内容</span>
+                </div>
+                <div class="cards-grid">
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Phys.org</span>
+                        <time datetime="2026-10-29T04:10:01+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 12:10
+                        </time>
+                    </div>
+                    <h3><a href="https://phys.org/news/2026-10-covid-era-snap-emergency-food.html" target="_blank" rel="noopener noreferrer">End of COVID-era SNAP emergency food assistance linked to increased child maltreatment rates</a></h3>
+                    <p class="summary">A new study has found that in U.S. counties that ended COVID-19 pandemic-era Supplemental Nutrition Assistance Program (SNAP) Emergency Allotments, child maltreatment rates went up. The findings from the study in the American Journal of Preventive Medicine suggest that changes to food assistance programs have consequences that extend beyond food security and also affect child and family well-being.</p>
+                    <div class="card-footer"><a class="read-more" href="https://phys.org/news/2026-10-covid-era-snap-emergency-food.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">NASA</span>
+                        <time datetime="2026-10-29T04:05:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 12:05
+                        </time>
+                    </div>
+                    <h3><a href="https://science.nasa.gov/image-article/apod-29-october-2026-the-horns-of-venus/" target="_blank" rel="noopener noreferrer">APOD: 29 October 2026 – The Horns of Venus</a></h3>
+                    <p class="summary">APOD Science APOD APOD: 29 October 2026 – The… Today’s APOD Archive Submissions Index Search Calendar RSS Education About Discuss APOD Astronomy Picture of the Day Discover the cosmos! Each day a different image or photograph of our fascinating universe is featured, along with a brief explanation written by a professional astronomer. The Horns […]</p>
+                    <div class="card-footer"><a class="read-more" href="https://science.nasa.gov/image-article/apod-29-october-2026-the-horns-of-venus/" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">NASA</span>
+                        <time datetime="2026-10-29T04:01:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 12:01
+                        </time>
+                    </div>
+                    <h3><a href="https://science.nasa.gov/earth/earth-observatory/arnab-strikes-india/" target="_blank" rel="noopener noreferrer">Arnab Strikes India</a></h3>
+                    <p class="summary">The first named storm of the North Indian Ocean’s cyclone season made landfall along the coast of Andhra Pradesh.</p>
+                    <div class="card-footer"><a class="read-more" href="https://science.nasa.gov/earth/earth-observatory/arnab-strikes-india/" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">ScienceDaily</span>
+                        <time datetime="2026-10-29T03:54:37+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 11:54
+                        </time>
+                    </div>
+                    <h3><a href="https://www.sciencedaily.com/releases/2026/10/261027063814.htm" target="_blank" rel="noopener noreferrer">Your blood pressure could be dangerous even when your numbers look normal</a></h3>
+                    <p class="summary">Researchers have discovered a small group of brain cells that prevents dangerous blood pressure swings, even when average readings appear normal. The finding reveals a hidden source of cardiovascular risk and could open the door to new treatments that protect the heart and brain.</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.sciencedaily.com/releases/2026/10/261027063814.htm" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">ScienceDaily</span>
+                        <time datetime="2026-10-29T03:39:27+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 11:39
+                        </time>
+                    </div>
+                    <h3><a href="https://www.sciencedaily.com/releases/2026/10/261027063713.htm" target="_blank" rel="noopener noreferrer">Scientists just broke a textbook rule of physics</a></h3>
+                    <p class="summary">Scientists have defied a long-standing rule of laser physics by generating X-rays with much higher energies than conventional theory predicts. The surprising discovery reveals how two electrons working together can overcome a previously accepted limit, opening new possibilities for quantum research.</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.sciencedaily.com/releases/2026/10/261027063713.htm" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">NASA</span>
+                        <time datetime="2026-10-29T02:49:59+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 10:49
+                        </time>
+                    </div>
+                    <h3><a href="https://www.nasa.gov/centers-and-facilities/jpl/caltech-names-artemis-ii-commander-reid-wiseman-as-nasa-jpl-deputy/" target="_blank" rel="noopener noreferrer">Caltech Names Artemis II Commander Reid Wiseman as NASA JPL Deputy</a></h3>
+                    <p class="summary">Artemis II Commander Reid Wiseman has been named Caltech associate vice president and deputy director of NASA’s Jet Propulsion Laboratory in Southern California. The emeritus astronaut and retired U.S. Navy captain begins his new role at NASA’s center of excellence for robotics and deep space exploration and at Caltech, which manages JPL for NASA, on […]</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.nasa.gov/centers-and-facilities/jpl/caltech-names-artemis-ii-commander-reid-wiseman-as-nasa-jpl-deputy/" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Phys.org</span>
+                        <time datetime="2026-10-29T02:00:02+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 10:00
+                        </time>
+                    </div>
+                    <h3><a href="https://phys.org/news/2026-10-optimistic-climate-futures-local-communities.html" target="_blank" rel="noopener noreferrer">Optimistic climate futures for local communities in the UK imagined in a new report</a></h3>
+                    <p class="summary">A new report co-authored by researchers from the University of York and WWF highlights how local communities across the U.K. imagine positive, sustainable, and resilient futures for the places where they live and work.</p>
+                    <div class="card-footer"><a class="read-more" href="https://phys.org/news/2026-10-optimistic-climate-futures-local-communities.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Phys.org</span>
+                        <time datetime="2026-10-29T01:00:06+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 09:00
+                        </time>
+                    </div>
+                    <h3><a href="https://phys.org/news/2026-10-indian-ocean-linked-europe-early.html" target="_blank" rel="noopener noreferrer">How the Indian Ocean is linked to Europe&#x27;s early-winter rain and storms</a></h3>
+                    <p class="summary">When we think about Europe&#x27;s winter weather, the Indian Ocean is probably not the first place we look. We might picture Atlantic storms, cold air arriving from the north or rain sweeping across the Mediterranean. In my research, however, I look at how these familiar weather systems fit into a much larger climate system. My colleagues and I asked whether an ocean thousands of kilometers away could leave a detectable s……</p>
+                    <div class="card-footer"><a class="read-more" href="https://phys.org/news/2026-10-indian-ocean-linked-europe-early.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Phys.org</span>
+                        <time datetime="2026-10-28T23:40:01+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 07:40
+                        </time>
+                    </div>
+                    <h3><a href="https://phys.org/news/2026-10-phantom-lighthouse-australia-strangest-illusions.html" target="_blank" rel="noopener noreferrer">The phantom lighthouse: New research explains one of Australia&#x27;s strangest illusions</a></h3>
+                    <p class="summary">There are two lighthouses on Lady Elliot Island, at the southernmost tip of Australia&#x27;s Great Barrier Reef. The first was built in 1873, but was decommissioned in 1995 when the second took over the job of warning ships off the reef. Visitors to the island, however, regularly report seeing signs of a third lighthouse. At night the beams of a nonexistent phantom lighthouse are seen far off, shining on the horizon.</p>
+                    <div class="card-footer"><a class="read-more" href="https://phys.org/news/2026-10-phantom-lighthouse-australia-strangest-illusions.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Phys.org</span>
+                        <time datetime="2026-10-28T23:20:02+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 07:20
+                        </time>
+                    </div>
+                    <h3><a href="https://phys.org/news/2026-10-ultrathin-metal-layer-boosts-door.html" target="_blank" rel="noopener noreferrer">Ultrathin metal layer boosts spin-related signals, opening a door to ultralow-power electronics</a></h3>
+                    <p class="summary">Researchers at Kyushu University have found that an ultrathin layer of iridium manganese (IrMn) can improve two spin-related signals in a structure made of a magnetic insulator and a platinum film. By examining how spin currents are generated and absorbed, the team gained insights into how the intermediate layer improves spin transfer. The findings could inform the development of ultralow-power devices for computing……</p>
+                    <div class="card-footer"><a class="read-more" href="https://phys.org/news/2026-10-ultrathin-metal-layer-boosts-door.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">NASA</span>
+                        <time datetime="2026-10-28T21:50:01+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 05:50
+                        </time>
+                    </div>
+                    <h3><a href="https://www.nasa.gov/organizations/oiir/nasa-welcomes-vietnam-as-newest-artemis-accords-signatory/" target="_blank" rel="noopener noreferrer">NASA Welcomes Vietnam as Newest Artemis Accords Signatory</a></h3>
+                    <p class="summary">The Socialist Republic of Vietnam became the 78th nation to sign the Artemis Accords, joining a growing coalition of like-minded nations committed to the peaceful, transparent, and responsible exploration of space. “Vietnam is joining at an important point in the development of its own space program,” said NASA Deputy Administrator Matt Anderson in recorded remarks […]</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.nasa.gov/organizations/oiir/nasa-welcomes-vietnam-as-newest-artemis-accords-signatory/" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">NASA</span>
+                        <time datetime="2026-10-28T18:59:44+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 02:59
+                        </time>
+                    </div>
+                    <h3><a href="https://www.nasa.gov/image-article/artemis-iii-sls-core-stage-joins-boosters-at-kennedy/" target="_blank" rel="noopener noreferrer">Artemis III SLS Core Stage Joins Boosters at Kennedy</a></h3>
+                    <p class="summary">NASA’s Artemis III SLS (Space Launch System) core stage is integrated alongside the twin solid rocket boosters on Oct. 28 inside the Vehicle Assembly Building’s High Bay 3 at NASA’s Kennedy Space Center in Florida. Technicians lifted the 212-foot rocket stage from the facility’s High Bay 2 using a one-of-a kind lifting beam designed […]</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.nasa.gov/image-article/artemis-iii-sls-core-stage-joins-boosters-at-kennedy/" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">ScienceDaily</span>
+                        <time datetime="2026-10-28T12:37:31+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-28 20:37
+                        </time>
+                    </div>
+                    <h3><a href="https://www.sciencedaily.com/releases/2026/10/261027231021.htm" target="_blank" rel="noopener noreferrer">A single sauna session sends immune cells surging through your body</a></h3>
+                    <p class="summary">A new Finnish study reveals that just 30 minutes in a sauna can temporarily flood the bloodstream with additional white blood cells, potentially helping the immune system patrol the body and detect threats. The surprising response resembles the immune boost seen during exercise and may help explain some of the health benefits linked to sauna bathing.</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.sciencedaily.com/releases/2026/10/261027231021.htm" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Nature</span>
+                        <time datetime="2026-10-28T00:00:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-28 08:00
+                        </time>
+                    </div>
+                    <h3><a href="https://www.nature.com/articles/s41586-026-11348-z" target="_blank" rel="noopener noreferrer">Switchable Chlorine Atom Transfer Radical Reactions</a></h3>
+                    <p class="summary">Nature, Published online: 28 October 2026; doi:10.1038/s41586-026-11348-z Switchable Chlorine Atom Transfer Radical Reactions</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.nature.com/articles/s41586-026-11348-z" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Nature</span>
+                        <time datetime="2026-10-28T00:00:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-28 08:00
+                        </time>
+                    </div>
+                    <h3><a href="https://www.nature.com/articles/s41586-026-11335-4" target="_blank" rel="noopener noreferrer">Back-to-monomer depolymerization of silicones by deoxygenative chlorination</a></h3>
+                    <p class="summary">Nature, Published online: 28 October 2026; doi:10.1038/s41586-026-11335-4 Back-to-monomer depolymerization of silicones by deoxygenative chlorination</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.nature.com/articles/s41586-026-11335-4" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+                </div>
+            </section>
+
+            <section
+                class="content-section"
+                id="ba08216f13"
+                data-category="游戏"
+                style="--category-color: #db2777"
+                 hidden
+            >
+                <div class="section-heading">
+                    <div>
+                        <span class="section-kicker">CURRENT CHANNEL</span>
+                        <h2>游戏</h2>
+                    </div>
+                    <span class="section-count">15 条内容</span>
+                </div>
+                <div class="cards-grid">
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">PlayStation Blog</span>
+                        <time datetime="2026-10-29T02:03:29+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 10:03
+                        </time>
+                    </div>
+                    <h3><a href="https://blog.playstation.com/2026/10/28/20261029-ps5/" target="_blank" rel="noopener noreferrer">(For Southeast Asia) First look inside the Prism Collection, with three new transparent designs for PS5 accessories</a></h3>
+                    <p class="summary">Get ready to see your PS5 console and DualSense controller in a whole new way. Today, we are pleased to introduce the Prism Collection, featuring three striking transparent designs for DualSense wireless controllers and PS5 console covers: Flare Orange, Emerald Green, and Graphite Gray. The new collection was inspired by our design teams’ interest to […]</p>
+                    <div class="card-footer"><a class="read-more" href="https://blog.playstation.com/2026/10/28/20261029-ps5/" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">PC Gamer</span>
+                        <time datetime="2026-10-29T02:00:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 10:00
+                        </time>
+                    </div>
+                    <h3><a href="https://www.pcgamer.com/games/action/phantom-blade-zero-quickhand-request-treasure-locations-relics/" target="_blank" rel="noopener noreferrer">All Quickhand&#x27;s Request treasure locations in Phantom Blade Zero</a></h3>
+                    <p class="summary">Plus where to find Zhang&#x27;s hideouts for The Wily Hare&#x27;s Three Dens quest.</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.pcgamer.com/games/action/phantom-blade-zero-quickhand-request-treasure-locations-relics/" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">PC Gamer</span>
+                        <time datetime="2026-10-29T02:00:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 10:00
+                        </time>
+                    </div>
+                    <h3><a href="https://www.pcgamer.com/games/action/phantom-blade-zero-four-fierce-axes-walkthrough/" target="_blank" rel="noopener noreferrer">How to complete Four Fierce Axes in Phantom Blade Zero</a></h3>
+                    <p class="summary">Gather evidence of the conspiracy against the Four Axes.</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.pcgamer.com/games/action/phantom-blade-zero-four-fierce-axes-walkthrough/" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">PC Gamer</span>
+                        <time datetime="2026-10-29T02:00:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 10:00
+                        </time>
+                    </div>
+                    <h3><a href="https://www.pcgamer.com/games/action/phantom-blade-zero-aberrant-three-faced-puppet-triple-threat/" target="_blank" rel="noopener noreferrer">How to beat the Aberrant Three-Faced Puppet in Phantom Blade Zero</a></h3>
+                    <p class="summary">Defeat this tricky boss in the Triple-Threat quest.</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.pcgamer.com/games/action/phantom-blade-zero-aberrant-three-faced-puppet-triple-threat/" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">PC Gamer</span>
+                        <time datetime="2026-10-29T02:00:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 10:00
+                        </time>
+                    </div>
+                    <h3><a href="https://www.pcgamer.com/games/action/phantom-blade-zero-crimson-manor-enter/" target="_blank" rel="noopener noreferrer">How to enter the Crimson Manor in Phantom Blade Zero</a></h3>
+                    <p class="summary">Find a way into this mysterious red house below the Sha-Chi tower.</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.pcgamer.com/games/action/phantom-blade-zero-crimson-manor-enter/" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">PC Gamer</span>
+                        <time datetime="2026-10-29T02:00:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 10:00
+                        </time>
+                    </div>
+                    <h3><a href="https://www.pcgamer.com/games/action/phantom-blade-zero-honor-among-thieves-answers-gentle-thief-questions/" target="_blank" rel="noopener noreferrer">All Honor Among Thieves answers in Phantom Blade Zero</a></h3>
+                    <p class="summary">Describe the brother&#x27;s letter to The Gentle Thief.</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.pcgamer.com/games/action/phantom-blade-zero-honor-among-thieves-answers-gentle-thief-questions/" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">PlayStation Blog</span>
+                        <time datetime="2026-10-29T02:00:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 10:00
+                        </time>
+                    </div>
+                    <h3><a href="https://blog.playstation.com/2026/10/28/phantom-blade-zero-how-boss-weapons-transform-combat-and-exploration/" target="_blank" rel="noopener noreferrer">Phantom Blade Zero: How boss weapons transform combat and exploration</a></h3>
+                    <p class="summary">Phantom Blade Zero blends influences from a variety of sources to create intense, fast-paced combat and a supernaturally infused Kungfupunk world. It draws on the tough, powerful bosses of Soulslikes, the quick, combo-focused combat of hack-and-slash games, the fascinating stories and characters of RPGs, and the unlockable exploration of search action games. All those ideas […]</p>
+                    <div class="card-footer"><a class="read-more" href="https://blog.playstation.com/2026/10/28/phantom-blade-zero-how-boss-weapons-transform-combat-and-exploration/" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Xbox Wire</span>
+                        <time datetime="2026-10-29T01:40:58+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 09:40
+                        </time>
+                    </div>
+                    <h3><a href="https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-warzone-season-1-announcement#new_tab" target="_blank" rel="noopener noreferrer">Call of Duty: Modern Warfare 4 and Call of Duty: Warzone Season 1: All You Need to Know</a></h3>
+                    <p class="summary">The post Call of Duty: Modern Warfare 4 and Call of Duty: Warzone Season 1: All You Need to Know appeared first on XBOX Wire .</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.callofduty.com/blog/2026/10/call-of-duty-modern-warfare-4-warzone-season-1-announcement#new_tab" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Eurogamer</span>
+                        <time datetime="2026-10-28T20:08:50+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 04:08
+                        </time>
+                    </div>
+                    <h3><a href="https://www.eurogamer.net/epic-genai-fortnite-unreal-engine-6-no-longer-writing-code" target="_blank" rel="noopener noreferrer">Epic Games further doubles down on gen-AI tools for Fortnite, Unreal Engine 6 and more: &quot;Our engineers are no longer writing the bulk of the code&quot;</a></h3>
+                    <p class="summary">To no one&#x27;s surprise, Epic Games has now confirmed that it&#x27;s tripling down on its gen-AI push and will use the controversial tech on everything from Fortnite to the next iteration of its widely-used game development engine, Unreal Engine 6. Read more</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.eurogamer.net/epic-genai-fortnite-unreal-engine-6-no-longer-writing-code" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Eurogamer</span>
+                        <time datetime="2026-10-28T19:16:08+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 03:16
+                        </time>
+                    </div>
+                    <h3><a href="https://www.eurogamer.net/alien-isolation-2-commit-physical-edition" target="_blank" rel="noopener noreferrer">Alien: Isolation 2 devs commit to a physical edition: &quot;Staying true to the analogue nature of Alien is one of our pillars&quot;</a></h3>
+                    <p class="summary">The developers behind Alien: Isolation 2 are committing to a full physical edition, and have shared even more details about the highly-anticipated survival horror sequel. Read more</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.eurogamer.net/alien-isolation-2-commit-physical-edition" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Eurogamer</span>
+                        <time datetime="2026-10-28T17:56:45+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 01:56
+                        </time>
+                    </div>
+                    <h3><a href="https://www.eurogamer.net/cyberpunk-2077-multiplayer-quests-cd-projekt-red" target="_blank" rel="noopener noreferrer">Cyberpunk 2 might include multiplayer after CD Projekt Red scrapped the feature in Cyberpunk 2077</a></h3>
+                    <p class="summary">Cyberpunk 2 might try to revive Cyberpunk 2077 &#x27;s online ambitions, as a new CD Projekt Red job listing is looking for someone familiar with &quot;multiplayer network architecture.&quot; Read more</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.eurogamer.net/cyberpunk-2077-multiplayer-quests-cd-projekt-red" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">PlayStation Blog</span>
+                        <time datetime="2026-10-28T17:15:17+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 01:15
+                        </time>
+                    </div>
+                    <h3><a href="https://blog.playstation.com/2026/10/28/modern-warfare-4-season-1-everything-you-need-to-know-for-november-6-launch/" target="_blank" rel="noopener noreferrer">Modern Warfare 4 Season 1: Everything you need to know for November 6 launch</a></h3>
+                    <p class="summary">Get ready for Season 1, with new maps, modes, events and rewards across Multiplayer and DMZ. Explore the unforgiving corridors of X01, wield new weapons and attachments, acquire new Operator Skins, Weapon Blueprints, DMZ Survival Kits, and more. Call of Duty: Modern Warfare 4 Season 1 goes live on November 6 New Multiplayer maps and […]</p>
+                    <div class="card-footer"><a class="read-more" href="https://blog.playstation.com/2026/10/28/modern-warfare-4-season-1-everything-you-need-to-know-for-november-6-launch/" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Eurogamer</span>
+                        <time datetime="2026-10-28T17:10:24+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 01:10
+                        </time>
+                    </div>
+                    <h3><a href="https://www.eurogamer.net/dont-nod-insolvency-life-is-strange-aphelion" target="_blank" rel="noopener noreferrer">&quot;This company has been driven into a wall for years&quot; - Life is Strange studio Don&#x27;t Nod faces unrest while teetering on insolvency</a></h3>
+                    <p class="summary">There&#x27;s deep unrest at French studio Don&#x27;t Nod - creator of Life is Strange , Remember Me , Vampyr, Banishers: New Eden, and most recently Aphelion - as it scrambles to restructure itself and guard against insolvency. Read more</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.eurogamer.net/dont-nod-insolvency-life-is-strange-aphelion" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Xbox Wire</span>
+                        <time datetime="2026-10-28T17:05:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 01:05
+                        </time>
+                    </div>
+                    <h3><a href="https://news.xbox.com/en-us/2026/10/28/football-manager-27-the-real-world-of-football-meets-your-digital-decisions-official-xbox-podcast/" target="_blank" rel="noopener noreferrer">Football Manager 27: The Real World of Football Meets Your Digital Decisions | Official XBOX Podcast</a></h3>
+                    <p class="summary">On this episode of the Official XBOX Podcast, we’re sitting down with the team behind Football Manager 27. The long running franchise is back and better than ever with all of the info, stats, insights, and more you’ll need to live out your football manager dreams. And, we’ll hear how the franchise has made an […] The post Football Manager 27: The Real World of Football Meets Your Digital Decisions | Official XBOX Pod……</p>
+                    <div class="card-footer"><a class="read-more" href="https://news.xbox.com/en-us/2026/10/28/football-manager-27-the-real-world-of-football-meets-your-digital-decisions-official-xbox-podcast/" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Xbox Wire</span>
+                        <time datetime="2026-10-28T17:00:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 01:00
+                        </time>
+                    </div>
+                    <h3><a href="https://news.xbox.com/en-us/2026/10/28/football-manager-27-interview-tips-tricks-xbox-launch/" target="_blank" rel="noopener noreferrer">Never Played Football Manager Before? Here are Some First-Timer Tips Before Football Manager 27 Arrives</a></h3>
+                    <p class="summary">The World Cup brought a lot of new eyes to football (soccer, if you must), which in turn is sure to bring a lot of new players to Football Manager 27. But this simulation series is so realistic that it’s helped kickstart the careers of professional managers, its database is used by real clubs, and […] The post Never Played Football Manager Before? Here are Some First-Timer Tips Before Football Manager 27 Arrives appe……</p>
+                    <div class="card-footer"><a class="read-more" href="https://news.xbox.com/en-us/2026/10/28/football-manager-27-interview-tips-tricks-xbox-launch/" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+                </div>
+            </section>
+
+            <section
+                class="content-section"
+                id="4534327de1"
+                data-category="时政热点"
+                style="--category-color: #ea580c"
+                 hidden
+            >
+                <div class="section-heading">
+                    <div>
+                        <span class="section-kicker">CURRENT CHANNEL</span>
+                        <h2>时政热点</h2>
+                    </div>
+                    <span class="section-count">15 条内容</span>
+                </div>
+                <div class="cards-grid">
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Al Jazeera</span>
+                        <time datetime="2026-10-29T05:36:08+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 13:36
+                        </time>
+                    </div>
+                    <h3><a href="https://www.aljazeera.com/features/2026/10/29/why-a-democratic-win-in-us-midterms-could-adversely-affect-europe?traffic_source=rss" target="_blank" rel="noopener noreferrer">Why a Democratic win in US midterms could adversely affect Europe</a></h3>
+                    <p class="summary">Complacency about rising far-right movements and renewed pressure on Ukraine could be the result.</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.aljazeera.com/features/2026/10/29/why-a-democratic-win-in-us-midterms-could-adversely-affect-europe?traffic_source=rss" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Al Jazeera</span>
+                        <time datetime="2026-10-29T05:29:20+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 13:29
+                        </time>
+                    </div>
+                    <h3><a href="https://www.aljazeera.com/news-analysis/2026/10/29/can-turkiyes-libya-breakthrough-reshape-eastern-mediterranean-diplomacy?traffic_source=rss" target="_blank" rel="noopener noreferrer">Can Turkiye’s Libya breakthrough reshape Eastern Mediterranean diplomacy?</a></h3>
+                    <p class="summary">Ankara wins backing from former adversaries in Libya for maritime border agreement, but other diplomatic tests remain.</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.aljazeera.com/news-analysis/2026/10/29/can-turkiyes-libya-breakthrough-reshape-eastern-mediterranean-diplomacy?traffic_source=rss" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Al Jazeera</span>
+                        <time datetime="2026-10-29T05:22:21+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 13:22
+                        </time>
+                    </div>
+                    <h3><a href="https://www.aljazeera.com/news/2026/10/29/russia-says-more-than-600-drones-launched-towards-moscow-overnight?traffic_source=rss" target="_blank" rel="noopener noreferrer">Russia says more than 600 drones launched towards Moscow overnight</a></h3>
+                    <p class="summary">The attack is the latest in a series of major drone assaults targeting the Moscow region.</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.aljazeera.com/news/2026/10/29/russia-says-more-than-600-drones-launched-towards-moscow-overnight?traffic_source=rss" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Al Jazeera</span>
+                        <time datetime="2026-10-29T05:06:23+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 13:06
+                        </time>
+                    </div>
+                    <h3><a href="https://www.aljazeera.com/news/2026/10/29/judge-rejects-trump-effort-to-block-california-noncitizen-ballots?traffic_source=rss" target="_blank" rel="noopener noreferrer">Judge rejects Trump effort to block California ‘noncitizen’ ballots</a></h3>
+                    <p class="summary">More than 100 subpoenas issued across 13 states as government ramps up search for alleged noncitizen voters.</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.aljazeera.com/news/2026/10/29/judge-rejects-trump-effort-to-block-california-noncitizen-ballots?traffic_source=rss" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">Al Jazeera</span>
+                        <time datetime="2026-10-29T04:30:04+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 12:30
+                        </time>
+                    </div>
+                    <h3><a href="https://www.aljazeera.com/video/newsfeed/2026/10/29/obama-mocks-trump-teams-cheesecake-factory-response?traffic_source=rss" target="_blank" rel="noopener noreferrer">Obama mocks Trump team’s Cheesecake Factory response</a></h3>
+                    <p class="summary">Obama mocks Trump team’s Cheesecake Factory response</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.aljazeera.com/video/newsfeed/2026/10/29/obama-mocks-trump-teams-cheesecake-factory-response?traffic_source=rss" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">德国之声中文</span>
+                        <time datetime="2026-10-29T03:02:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 11:02
+                        </time>
+                    </div>
+                    <h3><a href="https://www.dw.com/zh/西班牙高铁事故：调度中心指令失误-红灯仍放行/a-79789821?maca=chi-rss-chi-all-1127-rdf" target="_blank" rel="noopener noreferrer">西班牙高铁事故：调度中心指令失误 红灯仍放行</a></h3>
+                    <p class="summary">周三上午，西班牙中部有一列国有RENFE高铁追尾一列停车的私营IRYO列车，两节车厢脱轨跌下路堤，至少68人死亡。西班牙交通部长表示，事故前，该路段所有列车都因系统故障而停驶，但RENFE列车却从调度中心接到了“照常行驶”的错误指令。</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.dw.com/zh/西班牙高铁事故：调度中心指令失误-红灯仍放行/a-79789821?maca=chi-rss-chi-all-1127-rdf" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">BBC World</span>
+                        <time datetime="2026-10-29T01:14:01+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 09:14
+                        </time>
+                    </div>
+                    <h3><a href="https://www.bbc.co.uk/news/articles/c6kglwe4lxwzo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Flávio Bolsonaro denies fleeing Brazil after landing in Miami</a></h3>
+                    <p class="summary">The defeated Brazilian candidate claims to be the victim of a coup d’état and political persecution, recycling unsubstantiated allegations of “electoral fraud”.</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.bbc.co.uk/news/articles/c6kglwe4lxwzo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">The Guardian World</span>
+                        <time datetime="2026-10-28T22:06:46+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 06:06
+                        </time>
+                    </div>
+                    <h3><a href="https://www.theguardian.com/world/2026/oct/28/flavio-bolsonaro-miami-us-fleeing-brazilian-election-defeat" target="_blank" rel="noopener noreferrer">Flávio Bolsonaro calls himself the ‘leader of Brazil’ after fleeing to Miami</a></h3>
+                    <p class="summary">Far-right senator and family land in US after crossing from Brazil into Argentina and then flying via Ecuador Flávio Bolsonaro declared himself the “true president” of Brazil after losing last Sunday’s presidential election and fleeing to the United States. After landing on a private jet with his family in Miami, Florida , on Wednesday morning, the far-right senator published the claim in a letter – even though his o……</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.theguardian.com/world/2026/oct/28/flavio-bolsonaro-miami-us-fleeing-brazilian-election-defeat" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">BBC World</span>
+                        <time datetime="2026-10-28T21:38:54+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 05:38
+                        </time>
+                    </div>
+                    <h3><a href="https://www.bbc.co.uk/news/articles/c6p3g84kjqjlo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">High-speed train crash kills at least 68 people in Spain</a></h3>
+                    <p class="summary">The crash, between a moving train and another that was stopped further up the track, was caused by an &quot;inexplicable&quot; error, the transport minister said.</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.bbc.co.uk/news/articles/c6p3g84kjqjlo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">The Guardian World</span>
+                        <time datetime="2026-10-28T21:27:33+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 05:27
+                        </time>
+                    </div>
+                    <h3><a href="https://www.theguardian.com/world/2026/oct/28/european-union-canada" target="_blank" rel="noopener noreferrer">EU backs away from offer to Canada to start ‘associate member’ talks</a></h3>
+                    <p class="summary">Watered-down version of statement to be issued at end of Montreal summit instead offers ‘ever closer association’ The EU has backed away from its offer to Canada to start talks on becoming an “associate member” after disagreements between members states just as an EU-Canada summit was set to begin in Montreal. A draft of a joint statement to be issued after the end of the summit, which runs Thursday and Friday, showe……</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.theguardian.com/world/2026/oct/28/european-union-canada" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">BBC World</span>
+                        <time datetime="2026-10-28T21:24:41+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 05:24
+                        </time>
+                    </div>
+                    <h3><a href="https://www.bbc.co.uk/news/articles/cm9qzd47ng98o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Bloodied, dazed and angry - how passengers&#x27; rail journey turned to disaster in Spain</a></h3>
+                    <p class="summary">Survivors of the train crash in Spain have spoken of their shock, panic and anger at the accident in Toledo province on Wednesday.</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.bbc.co.uk/news/articles/cm9qzd47ng98o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">BBC World</span>
+                        <time datetime="2026-10-28T20:24:39+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 04:24
+                        </time>
+                    </div>
+                    <h3><a href="https://www.bbc.co.uk/news/articles/cmdx3knq1xexo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">Netanyahu&#x27;s bloc leading Israel election but short of majority, partial results show</a></h3>
+                    <p class="summary">With 85% of ballots counted, Netanyahu&#x27;s Likud party and its allies are set to win 53 seats in the 120-seat Knesset.</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.bbc.co.uk/news/articles/cmdx3knq1xexo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">The Guardian World</span>
+                        <time datetime="2026-10-28T20:15:07+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-29 04:15
+                        </time>
+                    </div>
+                    <h3><a href="https://www.theguardian.com/world/2026/oct/28/canada-ambassador-republicans-midterms" target="_blank" rel="noopener noreferrer">US ambassador suggests Trump could blame Canada if midterms don’t go his way</a></h3>
+                    <p class="summary">Pete Hoekstra, controversial US ambassador to Canada, has also accused Canadian officials of interfering in US elections The US ambassador has suggested Canada could be blamed if Republicans perform poorly in next week’s midterm elections, the latest intervention from a controversial figure who has been accused of inflaming a bitter dispute that has angered and baffled residents of both countries. On Wednesday, CTV n……</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.theguardian.com/world/2026/oct/28/canada-ambassador-republicans-midterms" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">德国之声中文</span>
+                        <time datetime="2026-10-28T15:22:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-28 23:22
+                        </time>
+                    </div>
+                    <h3><a href="https://www.dw.com/zh/以默茨名字命名：新加坡的兰花外交/a-79789658?maca=chi-rss-chi-all-1127-rdf" target="_blank" rel="noopener noreferrer">以默茨名字命名：新加坡的兰花外交</a></h3>
+                    <p class="summary">德国总理默茨访问新加坡期间，获得一项当地外交传统中的特殊礼遇：一种新培育的兰花以他的名字命名。</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.dw.com/zh/以默茨名字命名：新加坡的兰花外交/a-79789658?maca=chi-rss-chi-all-1127-rdf" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">德国之声中文</span>
+                        <time datetime="2026-10-28T15:18:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            10-28 23:18
+                        </time>
+                    </div>
+                    <h3><a href="https://www.dw.com/zh/德语媒体：代价高昂的玩笑/a-79789091?maca=chi-rss-chi-all-1127-rdf" target="_blank" rel="noopener noreferrer">德语媒体：代价高昂的玩笑</a></h3>
+                    <p class="summary">法国球星姆巴佩因所谓“中国独裁者”事件而遭到中国举国声讨的事件，也引起了德语媒体的广泛关注。《南德意志报》评论称，一句不经意间的玩笑，竟引发了一场不折不扣的政治风波，并让姆巴佩付出了惨重的代价。《法兰克福汇报》评论称，令人啼笑皆非的是，北京谴责姆巴佩“伤害中国人民感情”的同时，却不打算让民众知晓这位球星具体说了什么。</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.dw.com/zh/德语媒体：代价高昂的玩笑/a-79789091?maca=chi-rss-chi-all-1127-rdf" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+                </div>
+            </section>
+
+
+        <footer>
+            <span>最后生成：2026-10-29 14:03 CST</span>
+            <span class="footer-badge"><span class="live-dot"></span> GitHub Actions 自动更新</span>
+        </footer>
+    </main>
+
+    <script>
+        (() => {
+            const root = document.documentElement;
+            const selector = document.getElementById("category-select");
+            const sections = Array.from(document.querySelectorAll(".content-section"));
+            const filterPanel = document.getElementById("filter-panel");
+            const activeName = document.getElementById("active-category-name");
+            const activeCount = document.getElementById("active-category-count");
+            const themeToggle = document.getElementById("theme-toggle");
+            const themeIcon = document.getElementById("theme-icon");
+
+            const values = new Set(Array.from(selector.options, option => option.value));
+            const url = new URL(window.location.href);
+            const requested = url.searchParams.get("category");
+            let savedCategory = null;
+
+            try {
+                savedCategory = localStorage.getItem("personalDailyCategory:global");
+            } catch (error) {}
+
+            const initialCategory = values.has(requested)
+                ? requested
+                : values.has(savedCategory)
+                    ? savedCategory
+                    : selector.dataset.defaultCategory;
+
+            function applyCategory(value, updateHistory = false, shouldScroll = false) {
+                const selectedOption = Array.from(selector.options).find(
+                    option => option.value === value
+                );
+                const showAll = value === "__all__";
+
+                sections.forEach(section => {
+                    section.hidden = !showAll && section.dataset.category !== value;
+                });
+
+                selector.value = value;
+                activeName.textContent = showAll ? "全部内容" : value;
+                activeCount.textContent = (selectedOption?.dataset.count || "0") + " 条";
+                filterPanel.style.setProperty(
+                    "--active-color",
+                    selectedOption?.dataset.color || "#6366f1"
+                );
+
+                try {
+                    localStorage.setItem("personalDailyCategory:global", value);
+                } catch (error) {}
+
+                if (updateHistory) {
+                    if (value === selector.dataset.defaultCategory) {
+                        url.searchParams.delete("category");
+                    } else {
+                        url.searchParams.set("category", value);
+                    }
+                    history.replaceState(null, "", url);
+                }
+
+                if (shouldScroll) {
+                    const top = filterPanel.getBoundingClientRect().top + window.scrollY - 10;
+                    window.scrollTo({ top, behavior: "smooth" });
+                }
+            }
+
+            selector.addEventListener("change", () => {
+                applyCategory(selector.value, true, true);
+            });
+
+            function isDarkTheme() {
+                if (root.dataset.theme) return root.dataset.theme === "dark";
+                return window.matchMedia("(prefers-color-scheme: dark)").matches;
+            }
+
+            function refreshThemeIcon() {
+                const dark = isDarkTheme();
+                themeIcon.textContent = dark ? "☀" : "☾";
+                themeToggle.title = dark ? "切换到浅色主题" : "切换到深色主题";
+                themeToggle.setAttribute("aria-label", themeToggle.title);
+            }
+
+            themeToggle.addEventListener("click", () => {
+                const nextTheme = isDarkTheme() ? "light" : "dark";
+                root.dataset.theme = nextTheme;
+                try {
+                    localStorage.setItem("personalDailyTheme", nextTheme);
+                } catch (error) {}
+                refreshThemeIcon();
+            });
+
+            applyCategory(initialCategory);
+            refreshThemeIcon();
+        })();
+    </script>
+
+    <script>
+        (() => {
+            const switchTarget = "../../../index.html";
+            const switchMark = document.querySelector(".brand-mark");
+            let taps = [];
+
+            function switchEdition() {
+                window.location.assign(switchTarget);
+            }
+
+            if (switchMark) {
+                switchMark.addEventListener("click", event => {
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                    const now = Date.now();
+                    taps = taps.filter(value => now - value <= 4000);
+                    taps.push(now);
+
+                    if (taps.length >= 7) {
+                        taps = [];
+                        switchEdition();
+                    }
+                });
+            }
+
+            document.addEventListener("keydown", event => {
+                if (
+                    event.altKey
+                    && event.shiftKey
+                    && event.key.toLowerCase() === "g"
+                ) {
+                    event.preventDefault();
+                    switchEdition();
+                }
+            });
+        })();
+    </script>
+
+</body>
+</html>
