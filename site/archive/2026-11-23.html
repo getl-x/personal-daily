@@ -1,0 +1,2136 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="theme-color" content="#090d18">
+
+    <title>今日知览 · 2026-11-23</title>
+    <script>
+        try {
+            const savedTheme = localStorage.getItem("personalDailyTheme");
+            if (savedTheme === "light" || savedTheme === "dark") {
+                document.documentElement.dataset.theme = savedTheme;
+            }
+        } catch (error) {}
+    </script>
+    <style>
+        :root {
+            color-scheme: light;
+            --page: #f3f6fc;
+            --page-deep: #e9eef8;
+            --surface: rgba(255, 255, 255, 0.84);
+            --surface-solid: #ffffff;
+            --surface-soft: rgba(248, 250, 255, 0.82);
+            --text: #162033;
+            --text-soft: #344054;
+            --muted: #6b7587;
+            --border: rgba(37, 56, 88, 0.12);
+            --border-strong: rgba(37, 56, 88, 0.20);
+            --accent: #4f46e5;
+            --accent-two: #0ea5e9;
+            --glow: rgba(79, 70, 229, 0.20);
+            --shadow: 0 20px 60px rgba(37, 55, 88, 0.10);
+            --shadow-card: 0 12px 34px rgba(37, 55, 88, 0.08);
+        }
+
+        :root[data-theme="dark"] {
+            color-scheme: dark;
+            --page: #070b13;
+            --page-deep: #0b1020;
+            --surface: rgba(17, 24, 39, 0.78);
+            --surface-solid: #111827;
+            --surface-soft: rgba(15, 23, 42, 0.76);
+            --text: #f2f6ff;
+            --text-soft: #d2d9e6;
+            --muted: #929eb2;
+            --border: rgba(148, 163, 184, 0.16);
+            --border-strong: rgba(148, 163, 184, 0.26);
+            --accent: #818cf8;
+            --accent-two: #38bdf8;
+            --glow: rgba(99, 102, 241, 0.24);
+            --shadow: 0 24px 70px rgba(0, 0, 0, 0.30);
+            --shadow-card: 0 16px 42px rgba(0, 0, 0, 0.22);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                color-scheme: dark;
+                --page: #070b13;
+                --page-deep: #0b1020;
+                --surface: rgba(17, 24, 39, 0.78);
+                --surface-solid: #111827;
+                --surface-soft: rgba(15, 23, 42, 0.76);
+                --text: #f2f6ff;
+                --text-soft: #d2d9e6;
+                --muted: #929eb2;
+                --border: rgba(148, 163, 184, 0.16);
+                --border-strong: rgba(148, 163, 184, 0.26);
+                --accent: #818cf8;
+                --accent-two: #38bdf8;
+                --glow: rgba(99, 102, 241, 0.24);
+                --shadow: 0 24px 70px rgba(0, 0, 0, 0.30);
+                --shadow-card: 0 16px 42px rgba(0, 0, 0, 0.22);
+            }
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+            background:
+                radial-gradient(circle at 8% 0%, rgba(56, 189, 248, 0.12), transparent 29rem),
+                radial-gradient(circle at 92% 10%, var(--glow), transparent 34rem),
+                linear-gradient(155deg, var(--page), var(--page-deep));
+            color: var(--text);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+                BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+            line-height: 1.66;
+        }
+
+        body::before {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background-image:
+                linear-gradient(rgba(125, 141, 168, 0.055) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(125, 141, 168, 0.055) 1px, transparent 1px);
+            background-size: 42px 42px;
+            mask-image: linear-gradient(to bottom, black, transparent 82%);
+            content: "";
+        }
+
+        a { color: inherit; text-decoration: none; }
+        button, select { font: inherit; }
+        svg {
+            width: 1.1em;
+            height: 1.1em;
+            fill: none;
+            stroke: currentColor;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-width: 1.8;
+        }
+
+        .skip-link {
+            position: fixed;
+            top: 8px;
+            left: 8px;
+            z-index: 100;
+            padding: 9px 14px;
+            border-radius: 10px;
+            background: var(--surface-solid);
+            color: var(--text);
+            transform: translateY(-150%);
+        }
+
+        .skip-link:focus { transform: translateY(0); }
+
+        main {
+            width: min(1160px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 28px 0 80px;
+        }
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding: 26px 30px 32px;
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            background:
+                linear-gradient(135deg, rgba(99, 102, 241, 0.11), transparent 48%),
+                var(--surface);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(22px);
+        }
+
+        .hero::after {
+            position: absolute;
+            top: -90px;
+            right: -70px;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.20), transparent 68%);
+            content: "";
+            pointer-events: none;
+        }
+
+        .site-nav,
+        .hero-content { position: relative; z-index: 1; }
+
+        .site-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            padding-bottom: 27px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 11px;
+            font-weight: 760;
+            letter-spacing: -0.02em;
+        }
+
+        .brand-mark {
+            display: grid;
+            width: 38px;
+            height: 38px;
+            place-items: center;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #6366f1, #0ea5e9);
+            color: #fff;
+            box-shadow: 0 10px 24px rgba(79, 70, 229, 0.28);
+        }
+
+        .brand-mark svg { width: 21px; height: 21px; }
+
+        .nav-actions { display: flex; align-items: center; gap: 8px; }
+
+        .nav-link,
+        .theme-toggle {
+            display: inline-flex;
+            min-height: 38px;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 7px 11px;
+            border: 1px solid transparent;
+            border-radius: 11px;
+            color: var(--muted);
+            background: transparent;
+            cursor: pointer;
+            transition: 160ms ease;
+        }
+
+        .nav-link:hover,
+        .theme-toggle:hover {
+            border-color: var(--border);
+            background: var(--surface-soft);
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .theme-toggle { width: 40px; padding: 0; }
+        .theme-toggle span { font-size: 18px; line-height: 1; }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: minmax(0, 1.45fr) minmax(300px, 0.65fr);
+            align-items: end;
+            gap: 42px;
+            padding-top: 38px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 14px;
+            color: var(--accent-two);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: #22c55e;
+            box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.13);
+        }
+
+        h1 {
+            max-width: 760px;
+            margin: 0;
+            font-size: clamp(38px, 6vw, 70px);
+            font-weight: 850;
+            letter-spacing: -0.065em;
+            line-height: 1.02;
+        }
+
+        h1 span {
+            background: linear-gradient(110deg, var(--text) 8%, var(--accent) 58%, var(--accent-two));
+            background-clip: text;
+            color: transparent;
+        }
+
+        .subtitle {
+            max-width: 670px;
+            margin: 18px 0 0;
+            color: var(--text-soft);
+            font-size: clamp(16px, 2vw, 19px);
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 20px;
+            margin-top: 25px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .hero-meta span { display: inline-flex; align-items: center; gap: 7px; }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .stat {
+            min-width: 0;
+            padding: 18px 14px;
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            background: var(--surface-soft);
+            text-align: center;
+        }
+
+        .stat strong {
+            display: block;
+            color: var(--text);
+            font-size: clamp(22px, 3vw, 31px);
+            line-height: 1;
+        }
+
+        .stat span {
+            display: block;
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 11px;
+            white-space: nowrap;
+        }
+
+        .filter-panel {
+            --active-color: #059669;
+            position: sticky;
+            top: 12px;
+            z-index: 20;
+            display: grid;
+            grid-template-columns: minmax(190px, 0.9fr) minmax(280px, 1.15fr) auto;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+            padding: 17px 20px;
+            border: 1px solid var(--border-strong);
+            border-radius: 20px;
+            background: color-mix(in srgb, var(--surface-solid) 82%, transparent);
+            box-shadow: var(--shadow-card);
+            backdrop-filter: blur(22px);
+        }
+
+        .filter-title {
+            display: block;
+            font-size: 16px;
+            font-weight: 780;
+            letter-spacing: -0.02em;
+        }
+
+        .filter-hint { display: block; color: var(--muted); font-size: 12px; }
+
+        .select-control { display: block; min-width: 0; }
+        .select-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
+
+        .select-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .select-box > svg:first-child {
+            position: absolute;
+            left: 15px;
+            z-index: 1;
+            color: var(--active-color);
+            pointer-events: none;
+        }
+
+        .select-box select {
+            width: 100%;
+            min-height: 48px;
+            appearance: none;
+            padding: 10px 46px 10px 45px;
+            border: 1px solid color-mix(in srgb, var(--active-color) 42%, var(--border));
+            border-radius: 14px;
+            outline: none;
+            background: color-mix(in srgb, var(--active-color) 7%, var(--surface-solid));
+            color: var(--text);
+            font-weight: 720;
+            cursor: pointer;
+            transition: 160ms ease;
+        }
+
+        .select-box select:focus {
+            border-color: var(--active-color);
+            box-shadow: 0 0 0 4px color-mix(in srgb, var(--active-color) 15%, transparent);
+        }
+
+        .select-chevron {
+            position: absolute;
+            right: 14px;
+            color: var(--muted);
+            pointer-events: none;
+        }
+
+        .current-view {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            color: var(--muted);
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .current-view-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--active-color);
+            box-shadow: 0 0 0 5px color-mix(in srgb, var(--active-color) 13%, transparent);
+        }
+
+        .current-view strong { color: var(--text); font-size: 14px; }
+        .errors { margin-top: 20px; }
+
+        .errors,
+        .empty,
+        .noscript-message {
+            padding: 18px 20px;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: var(--surface);
+        }
+
+        .errors summary { cursor: pointer; font-weight: 720; }
+        .errors li { margin: 6px 0; overflow-wrap: anywhere; }
+
+        .content-section {
+            margin-top: 34px;
+            scroll-margin-top: 104px;
+        }
+
+        .content-section[hidden] { display: none !important; }
+
+        .section-heading {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 17px;
+        }
+
+        .section-kicker {
+            color: var(--category-color);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+        }
+
+        .section-heading h2 {
+            margin: 3px 0 0;
+            font-size: clamp(25px, 3vw, 34px);
+            letter-spacing: -0.04em;
+        }
+
+        .section-count { color: var(--muted); font-size: 13px; }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 15px;
+        }
+
+        .card {
+            position: relative;
+            display: flex;
+            min-width: 0;
+            min-height: 252px;
+            flex-direction: column;
+            overflow: hidden;
+            padding: 21px 22px 18px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background:
+                linear-gradient(145deg, color-mix(in srgb, var(--category-color) 5%, transparent), transparent 42%),
+                var(--surface);
+            box-shadow: var(--shadow-card);
+            transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+        }
+
+        .card:hover {
+            border-color: color-mix(in srgb, var(--category-color) 38%, var(--border));
+            box-shadow: 0 20px 46px color-mix(in srgb, var(--category-color) 11%, transparent);
+            transform: translateY(-3px);
+        }
+
+        .card-accent {
+            position: absolute;
+            top: 0;
+            right: 22px;
+            left: 22px;
+            height: 2px;
+            border-radius: 0 0 99px 99px;
+            background: linear-gradient(90deg, transparent, var(--category-color), transparent);
+            opacity: 0.75;
+        }
+
+        .card-meta-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .source-badge {
+            max-width: 68%;
+            overflow: hidden;
+            padding: 5px 9px;
+            border: 1px solid color-mix(in srgb, var(--category-color) 24%, var(--border));
+            border-radius: 999px;
+            background: color-mix(in srgb, var(--category-color) 8%, var(--surface-solid));
+            color: var(--category-color);
+            font-size: 11px;
+            font-weight: 780;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .card time {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--muted);
+            font-size: 11px;
+            white-space: nowrap;
+        }
+
+        .card h3 {
+            margin: 0;
+            font-size: clamp(17px, 2vw, 20px);
+            letter-spacing: -0.02em;
+            line-height: 1.42;
+        }
+
+        .card h3 a {
+            color: var(--text);
+            transition: color 150ms ease;
+        }
+
+        .card h3 a:hover { color: var(--category-color); text-decoration: none; }
+
+        .summary {
+            display: -webkit-box;
+            margin: 11px 0 0;
+            overflow: hidden;
+            color: var(--text-soft);
+            font-size: 14px;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 4;
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: end;
+            justify-content: flex-end;
+            min-height: 28px;
+            margin-top: auto;
+            padding-top: 15px;
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            color: var(--category-color);
+            font-size: 12px;
+            font-weight: 760;
+        }
+
+        .read-more svg { transition: transform 150ms ease; }
+        .read-more:hover { text-decoration: none; }
+        .read-more:hover svg { transform: translateX(3px); }
+
+        .empty { margin-top: 24px; }
+        .empty p { margin-bottom: 0; color: var(--muted); }
+
+        footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 50px;
+            padding: 24px 4px 0;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .footer-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        @media (max-width: 860px) {
+            .hero-content { grid-template-columns: 1fr; gap: 28px; }
+            .stats { max-width: 480px; }
+            .filter-panel { grid-template-columns: 1fr minmax(260px, 1.3fr); }
+            .current-view { display: none; }
+        }
+
+        @media (max-width: 720px) {
+            main { width: min(100% - 20px, 1160px); padding-top: 10px; }
+            .hero { padding: 18px 18px 24px; border-radius: 22px; }
+            .site-nav { padding-bottom: 18px; }
+            .brand > span:last-child { display: none; }
+            .nav-link span { display: none; }
+            .nav-link { width: 40px; padding: 0; }
+            .hero-content { padding-top: 26px; }
+            h1 { font-size: clamp(39px, 13vw, 58px); }
+            .filter-panel {
+                top: 8px;
+                grid-template-columns: 1fr;
+                gap: 11px;
+                padding: 13px;
+                border-radius: 17px;
+            }
+            .filter-copy { display: none; }
+            .cards-grid { grid-template-columns: 1fr; }
+            .card { min-height: 0; }
+            .section-heading { align-items: center; }
+            footer { align-items: flex-start; flex-direction: column; gap: 7px; }
+        }
+
+        @media (max-width: 430px) {
+            .hero-meta { display: grid; gap: 7px; }
+            .stats { gap: 7px; }
+            .stat { padding: 14px 8px; }
+            .stat span { font-size: 10px; }
+            .card { padding: 19px 17px 16px; border-radius: 17px; }
+            .card-meta-top { align-items: flex-start; flex-direction: column; gap: 8px; }
+            .source-badge { max-width: 100%; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <main id="main-content">
+        <header class="hero">
+            <nav class="site-nav" aria-label="主要导航">
+                <a class="brand" href="../index.html">
+                    <span class="brand-mark" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M5 5.5h10.5A2.5 2.5 0 0 1 18 8v10.5H7.5A2.5 2.5 0 0 1 5 16V5.5Z"/>
+                            <path d="M8.5 9h6M8.5 12h6M8.5 15h3.5M18 9h1a1 1 0 0 1 1 1v6.5a2 2 0 0 1-2 2"/>
+                        </svg>
+                    </span>
+                    <span>今日知览</span>
+                </a>
+                <div class="nav-actions">
+                    <a class="nav-link" href="../index.html" title="今天">
+                        <svg aria-hidden="true" viewBox="0 0 24 24">
+                            <path d="M5 5h14v14H5zM8 3v4M16 3v4M5 9h14"/>
+                        </svg>
+                        <span>今天</span>
+                    </a>
+                    <a class="nav-link" href="index.html" title="历史归档">
+                        <svg aria-hidden="true" viewBox="0 0 24 24">
+                            <path d="M4 7h16M6 4h12l1 3v13H5V7l1-3ZM9 11h6"/>
+                        </svg>
+                        <span>归档</span>
+                    </a>
+                    <button class="theme-toggle" id="theme-toggle" type="button" title="切换明暗主题" aria-label="切换明暗主题">
+                        <span id="theme-icon" aria-hidden="true">☾</span>
+                    </button>
+                </div>
+            </nav>
+
+            <div class="hero-content">
+                <div>
+                    <span class="eyebrow"><span class="live-dot"></span> DAILY BRIEFING</span>
+                    <h1><span>今日知览</span></h1>
+                    <p class="subtitle">科技、财经、科学、游戏与每日要闻，一页掌握今天值得关注的内容。</p>
+                    <div class="hero-meta">
+                        <span>
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <path d="M5 5h14v14H5zM8 3v4M16 3v4M5 9h14"/>
+                            </svg>
+                            2026-11-23
+                        </span>
+                        <span>
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <path d="M12 3v3M12 18v3M4.2 7.5l2.6 1.5M17.2 15l2.6 1.5M4.2 16.5 6.8 15M17.2 9l2.6-1.5"/>
+                                <circle cx="12" cy="12" r="4"/>
+                            </svg>
+                            每日 08:30 自动更新
+                        </span>
+                    </div>
+                </div>
+                <div class="stats" aria-label="日报统计">
+                    <div class="stat"><strong>68</strong><span>今日收录</span></div>
+                    <div class="stat"><strong>23</strong><span>免费信息源</span></div>
+                    <div class="stat"><strong>6</strong><span>内容频道</span></div>
+                </div>
+            </div>
+        </header>
+
+
+
+        <div class="filter-panel" id="filter-panel">
+            <div class="filter-copy">
+                <span class="filter-title">你想看什么？</span>
+                <span class="filter-hint">切换后只显示所选频道</span>
+            </div>
+
+    <label class="select-control" for="category-select">
+        <span class="select-label">内容类型</span>
+        <span class="select-box">
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+                <path d="M4 6.5h16M7 12h10M10 17.5h4"/>
+            </svg>
+            <select
+                id="category-select"
+                data-default-category="今日精选"
+                aria-label="选择要查看的内容类型"
+            >
+                <option value="今日精选" data-count="10" data-color="#059669" selected>今日精选 · 10 条</option><option value="科技" data-count="15" data-color="#2563eb">科技 · 15 条</option><option value="财经商业" data-count="13" data-color="#0f766e">财经商业 · 13 条</option><option value="科学探索" data-count="3" data-color="#0891b2">科学探索 · 3 条</option><option value="游戏" data-count="12" data-color="#db2777">游戏 · 12 条</option><option value="国内要闻" data-count="15" data-color="#ea580c">国内要闻 · 15 条</option><option value="__all__" data-count="68" data-color="#6366f1">全部内容 · 68 条</option>
+            </select>
+            <svg class="select-chevron" aria-hidden="true" viewBox="0 0 24 24">
+                <path d="m7 9.5 5 5 5-5"/>
+            </svg>
+        </span>
+    </label>
+
+            <div class="current-view" aria-live="polite">
+                <span class="current-view-dot" aria-hidden="true"></span>
+                <span id="active-category-name">今日精选</span>
+                <strong id="active-category-count">10 条</strong>
+            </div>
+        </div>
+
+        <noscript>
+            <style>.content-section[hidden] { display: block !important; }</style>
+            <p class="noscript-message">启用 JavaScript 后可以使用分类下拉筛选；当前仍会显示全部内容。</p>
+        </noscript>
+
+
+            <section
+                class="content-section"
+                id="73878a7377"
+                data-category="今日精选"
+                style="--category-color: #059669"
+
+            >
+                <div class="section-heading">
+                    <div>
+                        <span class="section-kicker">CURRENT CHANNEL</span>
+                        <h2>今日精选</h2>
+                    </div>
+                    <span class="section-count">10 条内容</span>
+                </div>
+                <div class="cards-grid">
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">极客公园</span>
+                        <time datetime="2026-11-23T01:22:36+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 09:22
+                        </time>
+                    </div>
+                    <h3><a href="http://www.geekpark.net/news/374304" target="_blank" rel="noopener noreferrer">OpenAI 首席科学家：AI 最早明年加速进化；B 站开始清理「大肥鱼」泛滥；瘫痪患者用脑机打 GTA6｜极客早知道</a></h3>
+                    <p class="summary">OpenAI 首席科学家警告：AI 最早可能在 2027 年加速自身发展，奥尔特曼赞同为 AI 开发设限 11 月 23 日消息，当地时间于 11 月 22 日，OpenAI 首席科学家雅库布 · 帕霍茨基（Jakub Pachocki）发文，提议 AI 企业应建立行业统一标准，对先进 AI 模型的开发设置共同限制，在研究人员具备更可靠的模型行为理解和监控能力之前，不应突破约定的发展门槛。 他认为，传统 AI 能力评测基准会随着技术进步迅速过时，而困惑度（Perplexity）可以作为衡量模型预训练进展的参考指标（困惑度用于衡量 AI 模型预测下一个文本 Token 的能力，数值越低，代表模型的预测能力越强）。 帕霍茨基还公布了 OpenAI 内部使用的部分模型评测数据：GPT-3.5 的对数困惑度约为 0.99，GPT-4 约为 0.91。当这一指标低于 0.8 时，OpenAI 观察到了模型在网络安全和数学领域出现新的能力；……</p>
+                    <div class="card-footer"><a class="read-more" href="http://www.geekpark.net/news/374304" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">每日经济新闻</span>
+                        <time datetime="2026-11-23T00:00:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 08:00
+                        </time>
+                    </div>
+                    <h3><a href="https://www.nbd.com.cn/articles/2026-11-23/4655475.html" target="_blank" rel="noopener noreferrer">从“连得上”到“会思考”2026中国5G+工业互联网大会观察：政策加码、智能体进场、安全与成本成两道坎</a></h3>
+
+                    <div class="card-footer"><a class="read-more" href="https://www.nbd.com.cn/articles/2026-11-23/4655475.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">科学网</span>
+                        <time datetime="2026-11-23T07:55:47.983664+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:55
+                        </time>
+                    </div>
+                    <h3><a href="https://news.sciencenet.cn/htmlnews/2026/11/575154.shtm" target="_blank" rel="noopener noreferrer">秒级复苏！她被这种“地球最强植物”迷住了</a></h3>
+
+                    <div class="card-footer"><a class="read-more" href="https://news.sciencenet.cn/htmlnews/2026/11/575154.shtm" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">3DM</span>
+                        <time datetime="2026-11-23T07:55:56.247585+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:55
+                        </time>
+                    </div>
+                    <h3><a href="https://www.3dmgame.com/news/202611/3961026.html" target="_blank" rel="noopener noreferrer">IGN发布《GTA6》游玩感想：修房玩法令人着迷</a></h3>
+
+                    <div class="card-footer"><a class="read-more" href="https://www.3dmgame.com/news/202611/3961026.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">中国新闻网即时</span>
+                        <time datetime="2026-11-23T07:47:15+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:47
+                        </time>
+                    </div>
+                    <h3><a href="https://www.chinanews.com.cn/gn/2026/11-23/10736479.shtml" target="_blank" rel="noopener noreferrer">中方：一贯主张国际刑事法院应该秉持客观公正立场</a></h3>
+                    <p class="summary">中新网北京11月23日电 (记者 黄钰钦)中国外交部发言人郭嘉昆23日主持例行记者会。</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.chinanews.com.cn/gn/2026/11-23/10736479.shtml" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">IT之家</span>
+                        <time datetime="2026-11-23T07:51:30+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:51
+                        </time>
+                    </div>
+                    <h3><a href="https://www.ithome.com/1/030/933.htm" target="_blank" rel="noopener noreferrer">SK 集团会长崔泰源决定支付全部 9440 亿韩元财产分割款，以终结离婚纠纷</a></h3>
+                    <p class="summary">IT之家 11 月 23 日消息，SK 集团（SK Group）会长崔泰源（Chey Tae-won）计划按照上诉法院的判决，向前妻卢素英（Roh Soh-yeong）支付全部 9,440 亿韩元 （IT之家注：现汇率约合 47.23 亿元人民币） 的财产分割款，以此结束这场持续近十年的法律纠纷。据消息人士周一透露，崔泰源已作出这一决定。 崔泰源的法律代理人已向韩国最高法院提交申请，请求法院建议双方通过和解方式解决纠纷。这一举动似乎意味着，他正在放弃此前针对首尔高等法院今年 7 月裁决提出的上诉。 崔泰源的一名代理人向韩联社表示：“我们申请法院提出和解建议，希望以友好方式彻底结束这场持续已久的争端。这意味着愿意支付全部财产分割款，以终结所有纠纷。” 该代理人还表示，崔泰源希望支付全部款项，从而将精力重新集中到商业活动上，尤其是在全球人工智能（AI）领域竞争日益激烈的背景下。 此前，崔泰源已出售 165 万股 SK 公司（SK I……</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.ithome.com/1/030/933.htm" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">钛媒体</span>
+                        <time datetime="2026-11-23T05:21:35+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 13:21
+                        </time>
+                    </div>
+                    <h3><a href="https://www.tmtpost.com/8209841.html" target="_blank" rel="noopener noreferrer">辰星技术：营收扩张难掩亏损，多款机器人曾亏本销售</a></h3>
+                    <p class="summary">报告期内公司仅在2025年依靠大额政府补助实现短暂账面盈利，其余时段均为亏损；剔除股改因素影响后，这家成立十余载的企业经营层面累计亏损接近2.2亿元。</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.tmtpost.com/8209841.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">中国科学院科研进展</span>
+                        <time datetime="2026-11-23T00:00:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 08:00
+                        </time>
+                    </div>
+                    <h3><a href="https://www.cas.cn/../../syky/202611/t20261123_5124785.shtml" target="_blank" rel="noopener noreferrer">科学家揭开斯氏按蚊更能传播疟疾的秘密</a></h3>
+
+                    <div class="card-footer"><a class="read-more" href="https://www.cas.cn/../../syky/202611/t20261123_5124785.shtml" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">机核</span>
+                        <time datetime="2026-11-23T07:54:25+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:54
+                        </time>
+                    </div>
+                    <h3><a href="https://www.gcores.com/articles/222676" target="_blank" rel="noopener noreferrer">克苏鲁风叙事恐怖游戏《诡语共鸣》将于2027 年发售</a></h3>
+                    <p class="summary">LUAL Games 与 Team17 宣布，克苏鲁风叙事解谜恐怖游戏《诡语共鸣》将于 2027 年登陆 PC。游戏融合谜题、诡谲故事与少量 Roguelike 元素。玩家将带上研究工具，深入未知，在时间耗尽前调查并了解那些侵扰世界的宇宙恐怖。 一头能够撕开现实帷幕的庞然巨物现身后，玩家手中只有研究工具、自己的智慧，以及日渐流失的理智。他们就此卷入一场拯救世界的竞赛。异界怪物不断侵袭家园，玩家必须研究每一种生物，调查其中遭到腐化的情绪，并不断更新魔典，逐步了解这些恐怖存在、它们的起源，以及幕后派遣者的身份。 Steam地址： https://store.steampowered.com/app/2073150/_/ &lt;内嵌内容，请前往机核查看&gt; 面对每一次观察，玩家都可以选择共情或暴力：净化生物体内的腐化，或彻底清除它，终结其宿主。无论选择仁慈还是残酷，都会带来长远影响。 每次互动也会消耗玩家的理智值，有些互动的消耗会更多。理智……</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.gcores.com/articles/222676" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">中国新闻网社会</span>
+                        <time datetime="2026-11-23T06:59:30+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 14:59
+                        </time>
+                    </div>
+                    <h3><a href="https://www.chinanews.com.cn/sh/2026/11-23/10736426.shtml" target="_blank" rel="noopener noreferrer">近期货车肇事导致的交通事故多发 公安部交管局发布提示</a></h3>
+                    <p class="summary">中新网11月23日电 据公安部交通管理局微信公众号消息，近期，湖北、甘肃、青海、广西、山西等地接连发生货车肇事导致的多人死伤交通事故，需引起警醒警示。</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.chinanews.com.cn/sh/2026/11-23/10736426.shtml" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+                </div>
+            </section>
+
+            <section
+                class="content-section"
+                id="3d078fbc4e"
+                data-category="科技"
+                style="--category-color: #2563eb"
+                 hidden
+            >
+                <div class="section-heading">
+                    <div>
+                        <span class="section-kicker">CURRENT CHANNEL</span>
+                        <h2>科技</h2>
+                    </div>
+                    <span class="section-count">15 条内容</span>
+                </div>
+                <div class="cards-grid">
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">IT之家</span>
+                        <time datetime="2026-11-23T07:51:30+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:51
+                        </time>
+                    </div>
+                    <h3><a href="https://www.ithome.com/1/030/933.htm" target="_blank" rel="noopener noreferrer">SK 集团会长崔泰源决定支付全部 9440 亿韩元财产分割款，以终结离婚纠纷</a></h3>
+                    <p class="summary">IT之家 11 月 23 日消息，SK 集团（SK Group）会长崔泰源（Chey Tae-won）计划按照上诉法院的判决，向前妻卢素英（Roh Soh-yeong）支付全部 9,440 亿韩元 （IT之家注：现汇率约合 47.23 亿元人民币） 的财产分割款，以此结束这场持续近十年的法律纠纷。据消息人士周一透露，崔泰源已作出这一决定。 崔泰源的法律代理人已向韩国最高法院提交申请，请求法院建议双方通过和解方式解决纠纷。这一举动似乎意味着，他正在放弃此前针对首尔高等法院今年 7 月裁决提出的上诉。 崔泰源的一名代理人向韩联社表示：“我们申请法院提出和解建议，希望以友好方式彻底结束这场持续已久的争端。这意味着愿意支付全部财产分割款，以终结所有纠纷。” 该代理人还表示，崔泰源希望支付全部款项，从而将精力重新集中到商业活动上，尤其是在全球人工智能（AI）领域竞争日益激烈的背景下。 此前，崔泰源已出售 165 万股 SK 公司（SK I……</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.ithome.com/1/030/933.htm" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">IT之家</span>
+                        <time datetime="2026-11-23T07:51:07+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:51
+                        </time>
+                    </div>
+                    <h3><a href="https://www.ithome.com/1/030/932.htm" target="_blank" rel="noopener noreferrer">荣耀 Earbuds 耳夹式耳机发布：Hi-Res 金标音质、40 小时综合续航，首销价 449 元</a></h3>
+                    <p class="summary">IT之家 11 月 23 日消息，荣耀 Earbuds 耳夹式耳机今日正式发布，其拥有 Hi-Res 金标音质、约 40 小时综合续航， 建议零售价 499 元、首销价 449 元 。 据介绍，这款耳机提供星空黑和珠光白两款配色，拥有专属挂饰配件，单耳重 5.6g， 单次续航约 10 小时、综合续航约 40 小时 。另外，荣耀 Earbuds 耳夹耳机支持跨生态适配不同设备，拥有耳畔 AI 助手等功能。 该耳机采用柔软牢固 C 桥设计，辅以食品级亲肤硅胶，支持日常佩戴无感；搭载旗舰耳机同规格双磁路镀钛动圈，拥有 Hi-Res 金标音质， 支持 LHDC5.0 无损格式 。荣耀 Earbuds 耳夹耳机还支持实时翻译等功能。 IT之家附荣耀 Earbuds 耳夹式耳机核心亮点如下：</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.ithome.com/1/030/932.htm" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">极客公园</span>
+                        <time datetime="2026-11-23T07:49:06+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:49
+                        </time>
+                    </div>
+                    <h3><a href="http://www.geekpark.net/news/374355" target="_blank" rel="noopener noreferrer">二级回收，将成为争夺下一代太空经济入场券的「新风向标」</a></h3>
+                    <p class="summary">美国中部时间 11 月 14 日，星舰飞船在结束约 22.5 小时的轨道飞行后返回地球，被发射塔机械臂捕获。这是人类航天史上第一次完成了轨道级大载重飞船的回收工程验证，二级回收也第一次有了成功案例。 在一些业内人士看来，这不是一次普通的「回收动作」。 二级回收真正影响的，可能是太空经济的成本曲线。 全可重复使用、大规模天地往返运输一旦跑通，人类进入太空并返回地球的成本有望明显下降，太空旅游、太空算力、太空基建也将随之打开新的空间。 有观点判断，拐点已至，窗口期正在到来；对中国商业航天而言，追赶的紧迫性也随之上升。 业内常有一种误读：把星舰当成一枚传统意义上的「火箭」，进而把二级回收理解成一级回收的翻版。事实上，此次「筷子」接住的是星舰飞船，所谓二级回收，回收的也是这艘飞船。 一级回收和二级回收，并不在同一个技术命题里。一级分离时速度约 2 公里/秒，返回全程 6 到 7 分钟；二级则要从约 7.8 公里/秒的轨道速度再入大气层，……</p>
+                    <div class="card-footer"><a class="read-more" href="http://www.geekpark.net/news/374355" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">IT之家</span>
+                        <time datetime="2026-11-23T07:44:22+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:44
+                        </time>
+                    </div>
+                    <h3><a href="https://www.ithome.com/1/030/931.htm" target="_blank" rel="noopener noreferrer">3399 元起荣耀 700 / 700S / Pro 系列手机发布：AI 灵动背屏、支持长焦增距镜</a></h3>
+                    <p class="summary">IT之家 11 月 23 日消息，在目前正在进行的 荣耀 700 系列暨全场景新品发布会中，荣耀 700 / 700S / Pro 系列手机正式发布。 京东 荣耀 700 系列手机 3399 元起 直达链接 系列手机提供晴空、粉雾、冷白、蓝调四种配色可选，拥有 IP68/IP69/IP69K 认证，厚 7.96mm，重 211g，正面配备一块 6.57 英寸 1.5K 120Hz LTPS 绿洲护眼屏，支持 AI 绿洲干眼评估。 系列手机配备 1.59 英寸 AI 灵动背屏，手机配备影棚级柔光环，支持选择三档模式，可实现“行业独家”2 亿柔光背屏自拍功能，同时还支持 AI 互动、多样主题，以及心率、血氧检测以及航班提醒等功能。 系列手机搭载 200Mp 1/1.56&quot; 主摄（荣耀 700/Pro）、12Mp 超广角、50Mp 3.5X 潜望长焦（荣耀 700/Pro），支持全新 4K 电影感 Live 照片功能，同时拥有电影感清……</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.ithome.com/1/030/931.htm" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">IT之家</span>
+                        <time datetime="2026-11-23T07:42:32+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:42
+                        </time>
+                    </div>
+                    <h3><a href="https://www.ithome.com/1/030/930.htm" target="_blank" rel="noopener noreferrer">中国汽车在 39 国的份额超过日本汽车</a></h3>
+                    <p class="summary">IT之家 11 月 23 日消息，据日经中文网今日报道， 在全球 39 个国家，中国汽车制造商的新车销售份额超过了日本汽车制造商 。 报道称，2026 年，德国、巴西等 14 个国家的份额发生逆转。受全球原油价格上涨影响，中国企业擅长的纯电动汽车（EV）销量增长，抢占了市场份额。 随着扩大本地生产等举措，中国企业正加强海外攻势，日本企业受到挤压。如果日本在产业链覆盖广泛的汽车行业中市场份额持续下滑，可能导致支撑材料和零部件制造商等供应链的整个产业基础走弱。 报道还提到，中国车在欧洲份额反超日本，发生逆转的是欧洲汽车制造商协会的 5 月新车销量统计。 比亚迪、上汽、吉利等 5 家中国车企达到 13.841 万辆 ，丰田、日产、本田等 6 家日本车企的销量为 13.0424 万辆。 市场研究机构 Dataforce 的数据指出 ，在 2026 年第 3 季度（7~9 月）， 中国品牌汽车在欧洲的注册量首次超过日本品牌 ，占欧洲总销量……</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.ithome.com/1/030/930.htm" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">极客公园</span>
+                        <time datetime="2026-11-23T07:18:26+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:18
+                        </time>
+                    </div>
+                    <h3><a href="http://www.geekpark.net/news/374348" target="_blank" rel="noopener noreferrer">利润增速降至 0.7%， 拼多多「申诉优赔」还要给商家补贴几十亿</a></h3>
+                    <p class="summary">作者｜李苏 编辑｜郑玄 11 月 19 日，拼多多发布 2026 年第三季度未经审计财报。季度营收 1083.41 亿元，同比微增 0.1%，低于市场约 1155 亿元的一致预期。归属于普通股股东的净利润 295.41 亿元，同比增长 0.7%，高于市场预期的 261.75 亿元。 财报发布前，市场普遍预计净利润将同比下滑 13%左右，实际披露的数据与预测方向相反。 营收停在原地，利润超出预期，两项指标的走向几乎相反。这种分化说明利润表内部正在发生结构性调整，单看任何一个总数都不足以概括这个季度，需要把营收和费用以及利润三条线逐一拆开，观察每条线背后的资源流向。 时间点提供了另一条线索。就在财报发布前夕，拼多多商家服务团队升级售后申诉体系，推出申诉优赔服务，平台开始主动介入异常售后订单的核实与补偿。 管理层在财报声明中的表态与这一动作相互印证，公司仍处于战略投入期，将继续投资于帮助商家成长的工具和服务。营收增速降至零点附近，面向……</p>
+                    <div class="card-footer"><a class="read-more" href="http://www.geekpark.net/news/374348" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">小众软件</span>
+                        <time datetime="2026-11-23T07:12:42+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:12
+                        </time>
+                    </div>
+                    <h3><a href="https://www.appinn.com/winget-mcp-server/" target="_blank" rel="noopener noreferrer">微软 WinGet 开始支持 MCP：以后安装 Windows 软件，直接告诉 AI 就行了</a></h3>
+                    <p class="summary">在 Windows 上安装软件，一般是下载，然后双击安装包，再一步步点击「下一步」。 其实，你还可以在 Windows 的终端中，直接输入以下命令，来安装 Firefox 浏览器： 这是微软早就提供的</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.appinn.com/winget-mcp-server/" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">爱范儿</span>
+                        <time datetime="2026-11-23T06:07:33+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 14:07
+                        </time>
+                    </div>
+                    <h3><a href="https://www.ifanr.com/1690991?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=" target="_blank" rel="noopener noreferrer">鸿蒙版醒图新版本上线：AI修图「不烧心」</a></h3>
+                    <p class="summary">手边刚好有舍不得删又不好修的照片？可以先拿它试试。 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.ifanr.com/1690991?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">少数派</span>
+                        <time datetime="2026-11-23T06:00:53+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 14:00
+                        </time>
+                    </div>
+                    <h3><a href="https://sspai.com/post/118705" target="_blank" rel="noopener noreferrer">新手问号 | 用智能插座为旧款 Apple 设备设置「充电上限」</a></h3>
+                    <p class="summary">曲线救国，旧的 Apple 设备也能拥有了「充电上限」功能。 查看全文</p>
+                    <div class="card-footer"><a class="read-more" href="https://sspai.com/post/118705" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">爱范儿</span>
+                        <time datetime="2026-11-23T04:00:32+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 12:00
+                        </time>
+                    </div>
+                    <h3><a href="https://www.ifanr.com/1690660?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=" target="_blank" rel="noopener noreferrer">XREAL AURA 体验：科幻电影的未来，这么近那么远</a></h3>
+                    <p class="summary">未来可期 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.ifanr.com/1690660?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">小众软件</span>
+                        <time datetime="2026-11-23T02:50:33+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 10:50
+                        </time>
+                    </div>
+                    <h3><a href="https://www.appinn.com/parallels-desktop-27/" target="_blank" rel="noopener noreferrer">Parallels Desktop 27 最新优惠，黑五史低 249元/年，：在 Mac 上运行多个操作系统</a></h3>
+                    <p class="summary">Mac 用户熟悉的虚拟机软件 Parallels Desktop 27 迎来黑五优惠，限时五折。 Parallels Desktop 是老牌的 Mac 虚拟机软件，可以让 Mac 直接运行 Windo</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.appinn.com/parallels-desktop-27/" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">极客公园</span>
+                        <time datetime="2026-11-23T01:22:36+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 09:22
+                        </time>
+                    </div>
+                    <h3><a href="http://www.geekpark.net/news/374304" target="_blank" rel="noopener noreferrer">OpenAI 首席科学家：AI 最早明年加速进化；B 站开始清理「大肥鱼」泛滥；瘫痪患者用脑机打 GTA6｜极客早知道</a></h3>
+                    <p class="summary">OpenAI 首席科学家警告：AI 最早可能在 2027 年加速自身发展，奥尔特曼赞同为 AI 开发设限 11 月 23 日消息，当地时间于 11 月 22 日，OpenAI 首席科学家雅库布 · 帕霍茨基（Jakub Pachocki）发文，提议 AI 企业应建立行业统一标准，对先进 AI 模型的开发设置共同限制，在研究人员具备更可靠的模型行为理解和监控能力之前，不应突破约定的发展门槛。 他认为，传统 AI 能力评测基准会随着技术进步迅速过时，而困惑度（Perplexity）可以作为衡量模型预训练进展的参考指标（困惑度用于衡量 AI 模型预测下一个文本 Token 的能力，数值越低，代表模型的预测能力越强）。 帕霍茨基还公布了 OpenAI 内部使用的部分模型评测数据：GPT-3.5 的对数困惑度约为 0.99，GPT-4 约为 0.91。当这一指标低于 0.8 时，OpenAI 观察到了模型在网络安全和数学领域出现新的能力；……</p>
+                    <div class="card-footer"><a class="read-more" href="http://www.geekpark.net/news/374304" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">爱范儿</span>
+                        <time datetime="2026-11-23T00:57:34+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 08:57
+                        </time>
+                    </div>
+                    <h3><a href="https://www.ifanr.com/1690613?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=" target="_blank" rel="noopener noreferrer">华为OSTA星芒 O1 Pro 评测：一台真正为 AI 而生的鸿蒙手机</a></h3>
+                    <p class="summary">面向 AI，面向世界，面向未来 #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.ifanr.com/1690613?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">爱范儿</span>
+                        <time datetime="2026-11-23T00:25:24+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 08:25
+                        </time>
+                    </div>
+                    <h3><a href="https://www.ifanr.com/1690857?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=" target="_blank" rel="noopener noreferrer">早报｜曝苹果明年下半年发布iPhone 20与智能眼镜/丘成桐：AI证明黎曼猜想，数学进入新纪元/GTA6带动主机溢价，PS5 Pro涨至近1.6万元</a></h3>
+                    <p class="summary">· 曝小米汽车欧洲团队再添一名前小鹏高管 · 神舟二十四号完成发射前最后一次全区合练 · AI 服务器供应商被曝在交货前提价，部分订单涨幅达 45% #欢迎关注爱范儿官方微信公众号：爱范儿（微信号：ifanr），更多精彩内容第一时间为您奉上。</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.ifanr.com/1690857?utm_source=rss&amp;utm_medium=rss&amp;utm_campaign=" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">少数派</span>
+                        <time datetime="2026-11-22T23:34:27+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 07:34
+                        </time>
+                    </div>
+                    <h3><a href="https://sspai.com/post/119418" target="_blank" rel="noopener noreferrer">派早报：Anthropic 研究员宣称用 Claude 证明黎曼猜想</a></h3>
+                    <p class="summary">Anthropic 研究员宣称用 Claude 证明黎曼猜想 OpenAI 公布反蒸馏举措 黄仁勋据称将攻击下属作为管理方式 GTA 6 首日销售额近 40 亿美元 特斯拉升级 FSD，推出实景渲染功能 AMD 股票被做空 看看就行的简讯 少数派的近期动态 你可能错过的好文章 查看全文</p>
+                    <div class="card-footer"><a class="read-more" href="https://sspai.com/post/119418" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+                </div>
+            </section>
+
+            <section
+                class="content-section"
+                id="1c306968f0"
+                data-category="财经商业"
+                style="--category-color: #0f766e"
+                 hidden
+            >
+                <div class="section-heading">
+                    <div>
+                        <span class="section-kicker">CURRENT CHANNEL</span>
+                        <h2>财经商业</h2>
+                    </div>
+                    <span class="section-count">13 条内容</span>
+                </div>
+                <div class="cards-grid">
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">第一财经</span>
+                        <time datetime="2026-11-23T07:55:37.307780+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:55
+                        </time>
+                    </div>
+                    <h3><a href="https://www.yicai.com/news/103449363.html" target="_blank" rel="noopener noreferrer">价值主动ETF招商（581080）今日上市，定位大盘价值与量化主动管理</a></h3>
+
+                    <div class="card-footer"><a class="read-more" href="https://www.yicai.com/news/103449363.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">第一财经</span>
+                        <time datetime="2026-11-23T07:55:37.307780+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:55
+                        </time>
+                    </div>
+                    <h3><a href="https://www.yicai.com/news/103449355.html" target="_blank" rel="noopener noreferrer">让“后APEC”时代更精彩，深圳可以怎么做</a></h3>
+                    <p class="summary">让“后APEC”时代更精彩，是更具挑战性的“下半场”。</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.yicai.com/news/103449355.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">第一财经</span>
+                        <time datetime="2026-11-23T07:55:37.307780+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:55
+                        </time>
+                    </div>
+                    <h3><a href="https://www.yicai.com/news/103449308.html" target="_blank" rel="noopener noreferrer">从“上个智能体”到“建体系”，公募AI布局拼到哪一步了</a></h3>
+                    <p class="summary">智能体密集上线之后，公募AI拼的是什么？</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.yicai.com/news/103449308.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">钛媒体</span>
+                        <time datetime="2026-11-23T07:53:58+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:53
+                        </time>
+                    </div>
+                    <h3><a href="https://www.tmtpost.com/8212002.html" target="_blank" rel="noopener noreferrer">字节20亿元对腾讯5亿美元：AI办公入口之争</a></h3>
+                    <p class="summary">字节腾讯AI办公走不同路径，入口之争刚启</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.tmtpost.com/8212002.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">中国新闻网财经</span>
+                        <time datetime="2026-11-23T07:28:06+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:28
+                        </time>
+                    </div>
+                    <h3><a href="https://www.chinanews.com.cn/cj/2026/11-23/10736451.shtml" target="_blank" rel="noopener noreferrer">云深处有大咖，瑞幸“中国咖啡云南季”溯源一杯云南好风味</a></h3>
+                    <p class="summary">一方好风土，化作杯中好风味。云南高山之间，独特风土孕育咖啡醇香。近日，瑞幸咖啡以“深的工夫云南功夫中国咖啡云南季”为主题，推出中国云南单一产地SOE咖啡豆为特色的深烘系列新品。新品采用原创双烘焙曲线的差异化工艺，呈现云南高山产区的独特风土，带来浓而不苦、醇厚有回甘的口感，让全国消费者在门店的每一杯日常咖啡中，都能品味云南咖啡的卓越风味。</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.chinanews.com.cn/cj/2026/11-23/10736451.shtml" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">中国新闻网财经</span>
+                        <time datetime="2026-11-23T07:26:56+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:26
+                        </time>
+                    </div>
+                    <h3><a href="https://www.chinanews.com.cn/cj/2026/11-23/10736452.shtml" target="_blank" rel="noopener noreferrer">A股收评：超4600只个股飘红 三大指数触底反弹集体收涨</a></h3>
+                    <p class="summary">原标题：A股收评：超4600只个股飘红，三大指数触底反弹集体收涨；北证50涨超4%；传媒、贵金属上涨，物理AI、CPO走高；保险、酒类、银行下跌</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.chinanews.com.cn/cj/2026/11-23/10736452.shtml" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">钛媒体</span>
+                        <time datetime="2026-11-23T05:21:35+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 13:21
+                        </time>
+                    </div>
+                    <h3><a href="https://www.tmtpost.com/8209841.html" target="_blank" rel="noopener noreferrer">辰星技术：营收扩张难掩亏损，多款机器人曾亏本销售</a></h3>
+                    <p class="summary">报告期内公司仅在2025年依靠大额政府补助实现短暂账面盈利，其余时段均为亏损；剔除股改因素影响后，这家成立十余载的企业经营层面累计亏损接近2.2亿元。</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.tmtpost.com/8209841.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">钛媒体</span>
+                        <time datetime="2026-11-23T05:19:54+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 13:19
+                        </time>
+                    </div>
+                    <h3><a href="https://www.tmtpost.com/8210963.html" target="_blank" rel="noopener noreferrer">立景创新：第一大客户身兼头号供应商，产能闲置仍谋扩产</a></h3>
+                    <p class="summary">报告期内，立景创新业绩高度依赖前五大客户，客户集中度逐年攀升，2025年、2026年1-5月前五大客户贡献超九成营业收入。其中客户A为核心收入来源，2025年贡献公司71%营收，自2024年起，公司至少六成收入均来自该客户，业务绑定程度极深。</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.tmtpost.com/8210963.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">钛媒体</span>
+                        <time datetime="2026-11-23T03:35:20+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 11:35
+                        </time>
+                    </div>
+                    <h3><a href="https://www.tmtpost.com/8209450.html" target="_blank" rel="noopener noreferrer">迅合科技：在Excel和微信群里，给老板造一个Personal Agent</a></h3>
+                    <p class="summary">老板对决策的要求比普通人更高，对知识库和决策质量的要求也更高，过去这样的需求长期存在但没有得到很好解决。</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.tmtpost.com/8209450.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">每日经济新闻</span>
+                        <time datetime="2026-11-23T00:00:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 08:00
+                        </time>
+                    </div>
+                    <h3><a href="https://www.nbd.com.cn/articles/2026-11-23/4655727.html" target="_blank" rel="noopener noreferrer">每经热评 | 当黄金成为风险资产，“害怕错过”而抄底抢购不可取</a></h3>
+
+                    <div class="card-footer"><a class="read-more" href="https://www.nbd.com.cn/articles/2026-11-23/4655727.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">每日经济新闻</span>
+                        <time datetime="2026-11-23T00:00:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 08:00
+                        </time>
+                    </div>
+                    <h3><a href="https://www.nbd.com.cn/articles/2026-11-23/4655531.html" target="_blank" rel="noopener noreferrer">借“港”出海：港股IPO热正引领智造机遇</a></h3>
+
+                    <div class="card-footer"><a class="read-more" href="https://www.nbd.com.cn/articles/2026-11-23/4655531.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">每日经济新闻</span>
+                        <time datetime="2026-11-23T00:00:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 08:00
+                        </time>
+                    </div>
+                    <h3><a href="https://www.nbd.com.cn/articles/2026-11-23/4655475.html" target="_blank" rel="noopener noreferrer">从“连得上”到“会思考”2026中国5G+工业互联网大会观察：政策加码、智能体进场、安全与成本成两道坎</a></h3>
+
+                    <div class="card-footer"><a class="read-more" href="https://www.nbd.com.cn/articles/2026-11-23/4655475.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">每日经济新闻</span>
+                        <time datetime="2026-11-23T00:00:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 08:00
+                        </time>
+                    </div>
+                    <h3><a href="https://www.nbd.com.cn/articles/2026-11-23/4655481.html" target="_blank" rel="noopener noreferrer">中国大模型周调用量连续30周全球第一！DeepSeek持续五周霸榜，小米MiMo单周大涨461%重回榜单</a></h3>
+
+                    <div class="card-footer"><a class="read-more" href="https://www.nbd.com.cn/articles/2026-11-23/4655481.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+                </div>
+            </section>
+
+            <section
+                class="content-section"
+                id="e41b915e32"
+                data-category="科学探索"
+                style="--category-color: #0891b2"
+                 hidden
+            >
+                <div class="section-heading">
+                    <div>
+                        <span class="section-kicker">CURRENT CHANNEL</span>
+                        <h2>科学探索</h2>
+                    </div>
+                    <span class="section-count">3 条内容</span>
+                </div>
+                <div class="cards-grid">
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">科学网</span>
+                        <time datetime="2026-11-23T07:55:47.983664+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:55
+                        </time>
+                    </div>
+                    <h3><a href="https://news.sciencenet.cn/htmlnews/2026/11/575154.shtm" target="_blank" rel="noopener noreferrer">秒级复苏！她被这种“地球最强植物”迷住了</a></h3>
+
+                    <div class="card-footer"><a class="read-more" href="https://news.sciencenet.cn/htmlnews/2026/11/575154.shtm" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">科学网</span>
+                        <time datetime="2026-11-23T07:55:47.983664+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:55
+                        </time>
+                    </div>
+                    <h3><a href="https://news.sciencenet.cn/htmlnews/2026/11/575155.shtm" target="_blank" rel="noopener noreferrer">曹春晓：人这一辈子，要活成什么样才算值得？</a></h3>
+
+                    <div class="card-footer"><a class="read-more" href="https://news.sciencenet.cn/htmlnews/2026/11/575155.shtm" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">中国科学院科研进展</span>
+                        <time datetime="2026-11-23T00:00:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 08:00
+                        </time>
+                    </div>
+                    <h3><a href="https://www.cas.cn/../../syky/202611/t20261123_5124785.shtml" target="_blank" rel="noopener noreferrer">科学家揭开斯氏按蚊更能传播疟疾的秘密</a></h3>
+
+                    <div class="card-footer"><a class="read-more" href="https://www.cas.cn/../../syky/202611/t20261123_5124785.shtml" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+                </div>
+            </section>
+
+            <section
+                class="content-section"
+                id="ba08216f13"
+                data-category="游戏"
+                style="--category-color: #db2777"
+                 hidden
+            >
+                <div class="section-heading">
+                    <div>
+                        <span class="section-kicker">CURRENT CHANNEL</span>
+                        <h2>游戏</h2>
+                    </div>
+                    <span class="section-count">12 条内容</span>
+                </div>
+                <div class="cards-grid">
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">3DM</span>
+                        <time datetime="2026-11-23T07:55:56.247585+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:55
+                        </time>
+                    </div>
+                    <h3><a href="https://www.3dmgame.com/news/202611/3961027.html" target="_blank" rel="noopener noreferrer">《虚空潜者：逃出深渊》公布发售日 正式版加入两名潜者及新章节</a></h3>
+
+                    <div class="card-footer"><a class="read-more" href="https://www.3dmgame.com/news/202611/3961027.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">3DM</span>
+                        <time datetime="2026-11-23T07:55:56.247585+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:55
+                        </time>
+                    </div>
+                    <h3><a href="https://www.3dmgame.com/news/202611/3961026.html" target="_blank" rel="noopener noreferrer">IGN发布《GTA6》游玩感想：修房玩法令人着迷</a></h3>
+
+                    <div class="card-footer"><a class="read-more" href="https://www.3dmgame.com/news/202611/3961026.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">3DM</span>
+                        <time datetime="2026-11-23T07:55:56.247585+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:55
+                        </time>
+                    </div>
+                    <h3><a href="https://www.3dmgame.com/news/202611/3961025.html" target="_blank" rel="noopener noreferrer">《塞尔达传说：时之笛》团队曾长期讨论结尾过场</a></h3>
+
+                    <div class="card-footer"><a class="read-more" href="https://www.3dmgame.com/news/202611/3961025.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">3DM</span>
+                        <time datetime="2026-11-23T07:55:56.247585+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:55
+                        </time>
+                    </div>
+                    <h3><a href="https://www.3dmgame.com/news/202611/3961024.html" target="_blank" rel="noopener noreferrer">《GTA6》玩家发现疑似由基莱恩特岛高塔触发的神秘NPC事件</a></h3>
+
+                    <div class="card-footer"><a class="read-more" href="https://www.3dmgame.com/news/202611/3961024.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">游民星空</span>
+                        <time datetime="2026-11-23T07:55:52.376748+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:55
+                        </time>
+                    </div>
+                    <h3><a href="https://www.gamersky.com/news/202611/2251321.shtml" target="_blank" rel="noopener noreferrer">假如没有《GTA6》 今年的年度最佳会是谁？</a></h3>
+
+                    <div class="card-footer"><a class="read-more" href="https://www.gamersky.com/news/202611/2251321.shtml" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">游民星空</span>
+                        <time datetime="2026-11-23T07:55:52.376748+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:55
+                        </time>
+                    </div>
+                    <h3><a href="https://www.gamersky.com/news/202611/2251399.shtml" target="_blank" rel="noopener noreferrer">&quot;1988年张奶奶1991年张大爷&quot;刷屏 官媒辟谣实为梗图</a></h3>
+
+                    <div class="card-footer"><a class="read-more" href="https://www.gamersky.com/news/202611/2251399.shtml" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">游民星空</span>
+                        <time datetime="2026-11-23T07:55:52.376748+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:55
+                        </time>
+                    </div>
+                    <h3><a href="https://www.gamersky.com/news/202611/2251386.shtml" target="_blank" rel="noopener noreferrer">《GTA6》路人不敢打女主？是BUG还是有隐藏机制</a></h3>
+
+                    <div class="card-footer"><a class="read-more" href="https://www.gamersky.com/news/202611/2251386.shtml" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">游民星空</span>
+                        <time datetime="2026-11-23T07:55:52.376748+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:55
+                        </time>
+                    </div>
+                    <h3><a href="https://www.gamersky.com/news/202611/2251389.shtml" target="_blank" rel="noopener noreferrer">影之刃沐小葵脸模早年黑历史被扒！COS冯宝宝太青涩</a></h3>
+
+                    <div class="card-footer"><a class="read-more" href="https://www.gamersky.com/news/202611/2251389.shtml" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">机核</span>
+                        <time datetime="2026-11-23T07:54:25+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:54
+                        </time>
+                    </div>
+                    <h3><a href="https://www.gcores.com/articles/222676" target="_blank" rel="noopener noreferrer">克苏鲁风叙事恐怖游戏《诡语共鸣》将于2027 年发售</a></h3>
+                    <p class="summary">LUAL Games 与 Team17 宣布，克苏鲁风叙事解谜恐怖游戏《诡语共鸣》将于 2027 年登陆 PC。游戏融合谜题、诡谲故事与少量 Roguelike 元素。玩家将带上研究工具，深入未知，在时间耗尽前调查并了解那些侵扰世界的宇宙恐怖。 一头能够撕开现实帷幕的庞然巨物现身后，玩家手中只有研究工具、自己的智慧，以及日渐流失的理智。他们就此卷入一场拯救世界的竞赛。异界怪物不断侵袭家园，玩家必须研究每一种生物，调查其中遭到腐化的情绪，并不断更新魔典，逐步了解这些恐怖存在、它们的起源，以及幕后派遣者的身份。 Steam地址： https://store.steampowered.com/app/2073150/_/ &lt;内嵌内容，请前往机核查看&gt; 面对每一次观察，玩家都可以选择共情或暴力：净化生物体内的腐化，或彻底清除它，终结其宿主。无论选择仁慈还是残酷，都会带来长远影响。 每次互动也会消耗玩家的理智值，有些互动的消耗会更多。理智……</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.gcores.com/articles/222676" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">机核</span>
+                        <time datetime="2026-11-23T03:33:25+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 11:33
+                        </time>
+                    </div>
+                    <h3><a href="https://www.gcores.com/articles/222667" target="_blank" rel="noopener noreferrer">《沉星之序》全中文配音上线，首波折扣限时开启中</a></h3>
+                    <p class="summary">发行商Gamirror Games与开发商Thekla, Inc.共同宣布，Steam玩家评价“好评如潮”的大型解谜冒险游戏《沉星之序》中文配音现已于Steam平台免费上线。完成游戏更新后，大家就可以通过熟悉的中文语音，沉浸式体验这场解谜盛宴。与此同时，《沉星之序》首次折扣正在进行中，欢迎玩家前往各平台商店了解折扣详情。 *Nintendo Switch 2与PlayStation 5版游戏的中文配音会在版本通过平台审核后尽快上线。 &lt;内嵌内容，请前往机核查看&gt; 【中文配音阵容：怪物细胞团队操刀，16位演员出演】 本次中文配音由配音团队“怪物细胞”承担制作，由16位配音演员参与完成了近4000条台词的录制，覆盖女王、搬运英豪、盗贼、吟游诗人、法师、德鲁伊，乃至那艘会说话的船等名单所列的全部角色。 主要角色与演员包括： 余又熙（《神舞幻想》岚湘、《暗影火炬城》Lady Q）饰 草甸之地女王 青琳昊（《三角洲行动》红狼）饰 搬运英豪……</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.gcores.com/articles/222667" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">机核</span>
+                        <time datetime="2026-11-23T01:15:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 09:15
+                        </time>
+                    </div>
+                    <h3><a href="https://www.gcores.com/articles/222653" target="_blank" rel="noopener noreferrer">B社确认《辐射》衍生游戏《A Wasteland Full of Cats》</a></h3>
+                    <p class="summary">近日，澳大利亚分级委员会公布了一款名为《A Wasteland Full of Cats》的《辐射》世界观衍生游戏。随着事件发酵，贝塞斯达发言人也证实了这一消息。虽然这次提前曝光并不在团队的计划之内，但官方确实会在近期公布更多内容。 据悉，游戏内容包含14个《辐射》系列标志性地点、33个房间以及一座避难所。 除了主线寻物玩法外，游戏还设有轻度解谜机制，用于解锁不影响通关的隐藏关卡。在最终Boss战中，玩家需要射击辐射蟑螂，从而营救剩余的猫和人类。 《A Wasteland Full of Cats》由巴西工作室 Devcats 负责制作，并联动非营利动物救援机构共同推出。贝塞斯达发言人在声明中表示，支持动物救援是团队和玩家社区多年来一直关心的事情，包括工作室自2015年起与Dallas Pets Alive建立的长期合作。双方的共同理念与 Devcats 独特的创作方式相结合，让《辐射》世界观以更有意义的方式呈现出来。</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.gcores.com/articles/222653" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">机核</span>
+                        <time datetime="2026-11-23T01:00:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 09:00
+                        </time>
+                    </div>
+                    <h3><a href="https://www.gcores.com/articles/222652" target="_blank" rel="noopener noreferrer">第三人称生存恐怖游戏《Ugly Within》正式公布</a></h3>
+                    <p class="summary">由 Serafini Productions 发行的第三人称生存恐怖游戏《Ugly Within》正式公布。本作中，拥有窥视过去能力的少年小野寺柊，与能够驱除超自然怪异的驱魔师美山玲子，一同探寻镰田家族不为人知的黑暗历史，以及这个家族世代供奉的神秘存在。 柊的能力使他能够窥见残留在场所和物品中的过去。但他无法改变前人的命运。从过去寻找线索，解开当下的谜团。 扮演玲子时，你将直面怪异并将其驱除。运用两人截然不同的能力与视角，深入笼罩着镰田家族的黑暗。 开发者表示，玩家将揭开世代相传的信仰、爱与恨所造就的扭曲遗产。随着玩家逐渐深入其中的秘密，人类与怪物之间的界限也将愈发模糊。这是一场可能降临在任何人身上的悲剧。</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.gcores.com/articles/222652" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+                </div>
+            </section>
+
+            <section
+                class="content-section"
+                id="728a94fa89"
+                data-category="国内要闻"
+                style="--category-color: #ea580c"
+                 hidden
+            >
+                <div class="section-heading">
+                    <div>
+                        <span class="section-kicker">CURRENT CHANNEL</span>
+                        <h2>国内要闻</h2>
+                    </div>
+                    <span class="section-count">15 条内容</span>
+                </div>
+                <div class="cards-grid">
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">中国新闻网即时</span>
+                        <time datetime="2026-11-23T07:49:53+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:49
+                        </time>
+                    </div>
+                    <h3><a href="https://www.chinanews.com.cn/gn/2026/11-23/10736481.shtml" target="_blank" rel="noopener noreferrer">来深圳，看五十年的中国</a></h3>
+                    <p class="summary">本报记者 刘发为</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.chinanews.com.cn/gn/2026/11-23/10736481.shtml" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">中国新闻网即时</span>
+                        <time datetime="2026-11-23T07:47:15+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:47
+                        </time>
+                    </div>
+                    <h3><a href="https://www.chinanews.com.cn/gn/2026/11-23/10736479.shtml" target="_blank" rel="noopener noreferrer">中方：一贯主张国际刑事法院应该秉持客观公正立场</a></h3>
+                    <p class="summary">中新网北京11月23日电 (记者 黄钰钦)中国外交部发言人郭嘉昆23日主持例行记者会。</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.chinanews.com.cn/gn/2026/11-23/10736479.shtml" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">中国新闻网即时</span>
+                        <time datetime="2026-11-23T07:45:43+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:45
+                        </time>
+                    </div>
+                    <h3><a href="https://www.chinanews.com.cn/cj/2026/11-23/10736478.shtml" target="_blank" rel="noopener noreferrer">海南澄迈：足不出岛闯全球 自贸港政策激活游戏产业新活力</a></h3>
+                    <p class="summary">中新网澄迈11月23日电(黄嘉雯)11月22日，“红星照耀中国·从琼崖烽火到开放自贸港”网络主题宣传活动采访团走进澄迈老城科技新城海南游戏出海众创空间，探访全国首个聚焦游戏出海全链条的公共服务平台。</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.chinanews.com.cn/cj/2026/11-23/10736478.shtml" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">中国新闻网即时</span>
+                        <time datetime="2026-11-23T07:45:07+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:45
+                        </time>
+                    </div>
+                    <h3><a href="https://www.chinanews.com.cn/cj/2026/11-23/10736477.shtml" target="_blank" rel="noopener noreferrer">社会保险基金监督条例公开征求意见</a></h3>
+                    <p class="summary">人力资源社会保障部11月23日发布《社会保险基金监督条例(征求意见稿)》，从即日起至12月23日，向社会公开征求意见。</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.chinanews.com.cn/cj/2026/11-23/10736477.shtml" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">中国新闻网社会</span>
+                        <time datetime="2026-11-23T07:37:28+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 15:37
+                        </time>
+                    </div>
+                    <h3><a href="https://www.chinanews.com.cn/sh/2026/11-23/10736474.shtml" target="_blank" rel="noopener noreferrer">寻访椰城红色印记：琼崖星火照亮自贸港新程</a></h3>
+                    <p class="summary">中新网海口11月23日电(黄嘉雯)近日，“红星照耀中国·从琼崖烽火到开放自贸港”网络主题宣传活动采访团走进海口，先后探访海南省史志馆、中共琼崖一大旧址、海口国家高新区，在回望二十三年孤岛奋战的峥嵘岁月中传承红色基因，见证琼崖革命精神代代相传、赋能海南自贸港高质量发展的生动图景。</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.chinanews.com.cn/sh/2026/11-23/10736474.shtml" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">中国新闻网社会</span>
+                        <time datetime="2026-11-23T06:59:30+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 14:59
+                        </time>
+                    </div>
+                    <h3><a href="https://www.chinanews.com.cn/sh/2026/11-23/10736426.shtml" target="_blank" rel="noopener noreferrer">近期货车肇事导致的交通事故多发 公安部交管局发布提示</a></h3>
+                    <p class="summary">中新网11月23日电 据公安部交通管理局微信公众号消息，近期，湖北、甘肃、青海、广西、山西等地接连发生货车肇事导致的多人死伤交通事故，需引起警醒警示。</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.chinanews.com.cn/sh/2026/11-23/10736426.shtml" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">中国新闻网社会</span>
+                        <time datetime="2026-11-23T06:57:06+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 14:57
+                        </time>
+                    </div>
+                    <h3><a href="https://www.chinanews.com.cn/sh/2026/11-23/10736433.shtml" target="_blank" rel="noopener noreferrer">88元红烧“小鸡”竟是南迁候鸟？捕杀食用候鸟需全链条治理</a></h3>
+                    <p class="summary">半月谈评论员 农冠斌</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.chinanews.com.cn/sh/2026/11-23/10736433.shtml" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">新华网时政</span>
+                        <time datetime="2026-11-23T00:00:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 08:00
+                        </time>
+                    </div>
+                    <h3><a href="https://www.news.cn/politics/20261123/a7da526b2312421db61f64311dd3ba60/c.html" target="_blank" rel="noopener noreferrer">南方降水短暂发展增强气温下降 北方大部天气晴朗气温偏高</a></h3>
+
+                    <div class="card-footer"><a class="read-more" href="https://www.news.cn/politics/20261123/a7da526b2312421db61f64311dd3ba60/c.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">新华网时政</span>
+                        <time datetime="2026-11-23T00:00:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 08:00
+                        </time>
+                    </div>
+                    <h3><a href="https://www.news.cn/politics/20261123/3462ec067057434eb80ae2e374fa6ea2/c.html" target="_blank" rel="noopener noreferrer">“二十四节气”列入联合国“非遗”名录十周年记</a></h3>
+
+                    <div class="card-footer"><a class="read-more" href="https://www.news.cn/politics/20261123/3462ec067057434eb80ae2e374fa6ea2/c.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">新华网时政</span>
+                        <time datetime="2026-11-23T00:00:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 08:00
+                        </time>
+                    </div>
+                    <h3><a href="https://www.news.cn/politics/20261123/9b56444bd18b40ed9ccc114be0263c4f/c.html" target="_blank" rel="noopener noreferrer">具身智能机器人应用技术员：把机器人“教”进真实世界</a></h3>
+
+                    <div class="card-footer"><a class="read-more" href="https://www.news.cn/politics/20261123/9b56444bd18b40ed9ccc114be0263c4f/c.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">央广网国内</span>
+                        <time datetime="2026-11-23T00:00:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 08:00
+                        </time>
+                    </div>
+                    <h3><a href="https://www.cnr.cn/newscenter/native/gd/20261123/t20261123_527880716.shtml" target="_blank" rel="noopener noreferrer">安居乐业共美好</a></h3>
+                    <p class="summary">江苏坚持就业优先、增收富民、保障兜底一体推进，着力缩小城乡差距，推动城乡融合和区域协调发展，厚植共同富裕根基，促进人的全面发展。</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.cnr.cn/newscenter/native/gd/20261123/t20261123_527880716.shtml" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">央广网国内</span>
+                        <time datetime="2026-11-23T00:00:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 08:00
+                        </time>
+                    </div>
+                    <h3><a href="https://www.cnr.cn/newscenter/native/gd/20261123/t20261123_527880703.shtml" target="_blank" rel="noopener noreferrer">从深圳出发，携手构建亚太共同体（亚太合作启新程）</a></h3>
+                    <p class="summary">亚太经合组织（APEC）第三十三次领导人非正式会议及相关活动日前在深圳成功举行。</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.cnr.cn/newscenter/native/gd/20261123/t20261123_527880703.shtml" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">央广网国内</span>
+                        <time datetime="2026-11-23T00:00:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 08:00
+                        </time>
+                    </div>
+                    <h3><a href="https://www.cnr.cn/newscenter/native/gd/20261123/t20261123_527880702.shtml" target="_blank" rel="noopener noreferrer">聚焦APEC・记者手记丨亚太合作的“深圳印记”</a></h3>
+                    <p class="summary">于道各努力，千里自同风。有共同的愿景，有明确的方向，有清晰的路径，有坚实的脚步。中国和亚太伙伴携手并肩，坚守开放合作，笃行多边之诺，必将续写“亚太奇迹”新篇章，开创亚太和世界更美好未来。</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.cnr.cn/newscenter/native/gd/20261123/t20261123_527880702.shtml" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">央广网国内</span>
+                        <time datetime="2026-11-23T00:00:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-23 08:00
+                        </time>
+                    </div>
+                    <h3><a href="https://www.cnr.cn/newscenter/native/gd/20261123/t20261123_527880603.shtml" target="_blank" rel="noopener noreferrer">今年前十个月我国公路水路更新和数智化改造投资占比超33%</a></h3>
+                    <p class="summary">记者从交通运输部了解到，今年以来我国公路水路更新和数智化改造完成投资占比不断提升。</p>
+                    <div class="card-footer"><a class="read-more" href="https://www.cnr.cn/newscenter/native/gd/20261123/t20261123_527880603.shtml" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+
+                <article class="card">
+                    <div class="card-accent" aria-hidden="true"></div>
+                    <div class="card-meta-top">
+                        <span class="source-badge">新华网时政</span>
+                        <time datetime="2026-11-22T00:00:00+00:00">
+                            <svg aria-hidden="true" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="8"/>
+                                <path d="M12 8v4.5l3 1.5"/>
+                            </svg>
+                            11-22 08:00
+                        </time>
+                    </div>
+                    <h3><a href="https://www.news.cn/politics/20261122/e0ad231cf0524f278b6a175fd281338f/c.html" target="_blank" rel="noopener noreferrer">中国热带雨林保护的“海南样板”</a></h3>
+
+                    <div class="card-footer"><a class="read-more" href="https://www.news.cn/politics/20261122/e0ad231cf0524f278b6a175fd281338f/c.html" target="_blank" rel="noopener noreferrer">阅读原文<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg></a></div>
+                </article>
+                </div>
+            </section>
+
+
+        <footer>
+            <span>最后生成：2026-11-23 15:55 CST</span>
+            <span class="footer-badge"><span class="live-dot"></span> GitHub Actions 自动更新</span>
+        </footer>
+    </main>
+
+    <script>
+        (() => {
+            const root = document.documentElement;
+            const selector = document.getElementById("category-select");
+            const sections = Array.from(document.querySelectorAll(".content-section"));
+            const filterPanel = document.getElementById("filter-panel");
+            const activeName = document.getElementById("active-category-name");
+            const activeCount = document.getElementById("active-category-count");
+            const themeToggle = document.getElementById("theme-toggle");
+            const themeIcon = document.getElementById("theme-icon");
+
+            const values = new Set(Array.from(selector.options, option => option.value));
+            const url = new URL(window.location.href);
+            const requested = url.searchParams.get("category");
+            let savedCategory = null;
+
+            try {
+                savedCategory = localStorage.getItem("personalDailyCategory:cn");
+            } catch (error) {}
+
+            const initialCategory = values.has(requested)
+                ? requested
+                : values.has(savedCategory)
+                    ? savedCategory
+                    : selector.dataset.defaultCategory;
+
+            function applyCategory(value, updateHistory = false, shouldScroll = false) {
+                const selectedOption = Array.from(selector.options).find(
+                    option => option.value === value
+                );
+                const showAll = value === "__all__";
+
+                sections.forEach(section => {
+                    section.hidden = !showAll && section.dataset.category !== value;
+                });
+
+                selector.value = value;
+                activeName.textContent = showAll ? "全部内容" : value;
+                activeCount.textContent = (selectedOption?.dataset.count || "0") + " 条";
+                filterPanel.style.setProperty(
+                    "--active-color",
+                    selectedOption?.dataset.color || "#6366f1"
+                );
+
+                try {
+                    localStorage.setItem("personalDailyCategory:cn", value);
+                } catch (error) {}
+
+                if (updateHistory) {
+                    if (value === selector.dataset.defaultCategory) {
+                        url.searchParams.delete("category");
+                    } else {
+                        url.searchParams.set("category", value);
+                    }
+                    history.replaceState(null, "", url);
+                }
+
+                if (shouldScroll) {
+                    const top = filterPanel.getBoundingClientRect().top + window.scrollY - 10;
+                    window.scrollTo({ top, behavior: "smooth" });
+                }
+            }
+
+            selector.addEventListener("change", () => {
+                applyCategory(selector.value, true, true);
+            });
+
+            function isDarkTheme() {
+                if (root.dataset.theme) return root.dataset.theme === "dark";
+                return window.matchMedia("(prefers-color-scheme: dark)").matches;
+            }
+
+            function refreshThemeIcon() {
+                const dark = isDarkTheme();
+                themeIcon.textContent = dark ? "☀" : "☾";
+                themeToggle.title = dark ? "切换到浅色主题" : "切换到深色主题";
+                themeToggle.setAttribute("aria-label", themeToggle.title);
+            }
+
+            themeToggle.addEventListener("click", () => {
+                const nextTheme = isDarkTheme() ? "light" : "dark";
+                root.dataset.theme = nextTheme;
+                try {
+                    localStorage.setItem("personalDailyTheme", nextTheme);
+                } catch (error) {}
+                refreshThemeIcon();
+            });
+
+            applyCategory(initialCategory);
+            refreshThemeIcon();
+        })();
+    </script>
+
+    <script>
+        (() => {
+            const switchTarget = "../view/2/index.html";
+            const switchMark = document.querySelector(".brand-mark");
+            let taps = [];
+
+            function switchEdition() {
+                window.location.assign(switchTarget);
+            }
+
+            if (switchMark) {
+                switchMark.addEventListener("click", event => {
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                    const now = Date.now();
+                    taps = taps.filter(value => now - value <= 4000);
+                    taps.push(now);
+
+                    if (taps.length >= 7) {
+                        taps = [];
+                        switchEdition();
+                    }
+                });
+            }
+
+            document.addEventListener("keydown", event => {
+                if (
+                    event.altKey
+                    && event.shiftKey
+                    && event.key.toLowerCase() === "g"
+                ) {
+                    event.preventDefault();
+                    switchEdition();
+                }
+            });
+        })();
+    </script>
+
+</body>
+</html>
